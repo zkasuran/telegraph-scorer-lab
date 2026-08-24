@@ -1,0 +1,6 @@
+target/
+harness/harness
+harness/dumpscores
+__pycache__/
+*.pyc
+.scratch/

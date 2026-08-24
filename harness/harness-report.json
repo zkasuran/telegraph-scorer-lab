@@ -1,0 +1,297 @@
+{
+  "ck_step0.wasm": {
+    "metrics": {
+      "module": "ck_step0.wasm",
+      "comparable_cases": 40,
+      "wins": 27,
+      "ties": 12,
+      "losses": [
+        "gk-photosynthesis(tie)",
+        "gk-largest-ocean(tie)",
+        "fin-bearish(tie)",
+        "fin-rate-cut",
+        "weather-berlin(tie)",
+        "weather-rain(tie)",
+        "code-py-len(tie)",
+        "cve-lookup(tie)",
+        "research-synth(tie)",
+        "news-headline(tie)",
+        "sports-score(tie)",
+        "tvl-lookup(tie)",
+        "extract-field(tie)"
+      ],
+      "candidate_margin": 0.65,
+      "mean_good": 0.975,
+      "mean_bad": 0.325,
+      "worst_self_match": 1,
+      "score_stddev": 0.4799789024899355,
+      "min_case_margin": -1,
+      "per_case": {
+        "acad-search": [
+          1,
+          0
+        ],
+        "agent-task": [
+          1,
+          0
+        ],
+        "aidet-no": [
+          1,
+          0
+        ],
+        "aidet-yes": [
+          1,
+          0
+        ],
+        "code-git-undo": [
+          1,
+          0
+        ],
+        "code-py-len": [
+          1,
+          1
+        ],
+        "crypto-ticker": [
+          1,
+          0
+        ],
+        "cve-lookup": [
+          1,
+          1
+        ],
+        "deepfake-real": [
+          1,
+          0
+        ],
+        "extract-field": [
+          1,
+          1
+        ],
+        "fact-einstein-nobel": [
+          1,
+          0
+        ],
+        "fact-great-wall": [
+          1,
+          0
+        ],
+        "fact-vaccine-autism": [
+          1,
+          0
+        ],
+        "fin-bearish": [
+          1,
+          1
+        ],
+        "fin-rate-cut": [
+          0,
+          1
+        ],
+        "fx-pair": [
+          1,
+          0
+        ],
+        "geo-ip": [
+          1,
+          0
+        ],
+        "gk-capital-au": [
+          1,
+          0
+        ],
+        "gk-largest-ocean": [
+          1,
+          1
+        ],
+        "gk-photosynthesis": [
+          1,
+          1
+        ],
+        "gk-water-boil": [
+          1,
+          0
+        ],
+        "lang-gen": [
+          1,
+          0
+        ],
+        "moderation-safe": [
+          1,
+          0
+        ],
+        "news-headline": [
+          1,
+          1
+        ],
+        "num-continents": [
+          1,
+          0
+        ],
+        "num-http-teapot": [
+          1,
+          0
+        ],
+        "num-moon-landing": [
+          1,
+          0
+        ],
+        "num-speed-light": [
+          1,
+          0
+        ],
+        "ocr-digits": [
+          1,
+          0
+        ],
+        "research-synth": [
+          1,
+          1
+        ],
+        "sentiment-neg": [
+          1,
+          0
+        ],
+        "sports-score": [
+          1,
+          1
+        ],
+        "ssl-expired": [
+          1,
+          0
+        ],
+        "task-completion": [
+          1,
+          0
+        ],
+        "trans-es-morning": [
+          1,
+          0
+        ],
+        "trans-fr-thanks": [
+          1,
+          0
+        ],
+        "tvl-lookup": [
+          1,
+          1
+        ],
+        "urlscan-phish": [
+          1,
+          0
+        ],
+        "weather-berlin": [
+          1,
+          1
+        ],
+        "weather-rain": [
+          1,
+          1
+        ]
+      }
+    },
+    "stage1": [
+      {
+        "name": "empty answer scores exactly 0",
+        "ok": true,
+        "detail": "score=0.0000 err=\u003cnil\u003e"
+      },
+      {
+        "name": "whitespace-only answer scores exactly 0",
+        "ok": true,
+        "detail": "score=0.0000 err=\u003cnil\u003e"
+      },
+      {
+        "name": "perfect answer scores \u003e= 0.75 everywhere",
+        "ok": true,
+        "detail": "worst_self_match=1.0000"
+      },
+      {
+        "name": "self-match beats unrelated cross-match",
+        "ok": false,
+        "detail": "narrowest gap 0.0000 (fact-great-wall)"
+      },
+      {
+        "name": "78KB answer does not trap",
+        "ok": true,
+        "detail": "score=0.0000 err=\u003cnil\u003e"
+      },
+      {
+        "name": "oversized ground truth does not trap",
+        "ok": true,
+        "detail": "score=1.0000 err=\u003cnil\u003e"
+      },
+      {
+        "name": "emoji/CJK/RTL/invalid-UTF8 answer does not trap",
+        "ok": true,
+        "detail": "score=0.0000 err=\u003cnil\u003e"
+      },
+      {
+        "name": "non-text ground truth self-matches",
+        "ok": true,
+        "detail": "score=1.0000 err=\u003cnil\u003e"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "question-echo [near_zero]",
+        "ok": false,
+        "detail": "honest=1.0000 attack=1.0000"
+      },
+      {
+        "name": "shotgun-candidates [below_honest]",
+        "ok": false,
+        "detail": "honest=1.0000 attack=1.0000"
+      },
+      {
+        "name": "negation-insert [below_honest]",
+        "ok": false,
+        "detail": "honest=1.0000 attack=1.0000"
+      },
+      {
+        "name": "verdict-flip [near_zero]",
+        "ok": true,
+        "detail": "honest=1.0000 attack=0.0000"
+      },
+      {
+        "name": "direction-flip [below_honest]",
+        "ok": false,
+        "detail": "honest=0.0000 attack=1.0000"
+      },
+      {
+        "name": "number-swap [below_honest]",
+        "ok": false,
+        "detail": "honest=1.0000 attack=1.0000"
+      },
+      {
+        "name": "word-order-swap [below_honest]",
+        "ok": true,
+        "detail": "honest=1.0000 attack=0.0000"
+      },
+      {
+        "name": "stopword-spam [near_zero]",
+        "ok": true,
+        "detail": "honest=1.0000 attack=0.0000"
+      },
+      {
+        "name": "filler-padding [near_honest]",
+        "ok": true,
+        "detail": "honest=1.0000 attack=1.0000"
+      },
+      {
+        "name": "unicode-noise [near_honest]",
+        "ok": true,
+        "detail": "honest=1.0000 attack=1.0000"
+      },
+      {
+        "name": "gt-plus-dump [below_honest]",
+        "ok": true,
+        "detail": "honest=1.0000 attack=0.0000"
+      },
+      {
+        "name": "empty-ish [near_zero]",
+        "ok": true,
+        "detail": "honest=1.0000 attack=0.0000"
+      }
+    ]
+  }
+}
