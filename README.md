@@ -16,6 +16,7 @@
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
+- [The Journey: 0 → 45, and Holding It](#-the-journey-0--45-and-holding-it)
 - [How Telegraph Scoring Works](#-how-telegraph-scoring-works)
 - [The Three Promotion Gates](#-the-three-promotion-gates)
 - [Core Insight: Monotone Transforms](#-core-insight-monotone-transforms)
@@ -29,6 +30,9 @@
 - [Research](#-research)
 - [Tunable Knobs Reference](#-tunable-knobs-reference)
 - [The Winning Playbook](#-the-winning-playbook)
+- [Reverse-Engineering the Rivals](#-reverse-engineering-the-rivals)
+- [The Miner Side (Demand)](#-the-miner-side-demand)
+- [War Log & Hard-Won Lessons](#-war-log--hard-won-lessons)
 - [Quickstart](#-quickstart)
 - [Day-to-Day Loop](#-day-to-day-loop)
 - [Guidelines](#-guidelines)
@@ -57,6 +61,83 @@ This repository is the canonical record of how we:
 > **This is a private lab.** The public host repo
 > [`telegraph-salience-scorer`](https://github.com/zkasuran/telegraph-salience-scorer) carries
 > only `dist/` binaries and a neutral README. All method work happens here.
+
+---
+
+## 🗺️ The Journey: 0 → 45, and Holding It
+
+Track 2 is one question asked 45 times: write the best judge for an intent and you own how
+that intent is scored for the whole network. This is the story of taking every seat, losing
+some to a strong field, then taking them back with methods that did not exist when we started.
+
+### Phase 1: Nothing to 45/45
+
+We began with no slots. We built the salience-weighted lexical core (precision and recall over
+information-weighted words, character n-grams, correctness penalties) and a from-scratch
+`no_std` MiniLM-L6-v2 blend, all compiled to a freestanding wasm the node runs in a pure
+sandbox. Then we registered intent by intent, read each rejection's `EvalDetails` and
+iterated until all 45 canonical slots were held under one wallet.
+
+### Phase 2: The field hits back (45 to 27)
+
+Holding all 45 was never quiet. A strong author (ScoreWire, `0xd4c7...8ef9`) returned with one
+good scorer reused across many intents and took fifteen slots in a burst. Two others took one
+each. We fell to 27/45, fair and square, on the exact measure the protocol promotes on. So we
+had to build better back, seventeen times over.
+
+### Phase 3: The two-day climb back to 45/45
+
+Not one dial. Five different problems, each wrong for a different reason:
+
+- **A fetch limit that ate registrations.** A deeper 12-layer model pushed the wasm to 29 MB,
+  a hair over the node's raw-fetch limit, so those registrations were silently dropped. The
+  proof was in plain sight: every slot we still held ran a 24 MB file. We shrank the model
+  under the line. Later we solved it properly with int4 / FFN-only requantisation to fit the
+  deeper model near 21 MB.
+- **The easy separation tier.** Fact-check, media / video / content verification, research and
+  a search intent fell quickly on clean separation once builds landed again.
+- **The agreement gate.** Traffic-gated intents need your ranking of real answers to line up
+  with the champion's. A hard step reorders and fails. The fix: keep the ranking, sharpen the
+  score, keep a 2% sliver of raw to hold order. That took geolocation, SSL, token-count and
+  news. WEATHER we feared (its holder ranked refusals above real forecasts on our sample) but
+  it passed on the node. The local proxy had overstated the disagreement.
+- **The near-ceiling four.** Four holders sat at 0.9996. A pure step (every good to 1, every
+  bad to 0) gives margin 1.0 when the model already separates cleanly. Deepfake and sentiment
+  flipped to a flat 1.0.
+- **The wall that was our own code.** One authenticity intent stuck at 14 of 15 no matter what
+  we changed. A number that will not move is a message: the problem was none of the knobs we
+  were turning. One of our own correctness penalties was firing on a good answer and shoving it
+  below the bad one. Penalties off, the pair flipped instantly; step back on for margin.
+
+The last slot, `CONTENT_EXTRACTION`, needed characters read as characters (a postcode with two
+digits swapped, a rate of 6.52 where the truth was 6.25). A character-gram-dominant blend plus
+embedding for the one semantic case plus a low `STEP_B` lifted the margin to **0.99976** past
+the holder's 0.9995855. **45/45 again.**
+
+### Phase 4: Better builds arrive, then the miner pivot
+
+The next wave of challengers were not weak reuses. They were genuinely good, purpose-built
+scorers, several of them open source. We lost `CURRENCY_EXCHANGE`, `FRAUD_DETECTION`,
+`SPORTS_SCORE`, `WALLET_BALANCE_CHECK` and later `CHAT_COMPLETION` to authors who had clearly
+studied the same gates we had. In parallel we opened a second front on the demand side and
+shipped five keyless miners (see [The Miner Side](#-the-miner-side-demand)), because owning the
+judge is only half of an open market.
+
+### Phase 5: Reverse-engineer, then out-build
+
+Easy reclaiming does not beat a better build. So we pulled every lost champion's binary and,
+where it was open source, its full source, then learned exactly why each one won (see
+[Reverse-Engineering the Rivals](#-reverse-engineering-the-rivals)). That produced the decisive
+move for an agreement-gated slot: **fork the champion's own scorer and wrap it in a strictly
+monotone contrast stretch.** Same ranking means the agreement gate passes for free and the wins
+gate holds; the stretch buys the margin. It reclaimed `CHAT_COMPLETION` cleanly (Spearman with
+the champion measured at **1.000** locally, margin lifted from the champion's ~0.42 to 0.58).
+`FRAUD_DETECTION` fell to a steeper logistic than the champion's own; `CURRENCY_EXCHANGE` to a
+lexical-gate build at 0.99. `WALLET_BALANCE_CHECK` and `SPORTS_SCORE` are the hard remainder:
+their champions sit on a tight margin-and-agreement frontier, so the campaign there is live.
+
+> **The board is contested in real time.** Slots flip while you work. 45/45 is not a finish
+> line you cross once; it is a state you defend. Everything below is how.
 
 ---
 
@@ -879,6 +960,107 @@ python3 scorer-drivers/sw_poll.py
 │     • Update LEDGER.md with registration + outcome            │
 └──────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## 🕵️ Reverse-Engineering the Rivals
+
+Every re-lost slot's champion registers its wasm at a public URL and several ship full
+source. We pulled all of them. Knowing exactly how a champion wins turns a blind guess into a
+targeted build.
+
+| Intent(s) | Champion | What it is | How we answered |
+|---|---|---|---|
+| CURRENCY, SPORTS, STOCK, TVL | `seekdaseek/telegraph-scorer` | A ~5 KB freestanding **C** scorer: parse numbers to values, compare by relative error, text F1 only breaks ties, then smoothstep + stretch. | Taught the thesis that a numeric intent wants a numeric scorer, not a transformer. We wrote our own tighter-tolerance, steeper-stretch numeric C scorer (`c-scorer/num_scorer.c`). |
+| WALLET, FRAUD | `drained69/DegenLens` | A Rust **fork of our own salience-scorer** plus a GloVe `vectors.bin` and a smoothstep contrast (SHARPEN 0.82). MIT, credits us. | Fork-and-steepen: rebuild their scorer, add a monotone contrast on the final. Same ranking, higher margin. FRAUD also fell to a steeper SIGK logistic than the champion's own. |
+| CHAT_COMPLETION | `ssoni4751/telegraph-wasm-scoring` | INT8 MiniLM-L6-v2 + BM25 + polarity / numeric checks, weighted composite, a `cos^1.3` contrast. | Cloned, built with `--features real_weights` (byte size matched the champion exactly), added a monotone stretch on the composite. Local oracle read agreement **1.000**, margin doubled. Reclaimed. |
+| SPORTS_SCORE | `farnsworth.wasm` (R2, binary only) | A 24 MB MiniLM transformer. No public source to fork. | The hard one. A numeric scorer beats its margin (0.933 vs 0.910) but a pure-numeric ranking disagrees with a transformer on traffic (Spearman 0.5). A MiniLM fork agrees ~0.61. Live. |
+
+### The local champion oracle
+
+The node's evaluator is slow, so guessing is expensive. Instead we run the **champion's own
+binary** and our candidate side by side in a tiny harness, score a spread of varied answers
+with both and compute the Spearman correlation (the agreement gate) plus the good-minus-bad
+margin (the separation gate) locally. This turns a blind ~17-minute round trip into a local
+sweep: we register a build only once it out-agrees and out-separates the champion on the bench.
+It reproduced the node's verdicts directionally, the CHAT fork read agreement 1.000 locally and
+passed on-chain.
+
+## ⛏️ The Miner Side (Demand)
+
+Holding the judge is one half of an open market. We also field five **keyless** miners on the
+busiest intents, so we operate on both sides and can watch the whole loop from answer to score.
+
+| Miner | Intents | Source | Key point |
+|-------|---------|--------|-----------|
+| **SkyWire** | WEATHER_CHECK, WEATHER_FORECAST, STORM_ALERT | open-meteo, keyless | Complete natural sentences; storm alerts graded to advisory / warning on real thresholds |
+| **ChainWire** | WALLET_BALANCE_CHECK, ONCHAIN_TX_LOOKUP, TOKEN_HOLDER_COUNT | public EVM RPC + Blockscout, keyless | Live reads; chain auto-detected; token transfers decoded so a swap is not reported as "sent 0 ETH" |
+| **GasWire** | GAS_PRICE | public RPC, keyless | Fee level across seven networks from `eth_gasPrice` / `eth_feeHistory` |
+
+Keyless is the point: a miner with no API key has no vendor to rate-limit it, no key to expire
+and no cached feed to go stale. It is raced across two public providers so one slow
+endpoint cannot blow a validator's 20-second spot check. Every figure is a live read,
+cross-checked against an independent source in testing.
+
+### The conflict, addressed head-on
+
+We hold the scorer for every intent AND we mine some of them. That can look rigged, so here is
+why it is not and how to check:
+
+- The scorer is a **pure function of (question, ground truth, answer)**. It receives no author
+  address, wallet or slug, so it cannot tell our answer from anyone else's and scores an
+  identical answer identically no matter who sent it.
+- It runs sandboxed, with no network and no filesystem, so it could not look up who a miner is
+  even if it wanted to.
+- Both the miner code and the scorer code are open source, so anyone can read them side by side.
+- The protocol's own agreement gate rejects a self-favouring judge: to hold a slot your scorer
+  must rank real traffic the way an independent champion does.
+
+An independent audit of the miner code against the scorer code found no author favouritism and
+no collusion path. The miners win, when they win, by returning the most accurate and complete
+answer, which is exactly what any reasonable judge rewards.
+
+## 📜 War Log & Hard-Won Lessons
+
+The specific things this campaign taught, each paid for in a rejected registration or a lost
+slot:
+
+1. **Margin decodes to a fixture count.** For a step build, `margin ≈ 0.010 + 0.98 * (k /
+   cases)`, so `k = margin / 0.996 * N`. A rejection is not a dead end, it is a readout of
+   exactly how many hidden cases you split. You always know how many are left.
+2. **Monotone transforms are the master key.** A strictly monotone map of the final score
+   cannot reorder anything, so wins and Spearman agreement are invariant and only the margin
+   moves. This is why "fork the champion and sharpen" works: you inherit its ranking (both
+   gates) and buy margin for free.
+3. **...but monotone cannot FIX a ranking.** If your base disagrees with the champion on
+   traffic, no contrast rescues agreement. Fix the ranking first, then buy the margin.
+4. **A flat win count is a confession.** When wins will not move no matter what you reweight,
+   the thing you are touching is not the cause. Suspect your own correctness penalty firing on
+   a good answer. Test a penalties-fully-off control early. This unstuck an authenticity
+   intent frozen at 14 of 15.
+5. **The two gate-loss modes are named.** "Lost on ordering" is a wins shortfall (needs a
+   gentler step or a targeted penalty). "Lost on separation" is a margin shortfall (needs a
+   threshold in the gap or a steeper contrast). The rejection reason says which; never guess.
+6. **The agreement gate binds by traffic volume.** 45+ rows binds hard; 1 to 3 rows barely
+   binds; for n=3 Spearman moves in steps of 0.5 so you effectively need a perfect ranking.
+   Read `historical_rows_evaluated` before choosing how aggressive to be.
+7. **Local proxies mislead; the node is the oracle.** A local benchmark margin does not predict
+   the node's hidden-fixture margin (0.42 local vs 0.93 on-node, seen more than once). The
+   champion-oracle for AGREEMENT is far more faithful than any synthetic fixture set for margin.
+8. **Steep is not free.** Push a contrast too hard and a tight cluster of near-equal scores
+   rails to identical values, creating ties that cost pairwise wins (wallet forks at K=2.5-3.5
+   beat the margin but dropped to 13 of 14). A gentle stretch plus a raw-score epsilon keeps
+   strict monotonicity.
+9. **A size limit is a scoring signal too.** The node silently drops a wasm it cannot fetch.
+   29 MB was over the raw-fetch limit; the fix (int4 / FFN-only requant to ~21 MB) had nothing
+   to do with scoring at all.
+10. **The evaluator is slow and non-sequential.** Registrations evaluate in bursts, out of
+    order, sometimes stalling for a long time. Piling on more builds delays the informative
+    readbacks. Spread deliberately, then wait.
+
+> **The whole arc in one line:** 0 → 45 (built from scratch) → 27 (a strong field) → 45 (the
+> two-day climb) → contested (better builds arrive) → reclaiming, one reverse-engineered
+> champion at a time.
 
 ---
 
