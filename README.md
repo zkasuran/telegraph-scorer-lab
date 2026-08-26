@@ -64,7 +64,7 @@ This repository is the canonical record of how we:
 
 ---
 
-## 🗺️ The Journey: 0 → 45, and Holding It
+## 🗺 The Journey: 0 → 45, and Holding It
 
 Track 2 is one question asked 45 times: write the best judge for an intent and you own how
 that intent is scored for the whole network. This is the story of taking every seat, losing
@@ -173,7 +173,7 @@ Everything the module needs must be compiled in.
 
 ---
 
-## 🏛️ The Three Promotion Gates
+## 🏛 The Three Promotion Gates
 
 A challenger must pass **all three gates in order** to replace the incumbent champion:
 
@@ -255,7 +255,7 @@ cluster collapses into ties, destroying Spearman. The fix: keep a sliver of the 
 
 ---
 
-## 🏗️ Architecture
+## 🏗 Architecture
 
 ```
 telegraph-scorer-lab/
@@ -772,7 +772,7 @@ Per-intent exploration directories for the intents that needed the most work:
 
 ---
 
-## 🎛️ Tunable Knobs Reference
+## 🎛 Tunable Knobs Reference
 
 Every constant lives at the top of `module/src/lib.rs`. `build_xfmr.py` patches them from a
 JSON config per build.
@@ -963,7 +963,7 @@ python3 scorer-drivers/sw_poll.py
 
 ---
 
-## 🕵️ Reverse-Engineering the Rivals
+## 🕵 Reverse-Engineering the Rivals
 
 Every re-lost slot's champion registers its wasm at a public URL and several ship full
 source. We pulled all of them. Knowing exactly how a champion wins turns a blind guess into a
@@ -986,7 +986,7 @@ sweep: we register a build only once it out-agrees and out-separates the champio
 It reproduced the node's verdicts directionally, the CHAT fork read agreement 1.000 locally and
 passed on-chain.
 
-## ⛏️ The Miner Side (Demand)
+## ⛏ The Miner Side (Demand)
 
 Holding the judge is one half of an open market. We also field five **keyless** miners on the
 busiest intents, so we operate on both sides and can watch the whole loop from answer to score.
@@ -1064,7 +1064,7 @@ slot:
 
 ---
 
-## ⚖️ Guidelines
+## ⚖ Guidelines
 
 ### Repository Visibility
 - The public host repo **must stay public** — privating it 404s the node's fetch
