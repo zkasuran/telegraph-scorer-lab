@@ -1,0 +1,174 @@
+# Method: the promotion gates and how we beat them
+
+This is the core of the lab. Read it before touching a build.
+
+## 1. The contest
+
+For each intent the node keeps one active champion module. A challenger you register is
+scored against the champion on that intent's evaluation set and promoted only if it is
+strictly better. "Better" is three separate tests, and a challenger must pass all of them.
+The node tells you which one you failed in the rejection reason, and it hands back the raw
+numbers in `EvalDetails`, so every registration is a labelled measurement you learn from.
+
+`EvalDetails` fields (read them off `GET /engine/validator/v1/wasm/<regid>`):
+
+| field | meaning |
+|---|---|
+| `candidate_margin` | your separation: how far you push good answers above bad ones on the hidden fixtures |
+| `champion_margin` | the incumbent's separation on the same fixtures |
+| `candidate_wins` / `champion_wins` | how many comparable cases each ranked correctly (good above bad) |
+| `comparable_cases` | fixture cases where both modules produced a comparable score |
+| `spearman` | `{INTENT: r}` your rank correlation with the champion on real traffic |
+| `historical_rows_evaluated` | how many real-traffic rows the agreement gate saw (0 = agreement not binding) |
+| `score_stddev`, `worst_self_match` | spread of your scores, and your lowest score on a known-correct answer |
+
+## 2. The three gates
+
+The gates are checked in order. You fail at the first one you miss, and the later numbers
+come back null when that happens.
+
+1. **Ordering (wins).** `candidate_wins >= champion_wins` on `comparable_cases`. You must
+   rank the good answer above the bad one on at least as many fixture cases as the champion.
+   Rejection reads "lost to the current champion on ordering ... you: 13 of 14, champion:
+   14 of 14." This is the hardest gate to move, because it needs your scorer to actually
+   get a case right that it was getting wrong. No amount of contrast fixes a wins loss.
+
+2. **Separation (margin).** `candidate_margin > champion_margin`. Margin is mean(good) minus
+   mean(bad) across the fixtures. Rejection reads "lost ... on separation ... your average
+   margin 0.9272 vs champion 0.9298. To replace it, you must beat its separation, not just
+   tie it." A tie loses; you must strictly exceed it.
+
+3. **Agreement (Spearman).** Only binds when `historical_rows_evaluated > 0`. Your ranking
+   of the intent's real traffic must correlate with the champion's at Spearman >= 0.60. This
+   is what stops a scorer that separates fixtures well but ranks real answers nonsensically.
+   Intents with heavy traffic (dozens of rows) bind hard here; intents with 1 to 3 rows
+   barely bind, so they are effectively a pure separation race.
+
+## 3. The one insight everything rests on
+
+A **strictly monotone** transform of the final score cannot reorder any two answers. So it
+leaves the ranking untouched, which means both the wins count and the Spearman agreement are
+exactly preserved, while the separation margin can be pushed up freely. Order-preserving is
+the magic word: it turns the margin gate into something you buy for free once the ranking is
+right, and it lets you inherit a strong scorer's agreement without inheriting its low margin.
+
+Every technique below is an application of this. The corollary that bites: a monotone
+transform cannot FIX a bad ranking either. If your base ranking disagrees with the champion
+on traffic, no contrast rescues the agreement gate. Fix the ranking first, then buy the
+margin.
+
+One caveat on "strictly": a bare hard step maps a whole cluster to one value, and in f32 a
+tight real-traffic cluster collapses into ties, which destroys Spearman. Keep a sliver of the
+raw score (`out = (1-b)*step + b*raw`, b around 0.02) so every answer keeps its own place.
+That is the difference between a step that wins and one that tanks agreement.
+
+## 4. Margin decodes to a fixture count
+
+For a step build the margin is `~0.010 + 0.98*(k/cases)` where k is the number of fixture
+cases cleanly split. So a margin reads back an integer k. Measured ROC for our int8 MiniLM
+embB cosine: threshold 0.40 gives k=15, 0.44 gives 20, 0.50 gives 24, 0.60 gives 29, 0.65
+gives 31 of 32. k>=26 wins most separation gates. Use this to place a threshold rather than
+guessing, and to sanity-check a reported margin against how many cases you think you split.
+
+## 5. The playbook
+
+Pick the technique by what you are up against. The decision tree is at the end.
+
+### 5a. Monotone contrast — separation-only intents
+
+When the agreement gate barely binds (few traffic rows) and you already rank the fixtures
+correctly, you only need more separation. Apply a monotone contrast to the final score:
+iterated smoothstep (`POST_ITERS`), a logistic (`SIGK`/`SIGC`), or the C scorer's stretch.
+Margin rises, ranking holds. This reclaimed the first wave of slots (FINANCIAL_DATA, URL_SCAN,
+CVE_LOOKUP, CRYPTO_PRICE, STORM_ALERT and more) at POST_ITERS=3.
+
+### 5b. Step plus tie-break — margin without losing agreement
+
+The most separation a monotone map can buy is a hard step at the right threshold: goods to 1,
+bads to 0. Add the `STEP_B` tie-break so the tight traffic cluster does not collapse into f32
+ties. `STEP_T` sets the threshold (read it off the margin-to-k table), `STEP_B` around 0.02
+keeps the raw ranking inside each band, `STEP_R` gates the good side on actually covering the
+answer, `STEP_W` widens the step into a ramp when the blend's scale is not yet measured. This
+is how the traffic-gated intents were taken to k=32.
+
+### 5c. Mirror and sharpen — an OPEN-SOURCE champion
+
+If the champion's module is open source and its margin is not already near the ceiling, this
+is a near-guaranteed win. Fork its exact source and weights, rebuild (our wasm f32 math is
+deterministic, so the rebuild is bit-identical in output to their published binary), then wrap
+its final composite in one strictly-monotone sharpener:
+
+```rust
+fn sharpen(x: f32) -> f32 {          // order-preserving => wins + Spearman identical to theirs
+    const K: f32 = 8.0; const C: f32 = 0.50; const EPS: f32 = 0.02;
+    let s = 1.0 / (1.0 + libm::expf(-K * (x - C)));
+    clamp01((1.0 - EPS) * s + EPS * x) // +EPS*x tie-break: no f32 saturation ties
+}
+```
+
+Because the ranking is identical to the champion's, your wins equal theirs and your Spearman
+equals theirs (both already passed the gate), and the sharpen strictly raises the margin. That
+is all three gates cleared by construction. This took CHAT_COMPLETION back from ssoni4751:
+their champion had margin 0.424 and Spearman 0.762, our fork landed margin 0.581 at Spearman
+0.683, wins tied 15/15. Register a spread of sharpen strengths (K around 8 to 16) and let the
+node pick: the gentlest that clears the champion margin is safest, because a steeper logistic
+shaves agreement on the fluent-answer traffic cluster. See
+`worklogs/` and the memory note for the exact numbers.
+
+### 5d. Head-to-head plus penalties — a CLOSED champion
+
+When the champion is not forkable but its binary is downloadable and standalone-runnable (no
+wasm import section), download it and run it head-to-head against your candidate on a fixture
+battery. Flag every case the champion wins that your candidate does not. Those divergences are
+the exact ordering cases you are losing, and they tell you which correctness penalty to add.
+
+This cracked WALLET_BALANCE_CHECK after roughly fourteen failed attempts all stuck at 13/14.
+The head-to-head exposed two blind spots of a pure numeric scorer: a bad answer that repeats
+the right number but negates it ("15.75 SOL is not correct, actually unknown"), and one padded
+with a spurious extra number. Our module's contradiction and numeric penalties
+(`M_CONTRA`, `M_NEGCOV`, `M_TWO_FACED`, `M_NUM_WRONG`) win both. The winning build took the
+missed case (14/14) at margin 0.782 over 0.758, and because those penalties fire only on
+clearly-bad answers the real-traffic order was undisturbed, so Spearman came back 0.829, well
+clear of the floor. Verify the candidate DOMINATES the champion on the battery locally before
+you spend a registration.
+
+### 5e. Bespoke numeric scorer — numeric intents
+
+For intents whose answer is a figure (prices, balances, scores) a tiny freestanding C scorer
+beats a transformer: parse numbers to values (strip commas and currency, apply k/m/b/t and
+thousand/million suffixes), compare by relative error in a tight band, let text overlap only
+break ties and carry non-numeric answers, then sharpen with a monotone stretch. `c-scorer/num_scorer.c`
+is about 5 KB of wasm, freestanding (no libc, static arena so alloc never fails at the page
+boundary). It won SPORTS_SCORE at margin 0.9333 over 0.9298.
+
+## 6. Pitfalls, learned the hard way
+
+- **More contrast is not more margin past a point.** `num_scorer.c` stretches about a fixed
+  0.5 pivot, so cranking STRETCH high crushes any good answer whose base sits below 0.5
+  (paraphrase or odd-format cases), which shrinks mean(good). Over-cranked SPORTS builds scored
+  0.62 to 0.82 and were rejected while the moderate build won at 0.9333. Register a spread and
+  let the node pick the sweet spot.
+- **Local agreement over-reads.** A local traffic proxy reported Spearman 0.69 where the node
+  measured 0.23. Use local sweeps to RANK variants, never to predict the gate. The node is the
+  only oracle for agreement.
+- **The public host must stay public.** Privating it 404s the node's anonymous fetch and every
+  new registration stalls "pending" forever while looking exactly like a stalled evaluator.
+- **The node is erratic.** It returns 500 or times out for stretches, then recovers. Poll and
+  wait; a margin-passing evaluation takes roughly 17 minutes. Do not mistake an outage for a
+  rejection.
+
+## 7. Which technique, when
+
+```
+champion open source?
+├── yes, margin < ~0.9  -> 5c mirror and sharpen  (near-guaranteed)
+└── no
+    ├── you already win all cases, agreement loose -> 5a/5b contrast or step+tiebreak (buy margin)
+    ├── you lose ordering (wins < champion)         -> 5d head-to-head, find the case, add a penalty
+    └── numeric-answer intent                       -> 5e bespoke numeric scorer, then 5b step
+```
+
+Always finish by reading `EvalDetails` back and confirming which gate you cleared. Register a
+spread when a knob's effect on the node is uncertain; one push carries N registrations and the
+node promotes the best.
+

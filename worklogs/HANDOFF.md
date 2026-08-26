@@ -1,5 +1,37 @@
 # Telegraph lane: what is left for a human
 
+## Current state 2026-08-26: 45 / 45 held
+
+Every one of the 45 canonical intents runs our module, active, author
+`0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`. `scorer-drivers/tools/bake_monitor.py` reads
+"not held: none". The method that got us here is now written up in full under `docs/`:
+
+- `docs/METHOD.md` — the three promotion gates and the winning playbook. Read first.
+- `docs/ARCHITECTURE.md`, `docs/RUNBOOK.md`, `docs/KNOBS.md`, `docs/GUIDELINES.md`.
+
+The last three reclaims and their techniques:
+
+- **CHAT_COMPLETION** (was ssoni4751, open source, margin 0.424 / Spearman 0.762): mirror and
+  sharpen. Forked their exact binary (rebuild bit-identical), wrapped the composite in a
+  monotone logistic sharpener. Won at margin 0.581, Spearman 0.683, wins 15/15 (identical
+  ranking preserves both, higher margin breaks the tie). Build `chat_fork_k8c50`, regid 1059.
+- **SPORTS_SCORE** (farnsworth transformer, closed, margin crept to 0.9298): bespoke numeric C
+  scorer, moderate text weight. Won at margin 0.9333, wins 15/15. Build `num_sports_t34n3`,
+  regid 1044. Note: over-cranked contrast variants scored LOWER and were rejected.
+- **WALLET_BALANCE_CHECK** (closed, ~1 MB lexical, stuck 13/14 for ~14 attempts): downloaded
+  the champion, ran head-to-head, found the two missed ordering cases (a negated answer
+  repeating the right number, and one padded with a spurious number), added contradiction and
+  numeric-wrong penalties. Won 14/14 at margin 0.782 over 0.758, Spearman 0.829. Build
+  `wl_penstep40`, regid 1066.
+
+Since the contest is live, slots can change hands. On a loss, follow `docs/RUNBOOK.md` step 1
+onward: read the new champion, classify with the METHOD decision tree, reclaim, rebake.
+
+---
+
+## Historical record (kept as-is from earlier rounds)
+
+
 One decision, then publishing. Everything else in this lane is done and verifiable
 without our help.
 

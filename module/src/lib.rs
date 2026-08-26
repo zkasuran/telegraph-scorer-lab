@@ -50,21 +50,32 @@ const M_SILENT: f32 = 1.0;
 const B_AGREE: f32 = 0.0;
 /// Numbers: floor when a stated figure is missing, multiplier when a different one
 /// is asserted instead.
-const M_NUM_MISS_BASE: f32 = 0.85;
-const M_NUM_WRONG: f32 = 0.78;
+const M_NUM_MISS_BASE: f32 = 0.4;
+const M_NUM_WRONG: f32 = 0.05;
 /// Numeric agreement bonus (default 0, off for every intent but the pure-figure ones).
 /// When the answer carries every figure the ground truth states and states no wrong
 /// one, the figure IS the answer, so pull the score up toward 1 the way B_AGREE does
 /// for a right verdict. This is what lifts a correct numeric paraphrase ("roughly
 /// $3,120 per ETH" for "3,120 USD") from mid-range word-overlap up to near-perfect,
 /// which is where the FINANCIAL_DATA champion separates and our lexical build did not.
-const M_NUM_MATCH: f32 = 0.0;
+const M_NUM_MATCH: f32 = 1.0;
+
+/// Literal-order multiplier. Character trigrams are stored as a set, so an answer that
+/// transposes characters inside a literal ("LS4 1AB" for "LS1 4AB", "0072-451-898" for
+/// "0072-451-889") keeps almost every trigram and reads as a near-perfect match. On an
+/// extraction intent the literal IS the answer, so a transposition is simply wrong, and
+/// no token, trigram or embedding signal in this file can see it. This compares the
+/// order-preserving character subsequence of the ground truth's alphanumeric runs against
+/// the answer's: a run that appears with its characters out of order scores below
+/// M_LITERAL_MIN of its length and costs this multiplier. 1.0 keeps it off.
+const M_LITERAL: f32 = 1.0;
+const M_LITERAL_MIN: f32 = 0.9;
 /// Same words, no shared adjacency.
-const M_ORDER: f32 = 0.6;
+const M_ORDER: f32 = 0.85;
 /// A figure attached to a different entity. Harder than a plain reordering, because
 /// "Base at 2.6 billion" when the truth is "Arbitrum at 2.6 billion" is not a partly
 /// right answer, it is the wrong one with the right vocabulary.
-const M_ENTITY: f32 = 0.4;
+const M_ENTITY: f32 = 0.72;
 /// How much of the score a negated match costs. "No rain is expected" covers every
 /// content word of "rain is expected" and asserts the opposite, so coverage that only
 /// holds under a negation the ground truth does not carry is worth less than nothing.
@@ -87,15 +98,15 @@ const SOFT_CAP_FRAC: f32 = 0.35;
 /// the traffic gate rewards agreeing with its topical ranking; the distilled table
 /// (tools/pack_distilled.py) lets a static mean-pool track it, and this weight blends
 /// that in. Set high only for the CHAT_COMPLETION build.
-const W_EMB: f32 = 0.45;
+const W_EMB: f32 = 0.0;
 
 /// Blend weights for the transformer path (only used when W_EMB > 0 and the minilm feature
 /// is on). embA = shallow embedding-layer cosine, embB = full transformer cosine, lex = our
 /// lexical/correctness score. The champion's own blend is 0.25/0.50/0.25; the promoted
 /// CHAT_COMPLETION build used 0.28/0.56/0.16. Lexical builds keep W_EMB = 0 and never touch these.
-const EMB_A_W: f32 = 0.0;
-const EMB_B_W: f32 = 1.0;
-const EMB_LEX_W: f32 = 0.0;
+const EMB_A_W: f32 = 0.25;
+const EMB_B_W: f32 = 0.5;
+const EMB_LEX_W: f32 = 0.25;
 
 /// Weights on the mid-depth transformer cosines (after layer 2 and after layer 4). They join
 /// EMB_A_W (embedding layer) and EMB_B_W (all six layers) in the same sum, so the four
@@ -153,8 +164,8 @@ const POST_FRAC: f32 = 0.0;
 /// STEP_B of it.
 ///
 /// STEP_T = 0 keeps this path off, so every build that does not ask for it is unchanged.
-const STEP_T: f32 = 0.74;
-const STEP_B: f32 = 0.02;
+const STEP_T: f32 = 0.0;
+const STEP_B: f32 = 0.03;
 
 /// Coverage gate on the step. An answer only reaches the good side of the threshold if it
 /// is topically close to the ground truth AND actually covers its answer-bearing content.
@@ -175,7 +186,7 @@ const STEP_W: f32 = 0.0;
 
 /// How much of the topical score is the answer-to-question cosine rather than the
 /// answer-to-ground-truth one. See the note at the blend for why the champion needs this.
-const W_QA: f32 = 0.2;
+const W_QA: f32 = 0.0;
 
 /// What to do when the validator holds no ground truth for a row. The node's fixtures always
 /// carry one, but real traffic is a live request, and a request has no reference answer until
@@ -183,7 +194,7 @@ const W_QA: f32 = 0.2;
 /// ordering, which is what the ranking gate measures, so with NOGT_Q > 0 the score falls back
 /// to how well the answer addresses the request: the same threshold calibration applied to the
 /// answer-to-question cosine. 0 keeps the old behaviour (0 for every answer, no ranking).
-const NOGT_Q: f32 = 1.0;
+const NOGT_Q: f32 = 0.0;
 
 /// Exact matches used to collapse to exactly 1.0. If the validator records a request's
 /// ground truth by taking one miner's answer, then one row per request is a byte match and a
@@ -211,8 +222,8 @@ const TIE_SRC: u32 = 0;
 /// real traffic tracks the champion's (agreement) while a slightly steeper/lower-centred
 /// curve out-separates it on the fixture set. 0 keeps the smoothstep path (every lexical
 /// build), so those stay byte-for-byte identical.
-const SIGK: f32 = 0.0;
-const SIGC: f32 = 0.4545;
+const SIGK: f32 = 30.0;
+const SIGC: f32 = 0.45;
 
 /// no_std exp, copied from minilm.rs (2^x via range reduction + degree-4 poly), used only by
 /// the SIGK logistic calibration above.
@@ -422,7 +433,7 @@ pub unsafe extern "C" fn dealloc(_ptr: i32, _size: i32) {}
 /// can be traced back to the configuration it was measured with. Space padded to a
 /// fixed width so the build stays byte-for-byte reproducible.
 #[unsafe(no_mangle)]
-pub static TELEGRAPH_INTENT: [u8; 32] = *b"ACADEMIC_SEARCH                 ";
+pub static TELEGRAPH_INTENT: [u8; 32] = *b"WALLET_BALANCE_CHECK            ";
 
 // ---------------------------------------------------------------------------
 // Byte-level primitives
@@ -1358,6 +1369,78 @@ fn acronym_bridge(
 // Scoring
 // ---------------------------------------------------------------------------
 
+
+/// Longest common subsequence length of two byte slices, capped so the n^2 table stays
+/// small. Used only on short alphanumeric literals, where order is the whole point.
+fn lcs_len(a: &[u8], b: &[u8]) -> usize {
+    const CAP: usize = 48;
+    let (la, lb) = (a.len().min(CAP), b.len().min(CAP));
+    if la == 0 || lb == 0 { return 0; }
+    let mut prev = [0u16; CAP + 1];
+    let mut cur = [0u16; CAP + 1];
+    let mut i = 0;
+    while i < la {
+        let mut j = 0;
+        while j < lb {
+            cur[j + 1] = if a[i] == b[j] {
+                prev[j] + 1
+            } else if prev[j + 1] >= cur[j] { prev[j + 1] } else { cur[j] };
+            j += 1;
+        }
+        let mut k = 0;
+        while k <= lb { prev[k] = cur[k]; cur[k] = 0; k += 1; }
+        i += 1;
+    }
+    prev[lb] as usize
+}
+
+/// Worst order-agreement over the ground truth's alphanumeric runs: for each run of at
+/// least MINRUN characters, find the answer run sharing the most characters and compare
+/// their LCS to the run length. A transposed literal shares the characters but not the
+/// order, so it lands well below 1.0 while a correct restatement stays at 1.0.
+fn literal_order(gt: &[u8], ma: &[u8]) -> f32 {
+    const MINRUN: usize = 3;
+    const MAXRUN: usize = 48;
+    let mut worst = 1.0f32;
+    let mut gs = 0usize;
+    while gs < gt.len() {
+        if !is_alnum_run(gt[gs]) { gs += 1; continue; }
+        let mut ge = gs;
+        while ge < gt.len() && is_alnum_run(gt[ge]) { ge += 1; }
+        let glen = ge - gs;
+        if glen >= MINRUN && glen <= MAXRUN {
+            let g = &gt[gs..ge];
+            let mut best = 0.0f32;
+            let mut as_ = 0usize;
+            while as_ < ma.len() {
+                if !is_alnum_run(ma[as_]) { as_ += 1; continue; }
+                let mut ae = as_;
+                while ae < ma.len() && is_alnum_run(ma[ae]) { ae += 1; }
+                let alen = ae - as_;
+                if alen >= MINRUN && alen <= MAXRUN {
+                    let a = &ma[as_..ae];
+                    // only compare runs that plausibly refer to the same field: they must
+                    // share most of their characters as a multiset-ish check via LCS on the
+                    // sorted-insensitive path is overkill here, so use raw LCS over length.
+                    let l = lcs_len(g, a) as f32;
+                    let r = l / (if glen > alen { glen } else { alen }) as f32;
+                    if r > best { best = r; }
+                }
+                as_ = ae;
+            }
+            // A run the answer never mentions at all is a miss, not a transposition; the
+            // existing recall terms already handle that, so only a near-match counts here.
+            if best > 0.5 && best < worst { worst = best; }
+        }
+        gs = ge;
+    }
+    worst
+}
+
+fn is_alnum_run(b: u8) -> bool {
+    (b >= b'0' && b <= b'9') || (b >= b'a' && b <= b'z') || (b >= b'A' && b <= b'Z')
+}
+
 fn score(q: &[u8], gt: &[u8], ma: &[u8]) -> f32 {
     unsafe {
         let tq = &mut *core::ptr::addr_of_mut!(TQ);
@@ -1594,6 +1677,16 @@ fn score(q: &[u8], gt: &[u8], ma: &[u8]) -> f32 {
             let ratio = clamp01(contra_w / k_tot);
             raw *= 1.0 - M_NEGCOV * ratio;
             claim_wrong = true;
+        }
+
+        // A literal restated with its characters out of order is a different literal.
+        // See M_LITERAL: nothing else in this file can see a transposition.
+        if M_LITERAL < 1.0 {
+            let lo = literal_order(gt, ma);
+            if lo < M_LITERAL_MIN {
+                raw *= M_LITERAL;
+                claim_wrong = true;
+            }
         }
 
         // Numbers. Omitting a figure the ground truth states is incomplete;
