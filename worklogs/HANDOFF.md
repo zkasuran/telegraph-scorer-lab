@@ -1,12 +1,12 @@
 # Telegraph lane: what is left for a human
 
-## Current state 2026-08-27: 45 / 45 held (re-won after four losses)
+## Current state 2026-08-27: 45 / 45 held (re-won after five losses)
 
 Every one of the 45 canonical intents runs our module, active, author
 `0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`, verified by reading every `/intents/<id>` back
 (not the cached address list). `scorer-drivers/tools/bake_monitor.py` reads "not held: none".
 
-On 2026-08-27 four slots had been retaken by stronger rival builds and were won back the same
+On 2026-08-27 five slots had been retaken by stronger rival builds and were won back the same
 day. The techniques are now written up in `docs/METHOD.md` (gate facts in 2a, fork-and-stretch
 in 5c, the three-band step in 5f) and the knobs in `docs/KNOBS.md`:
 
@@ -26,6 +26,11 @@ in 5c, the three-band step in 5f) and the knobs in `docs/KNOBS.md`:
   ordered by character trigrams (`TRI_FLOOR=1e-9, TRI_SRC=2`) so real traffic keeps a defined
   ranking. Margin 1.0, Spearman 0.728. Active reg 1286. This one took a probe ladder: the node
   reports each `TRI_SRC` signal's own agreement, and trigrams (0.728) beat the blend (0.363).
+- **CHAT_COMPLETION** (a new author 0x6981b47b running ssoni4751's open-source module, margin
+  0.634 / Spearman 0.619 / 143 real rows): mirror-and-sharpen (5c). Rebuilt ssoni4751 with
+  `--features real_weights`, confirmed identical scoring, wrapped its composite in a monotone
+  logistic sharpen (`STRETCH_K`/`STRETCH_C`/`STRETCH_EPS`). Registered a K/C spread; the node
+  promoted K=10 C=0.50 at margin 0.634 -> 0.820, wins 15/15, Spearman 0.619 inherited. Reg 1295.
 
 Two things that made the difference and are now fixed for next time:
 - `reclaim.py:live_champ()` reads the CURRENT champion's margin off `/intents/<id>`. The old

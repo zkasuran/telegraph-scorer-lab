@@ -57,9 +57,12 @@ This repository is the canonical record of how we:
 
 **Current status: 45 / 45 canonical intents held** (as of 2026-08-27) by wallet
 `0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`, verified by reading every `/intents/<id>`
-back. Four slots (AI_TEXT_DETECTION, CVE_LOOKUP, FACT_CHECK, GAME_RESULT) had been retaken by
-stronger rival builds and were won back the same day: see [The Winning Playbook](#-the-winning-playbook)
-5c/5f and the 2026-08-27 entry in `worklogs/LEDGER.md`.
+back. Five slots were retaken by stronger rival builds and won back the same day:
+AI_TEXT_DETECTION, CVE_LOOKUP, FACT_CHECK and GAME_RESULT in the first pass, then
+CHAT_COMPLETION when a new author took it with ssoni4751's module (reclaimed by
+mirror-and-sharpen, margin 0.634 -> 0.820, active reg 1295). See
+[The Winning Playbook](#-the-winning-playbook) 5c/5f and the 2026-08-27 entries in
+`worklogs/LEDGER.md`.
 
 > **This is a private lab.** The public host repo
 > [`telegraph-salience-scorer`](https://github.com/zkasuran/telegraph-salience-scorer) carries
