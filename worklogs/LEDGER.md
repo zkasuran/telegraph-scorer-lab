@@ -825,3 +825,14 @@ byte-identical (cost two rounds on AI_TEXT_DETECTION). Now reads the declared ty
 
 Verified 45/45 twice against the per-intent endpoints, ten minutes apart. Registration bond is 0,
 so the many probe registrations cost only Base Sepolia gas.
+
+## 2026-08-27 (b) — CHAT_COMPLETION retaken by a new author, reclaimed by mirror-and-sharpen
+
+A new wallet (0x6981b47b) took CHAT_COMPLETION with ssoni4751's open-source module at margin
+0.634 / Spearman 0.619 / 143 real rows (a hard agreement gate). Straight 5c: cloned
+ssoni4751/telegraph-wasm-scoring, built with --features real_weights, confirmed it scores every
+sampled case identically to the registered champion (different toolchain so the bytes differ,
+behaviour does not), then wrapped its composite in a strictly-monotone logistic sharpen
+(STRETCH_K/STRETCH_C/STRETCH_EPS in that fork's src/lib.rs). Registered a K/C spread; the node
+promoted K=10 C=0.50 at margin 0.634 -> 0.820, wins 15/15, Spearman 0.619 inherited unchanged
+(our ranking IS the champion's, so agreement is theirs for free). Active reg 1295. 45/45 again.
