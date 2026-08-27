@@ -130,6 +130,7 @@ Same ranking = agreement passes free + wins hold; the stretch buys the margin.
 
 - CHAT\_COMPLETION reclaimed (Spearman **1.000** locally, margin lifted 0.42 → 0.58)
 - FRAUD\_DETECTION fell to a steeper logistic
+- CURRENCY\_EXCHANGE fell to a lexical-gate build at margin 0.99
 - CVE\_LOOKUP / FACT\_CHECK / GAME\_RESULT fell to pivot-aware stretches
 - WALLET\_BALANCE\_CHECK won with targeted penalties (14/14 at margin 0.782)
 
@@ -183,7 +184,7 @@ A challenger must pass **all three gates in order** to replace the incumbent:
 <tr>
 <td>
 
-### 1️⃣ Ordering (Wins)
+**1️⃣ Ordering (Wins)**
 
 </td>
 <td>
@@ -198,7 +199,7 @@ candidate_wins >= champion_wins
 <tr>
 <td>
 
-### 2️⃣ Separation (Margin)
+**2️⃣ Separation (Margin)**
 
 </td>
 <td>
@@ -218,7 +219,7 @@ _(strict inequality)_
 <tr>
 <td>
 
-### 3️⃣ Agreement (Spearman ρ)
+**3️⃣ Agreement (Spearman ρ)**
 
 </td>
 <td>
@@ -617,12 +618,22 @@ reg_batch.py ──────────────────────�
   • Registers each module on-chain (one tx per file)
 ```
 
+### Named Variants (`variants.py`)
+
+| Preset | Description |
+|--------|-------------|
+| `rawB` | Pure embB (full transformer cosine) |
+| `rawR` / `rawRp` | Champion-mimic blend (with penalties) |
+| `rawG35` / `rawG35p` | Blend + lexical gate (with penalties) |
+| `rawLex` | Lexical only (no transformer) |
+| `PEN` | All correctness penalties enabled |
+
 ### Driver Scripts
 
 | Script | Purpose |
 |--------|---------|
 | `build_xfmr.py` | Single build entry point — patch, build, output to `dist/` |
-| `variants.py` | Named full configs: rawB, rawR, rawG35p, PEN sets |
+| `variants.py` | Named full configs (see table above) |
 | `deploy.py` | Low-level on-chain `registerWasm` (wallet key → tx) |
 | `reg_batch.py` | **The workhorse** — host + verify + register N modules in one push |
 | `reg_xfmr.py` | Single-file register path (large builds) |
@@ -853,7 +864,7 @@ For a step build: `margin ≈ 0.010 + 0.98 × (k / cases)`
 
 ---
 
-## 🕵️ Reverse-Engineering the Rivals
+## 🕵 Reverse-Engineering the Rivals
 
 Every lost slot's champion registers its wasm at a public URL. We pulled all of them.
 
