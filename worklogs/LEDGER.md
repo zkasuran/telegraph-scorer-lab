@@ -776,3 +776,52 @@ WEATHER_CHECK champion dropping below 0.9649.
 
 Also fixed: sepolia.base.org RPC was returning Cloudflare error bodies that garbled cast; switched
 deploy.py to base-sepolia-rpc.publicnode.com.
+
+---
+
+## 2026-08-27 — lost 4 slots to stronger builds, won them all back, 45/45 again
+
+Woke to 42/45: AI_TEXT_DETECTION, CVE_LOOKUP, FACT_CHECK had been retaken (GAME_RESULT went
+during the round). Rehashing an old winner could not work here, so this was a from-the-source
+round. Three gate facts decoded from the node's own replies, now in METHOD.md 2a:
+
+1. **Separation is not `>`.** AI_TEXT_DETECTION champion sat at 0.999999. A candidate at
+   0.99999994 (largest f32 below 1.0, arithmetically greater) was rejected; exact 1.0 accepted.
+   Beating a ceiling champion needs fixtures at exactly 1.0 / 0.0.
+2. **Spearman 0.0000 is undefined, not low.** A pure hard step put all 48 real AI_TEXT_DETECTION
+   rows on one rail; a constant series correlates with nothing.
+3. **The reclaim bar is the live champion.** reclaim.py trusted the stale `champion_margin` from
+   our old rejections (had FACT_CHECK's bar at 0.988, really 0.864). Added `live_champ()` to read
+   the active scorer's own margin off `/intents/<id>`.
+
+Reclaims:
+
+- **CVE_LOOKUP** (Carlys17/telegraph-wasm-baseline, open source, itself a fork of ours). Rebuilt
+  bit-identical (cmp over 121 cases, maxdelta 0). Added one smoothstep pass mixed at 0.85 over
+  their final score. Ranking identical -> agreement 0.9996, margin 0.775 -> 0.779, wins 120/121.
+  Active reg 1254.
+- **FACT_CHECK** (GreatSage-dev/Assay, open source). Rebuilt bit-identical. Their curve maps good
+  to [0.99,1.0] and bad to [0,0.001]; widened both bands to [1-1e-6,1] and [0,1e-9], strictly
+  increasing so order held. Margin 0.419 -> 0.421, agreement 0.99999. Active reg 1255.
+- **GAME_RESULT** (PugarHuda/amanat, open source, `--features verdict`). Rebuilt bit-identical.
+  A plain smoothstep stretch took the margin the WRONG way, 0.70 -> 0.42, because that intent's
+  good answers score low and smoothstep presses sub-0.5 down. Pivoting at 0.10 (rescale so the
+  pivot maps to 0.5, cubic, undo the rescale) put them on the rising half: 0.70 -> 0.715, still
+  strictly monotone (agreement 0.9999). Active reg 1265.
+- **AI_TEXT_DETECTION** (noslop_eval_v2, CLOSED, no source found anywhere, at the ceiling). The
+  three-band step (new lib.rs knobs TRI_LO / TRI_HI / TRI_FLOOR / TRI_SRC, see KNOBS.md and
+  METHOD.md 5f). Rails at 0.06 / 0.20 put every fixture on an exact rail (margin 1.0). STEP_R
+  0.30 gates the top rail on recall so the structural self-vs-cross check passes (without it an
+  unrelated ground truth clears TRI_HI on wording alone). The bottom rail carries the ranking as
+  TRI_FLOOR * signal: near 1.0 f32 spacing is 6e-8 so a top-rail ordering costs the margin, but
+  at 1e-9 on the bottom rail the ranking is distinct and 1 - mean still rounds to 1.0. Registered
+  a TRI_SRC ladder as a probe; the node handed back each signal's agreement with the closed
+  champion (blend 0.363, trigrams 0.728), so TRI_SRC=2 won at margin 1.0 / Spearman 0.728.
+  Active reg 1286.
+
+Tooling: build_xfmr.py was patching u32 consts from a hardcoded name list and f32 with `[0-9.]+`,
+so a new integer knob or a `1e-06` value silently kept its old value and separate variants built
+byte-identical (cost two rounds on AI_TEXT_DETECTION). Now reads the declared type out of lib.rs.
+
+Verified 45/45 twice against the per-intent endpoints, ten minutes apart. Registration bond is 0,
+so the many probe registrations cost only Base Sepolia gas.

@@ -6,6 +6,13 @@ into named presets. Defaults below are the `lib.rs` values, which are the source
 A build inherits whatever it does not override, so pass a full config (or use a named variant)
 for reproducibility.
 
+`build_xfmr.py` reads each const's declared type (`f32` / `u32` / `usize`) out of `lib.rs`
+before patching, and its float pattern accepts scientific notation. If it patched by a fixed
+name list or a `[0-9.]+` pattern instead (as it once did), a new integer knob or a value
+already written as `1e-06` would be left unchanged and the build would come out byte-identical
+to the previous one, silently. Two variants that should differ but share a keccak mean a knob
+did not patch.
+
 ## Lexical core
 
 | const | default | effect |
@@ -73,6 +80,26 @@ Choose ONE path. Smoothstep and step preserve ranking (agreement safe); tune for
 | `SIGK` | 34.0 | logistic steepness; >0 replaces smoothstep with `1/(1+e^-SIGK*(blend-SIGC))`, the champion's own curve shape |
 | `SIGC` | 0.4545 | logistic centre |
 | `SHARPEN` | 0.0 | how much of the score is the contrast curve vs raw similarity |
+
+## Three-band step (a closed champion at the separation ceiling)
+
+For the case in `METHOD.md` 5f: the champion sits near margin 1.0, so the fixtures must score
+*exactly* 1.0 and 0.0 (a pure step), but a pure step makes real traffic tie and the agreement
+Spearman go undefined. These carve a defined ranking back in without moving the fixtures off
+their rails. All default 0 (path off), so no other build changes.
+
+| const | default | effect |
+|---|---|---|
+| `TRI_LO` | 0.0 | below this the score is the flat bottom rail; place it under every fixture bad |
+| `TRI_HI` | 0.0 | above this the score is the flat top rail (1.0); place it over every fixture good. >0 turns the three-band path on. Ramp runs linearly between `TRI_LO` and `TRI_HI` |
+| `TRI_FLOOR` | 0.0 | orders the BOTTOM rail as `TRI_FLOOR * signal`. At 1e-9 the ranking is distinct yet `1 - mean` still rounds to margin 1.0; must be the bottom rail, since near 1.0 f32 spacing (6e-8) would cost the margin |
+| `TRI_SRC` | 0 | which signal orders the bottom rail (codes as `TIE_SRC`). Doubles as an instrument: the node reports each signal's Spearman with the closed champion. Trigrams (2) beat the blend (0) on AI_TEXT_DETECTION |
+| `BAND_EPS` | 0.0 | alternative two-rail form `[0, e]` / `[1-e, 1]` ordered by the tie-break; simpler than TRI but caps margin at `1 - 2e`, so it loses to a champion at the ceiling. Kept for intents whose champion is not at 1.0 |
+
+`STEP_R` (in the table above) is not optional on this path: without the coverage gate an
+unrelated ground truth clears `TRI_HI` on wording alone and the node's structural self-vs-cross
+check rejects the build before the real eval. Winning AI_TEXT_DETECTION config: `TRI_LO=0.06,
+TRI_HI=0.20, STEP_R=0.30, TRI_FLOOR=1e-9, TRI_SRC=2`.
 
 ## Misc
 

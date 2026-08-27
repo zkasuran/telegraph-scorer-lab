@@ -41,6 +41,41 @@ def node_regs():
     return by
 
 
+def kec(s):
+    from Crypto.Hash import keccak as _k
+    h = _k.new(digest_bits=256)
+    h.update(s.encode())
+    return h.hexdigest()
+
+
+def live_champ(intent):
+    """The bar to beat, read off the CURRENT champion rather than inferred.
+
+    An old rejection of ours records the champion_margin as it stood when that
+    registration was evaluated, which is stale in both directions: the champion may
+    have been replaced by a weaker one (so we skip an intent we could take) or by a
+    stronger one (so we burn a registration that cannot win). The per-intent endpoint
+    names the active scorer, and its own candidate_margin is the separation it holds
+    the slot with, so that is the real bar. Returns (margin, regid, author) or
+    (None, None, None) when the node has no active scorer for the intent.
+    """
+    r = run(["curl", "-s", "--max-time", "30", f"{NODE}/engine/validator/v1/intents/{kec(intent)}"])
+    try:
+        d = json.loads(r.stdout)
+    except Exception:
+        return (None, None, None)
+    active = [s for s in d.get("wasm", []) if str(s.get("status", "")).lower() == "active"]
+    if not active:
+        return (None, None, None)
+    rid = active[0].get("registration_id")
+    r2 = run(["curl", "-s", "--max-time", "30", f"{NODE}/engine/validator/v1/wasm/{rid}"])
+    try:
+        w = (json.loads(r2.stdout) or {}).get("wasm", {})
+    except Exception:
+        return (None, rid, None)
+    return (ed_of(w).get("candidate_margin"), rid, w.get("AuthorAddress"))
+
+
 def ed_of(reg):
     ed = reg.get("EvalDetails")
     if isinstance(ed, str):
@@ -151,7 +186,13 @@ def reclaim(intent, send, by=None):
     if any(r.get("ActivationStatus") == "active" for r in regs):
         print(f"{intent}: already held (active)"); return "held"
     champs = [ed_of(r).get("champion_margin") for r in regs if ed_of(r).get("champion_margin") is not None]
-    cur_champ = max(champs) if champs else 0.0
+    stale = max(champs) if champs else 0.0
+    # Prefer the live champion's own separation over the stale figure our old rejections
+    # recorded. Fall back to the stale max only when the node has no active scorer to read.
+    live, champ_reg, champ_author = live_champ(intent)
+    cur_champ = live if live is not None else stale
+    if live is not None and abs(live - stale) > 1e-6:
+        print(f"{intent}: live champion bar {live:.6f} (reg{champ_reg}) replaces stale {stale:.6f}")
     winners = [r for r in regs if passed(r, cur_champ)]
     if not winners:
         print(f"{intent}: no binary of ours beats the current champion ({cur_champ:.4f}) — skipping (rival champion / never won)")

@@ -20,9 +20,7 @@ OUT = os.path.join(ROOT, "dist", "xfmr")
 def patch(intent, values):
     src = open(LIB).read()
     for name, val in values.items():
-        if name in ("POST_ITERS", "TIE_SRC", "STEP_SHARP"):
-            src, n = re.subn(rf"const {name}: u32 = \d+;", f"const {name}: u32 = {int(val)};", src)
-        elif name in ("TOK_SPAN", "MAXTOK"):
+        if name in ("TOK_SPAN", "MAXTOK"):
             # these live in minilm.rs and are usize
             mp = os.path.join(ROOT, "module", "src", "minilm.rs")
             msrc = open(mp).read()
@@ -30,10 +28,23 @@ def patch(intent, values):
             if n == 1:
                 open(mp, "w").write(msrc)
             continue
+        # Read the declared type out of the source instead of keeping a list of which
+        # consts are integers. A name missing from that list used to fall through to the
+        # f32 pattern, miss, and leave the knob at its previous value, so the build was a
+        # silent no-op and three "different" variants came out byte-identical.
+        decl = re.search(rf"const {name}: (f32|u32|usize) = ", src)
+        if not decl:
+            print(f"  (skip {name}: const not in lib.rs)")
+            continue
+        ty = decl.group(1)
+        if ty == "f32":
+            rhs = str(val)
+            src, n = re.subn(rf"const {name}: f32 = [-+0-9.eE]+;", f"const {name}: f32 = {rhs};", src)
         else:
-            src, n = re.subn(rf"const {name}: f32 = [0-9.]+;", f"const {name}: f32 = {val};", src)
+            src, n = re.subn(rf"const {name}: {ty} = \d+;", f"const {name}: {ty} = {int(val)};", src)
         if n != 1:
-            print(f"  (skip {name}: const not in lib.rs)"); continue
+            print(f"  (skip {name}: could not patch {ty} const)")
+            continue
     padded = intent.ljust(32)
     src, n = re.subn(r'pub static TELEGRAPH_INTENT: \[u8; 32\] = \*b"[^"]{32}";',
                      f'pub static TELEGRAPH_INTENT: [u8; 32] = *b"{padded}";', src)

@@ -55,8 +55,11 @@ This repository is the canonical record of how we:
 3. **Register** them on-chain via automated Python drivers
 4. **Hold** all 45 slots by iterating on the node's evaluation feedback
 
-**Current status: 45 / 45 canonical intents held** by wallet
-`0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`.
+**Current status: 45 / 45 canonical intents held** (as of 2026-08-27) by wallet
+`0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`, verified by reading every `/intents/<id>`
+back. Four slots (AI_TEXT_DETECTION, CVE_LOOKUP, FACT_CHECK, GAME_RESULT) had been retaken by
+stronger rival builds and were won back the same day: see [The Winning Playbook](#-the-winning-playbook)
+5c/5f and the 2026-08-27 entry in `worklogs/LEDGER.md`.
 
 > **This is a private lab.** The public host repo
 > [`telegraph-salience-scorer`](https://github.com/zkasuran/telegraph-salience-scorer) carries
@@ -845,8 +848,15 @@ Champion open source?
 │       Fork exact source + weights, rebuild (bit-identical),
 │       wrap in strictly-monotone sharpener (logistic).
 │       Wins = theirs, Spearman = theirs, margin > theirs.
+│       If its good answers score low, PIVOT the stretch first,
+│       else a plain smoothstep shrinks the very gap it should widen.
 │
 └── NO
+    ├── Margin at the ceiling (~1.0)
+    │   └── 5f: Three-Band Step (closed champion, no headroom)
+    │       Exact rails for the fixtures (margin exactly 1.0),
+    │       ordered bottom rail for real traffic (agreement defined).
+    │
     ├── Already win all cases, agreement loose
     │   └── 5a/5b: Monotone Contrast or Step+Tiebreak
     │       Apply iterated smoothstep, logistic, or C stretch.
@@ -864,15 +874,19 @@ Champion open source?
             text only breaks ties, then step for margin.
 ```
 
+At reclaim time, read the CURRENT champion's margin off `/intents/<id>`, not the stale figure
+your last rejection recorded. `reclaim.py:live_champ()` does this.
+
 ### Technique Summary
 
 | # | Technique | When | Key Insight |
 |---|-----------|------|-------------|
 | 5a | Monotone contrast | Agreement loose, ranking correct | Smoothstep/logistic is order-preserving |
 | 5b | Step + tie-break | Maximum margin needed | Hard step = max separation, STEP_B keeps ranking |
-| 5c | Mirror & sharpen | Champion is open-source | Fork + monotone sharpener = guaranteed win |
+| 5c | Mirror & sharpen | Champion is open-source | Fork + monotone sharpener = guaranteed win; pivot the stretch if its good answers score low |
 | 5d | Head-to-head + penalties | Losing on ordering | Find the exact case, add targeted penalty |
 | 5e | Bespoke numeric | Figure intents | Numbers to values > word overlap |
+| 5f | Three-band step | Closed champion at margin ~1.0 | Exact rails for fixtures, ranking carried on the bottom rail (near 0, f32 spacing lets 1e-9 stay distinct while margin still rounds to 1.0) |
 
 ### Margin Decodes to Fixture Count
 

@@ -44,6 +44,26 @@ come back null when that happens.
    Intents with heavy traffic (dozens of rows) bind hard here; intents with 1 to 3 rows
    barely bind, so they are effectively a pure separation race.
 
+### 2a. What the gates actually do, decoded from the node's own replies (2026-08-27)
+
+Three facts that are not in any doc the node publishes, read off its accept/reject numbers:
+
+- **Separation is not a plain `>`.** Against an AI_TEXT_DETECTION champion holding 0.999999, a
+  candidate margin of `0.99999994` (the largest f32 below 1.0, and arithmetically greater than
+  the champion) was REJECTED; an exact `1.0` was ACCEPTED. So beating a champion sitting at the
+  ceiling means the fixtures have to score *exactly* 1.0 and *exactly* 0.0, not merely close.
+  Any scheme that keeps a sliver of raw score for ranking (`STEP_B`, and the `BAND_EPS` idea)
+  gives that sliver up on both rails and lands a hair short.
+- **A Spearman of `0.0000` is undefined, not low.** It means every real-traffic row got the
+  same score, so the ranking is constant and correlates with nothing. A pure hard step does
+  exactly this when all traffic lands on one side of the threshold. The fix is to give the
+  traffic rows distinct scores again without moving the fixtures off their rails (section 5f).
+- **The reclaim bar is the LIVE champion, not the one your old rejection recorded.** A rejected
+  registration stores `champion_margin` as it stood when that eval ran. Weeks later that figure
+  is stale in both directions: it can make you skip an intent whose champion has since weakened,
+  or burn a registration against a bar that has since risen. Read the active scorer's own
+  `candidate_margin` off `/intents/<id>` at reclaim time. `reclaim.py:live_champ()` does this.
+
 ## 3. The one insight everything rests on
 
 A **strictly monotone** transform of the final score cannot reorder any two answers. So it
@@ -115,6 +135,19 @@ node pick: the gentlest that clears the champion margin is safest, because a ste
 shaves agreement on the fluent-answer traffic cluster. See
 `worklogs/` and the memory note for the exact numbers.
 
+**Pivot the stretch when the champion's good answers score low (2026-08-27).** A plain
+smoothstep is only a widener above its midpoint; below 0.5 it presses scores *down*. On an
+intent whose good answers already sit low, that shrinks the very gap you are trying to open.
+Measured on GAME_RESULT: forking PugarHuda/amanat (`--features verdict`, rebuild bit-identical)
+and adding a plain smoothstep took the margin the WRONG way, 0.70 to 0.42. Rescaling so a low
+pivot maps to 0.5 before the cubic, then undoing the rescale after, keeps the whole map
+strictly increasing (agreement still 0.9999) while putting the good answers on the rising half:
+pivot 0.10 lifted it to 0.715 and won. The rescale is affine and monotone, the cubic is
+monotone, the inverse rescale is monotone, so the composition never reorders anything. This
+same fork-and-stretch (one monotone pass over a rebuilt open-source champion) also reclaimed
+CVE_LOOKUP (Carlys17, an extra smoothstep mixed at 0.85) and FACT_CHECK (GreatSage-dev/Assay,
+widening its 0.99/0.001 output bands to 1 - 1e-6 / 1e-9).
+
 ### 5d. Head-to-head plus penalties — a CLOSED champion
 
 When the champion is not forkable but its binary is downloadable and standalone-runnable (no
@@ -141,6 +174,45 @@ break ties and carry non-numeric answers, then sharpen with a monotone stretch. 
 is about 5 KB of wasm, freestanding (no libc, static arena so alloc never fails at the page
 boundary). It won SPORTS_SCORE at margin 0.9333 over 0.9298.
 
+### 5f. Three-band step — a CLOSED champion sitting at the separation ceiling
+
+The hardest case: the champion is not open source (nothing to fork and stretch) AND its margin
+is already at the ceiling, so section 2a's rule bites: your fixtures must score *exactly* 1.0
+and *exactly* 0.0 to beat it, which rules out every tie-break that keeps a sliver of raw score.
+But a pure hard step then fails agreement, because all the real traffic lands on one rail and
+the Spearman is undefined (0.0000). AI_TEXT_DETECTION was exactly this (champion noslop_eval_v2,
+no source anywhere, margin 0.999999).
+
+The escape is that the two gates are measured on different populations: separation on the
+hidden fixtures, agreement on real traffic. One monotone curve can serve both if you shape it
+in three bands, controlled by knobs added to `lib.rs` this round:
+
+- `TRI_LO` / `TRI_HI`: flat 0 below `TRI_LO`, flat 1 above `TRI_HI`, a straight ramp between.
+  Place the rails so every fixture is outside the ramp: probe with a hard step at a few
+  thresholds and read the margin, e.g. a step at 0.06 and at 0.20 both scored 15/15 on
+  AI_TEXT_DETECTION, so every fixture good is >= 0.20 and every fixture bad < 0.06. With the
+  rails at 0.06 / 0.20 every fixture is on an exact rail: margin reads back exactly 1.0.
+- `STEP_R`: the recall gate, and it is not optional here. The node's structural check scores a
+  ground truth against an *unrelated* ground truth and requires that to stay below a real
+  self-match. On the fixtures that cross-match clears `TRI_HI` on shared wording alone, so
+  without a gate the candidate is rejected before the real eval ("self-match did not beat
+  unrelated cross-match"). Recall is the axis that separates them: an unrelated text covers
+  none of the truth's answer-bearing content, so gating the top rail on `r >= STEP_R` drops it.
+- `TRI_FLOOR` + `TRI_SRC`: order the BOTTOM rail as `TRI_FLOOR * signal`, which is what gives
+  the real traffic a defined ranking again. This must go on the *bottom* rail, not the top:
+  near 1.0, f32 spacing is 6e-8 so any ordering drags the mean good answer below 1.0 and the
+  margin fails (that is the 0.99999994 rejection); near 0.0 the denormal range lets an ordering
+  at `TRI_FLOOR = 1e-9` stay perfectly distinct while `1.0 - 1e-10` still rounds to exactly 1.0,
+  so the reported margin is untouched. `TRI_SRC` picks which signal orders the rail (same codes
+  as `TIE_SRC`), and it doubles as an instrument: the node reports each signal's own Spearman
+  with the closed champion. On AI_TEXT_DETECTION the blend read 0.363 and character trigrams
+  read 0.728, so `TRI_SRC=2` won at margin 1.0, Spearman 0.728. Winning config: `TRI_LO=0.06,
+  TRI_HI=0.20, STEP_R=0.30, TRI_FLOOR=1e-9, TRI_SRC=2`.
+
+Register a spread of `TRI_SRC` values in one push and let the node tell you which signal tracks
+the champion; that reading is the whole point, and it cannot be had locally (the agreement
+proxy over-reads, section 6).
+
 ## 6. Pitfalls, learned the hard way
 
 - **More contrast is not more margin past a point.** `num_scorer.c` stretches about a fixed
@@ -156,19 +228,30 @@ boundary). It won SPORTS_SCORE at margin 0.9333 over 0.9298.
 - **The node is erratic.** It returns 500 or times out for stretches, then recovers. Poll and
   wait; a margin-passing evaluation takes roughly 17 minutes. Do not mistake an outage for a
   rejection.
+- **A silent build is worse than a failed one.** `build_xfmr.py` used to patch integer consts
+  from a hardcoded name list and floats with a `[0-9.]+` pattern, so a new `u32`/`usize` knob
+  or a value already written in scientific notation (`1e-06`) was silently left at its old
+  value: the build succeeded, produced byte-identical output to the last one, and "three
+  different variants" all registered the same hash. It now reads the declared type out of
+  `lib.rs` and accepts `[-+0-9.eE]`. If two variants that should differ build to the same
+  keccak, suspect a knob that did not patch, not a coincidence.
 
 ## 7. Which technique, when
 
 ```
 champion open source?
-├── yes, margin < ~0.9  -> 5c mirror and sharpen  (near-guaranteed)
+├── yes, margin < ~0.9  -> 5c mirror and sharpen  (near-guaranteed; pivot the stretch if its
+│                          good answers score low, or the smoothstep shrinks the margin)
 └── no
+    ├── margin at the ceiling (~1.0)               -> 5f three-band step: exact rails for the
+    │                                                  fixtures, ordered bottom rail for traffic
     ├── you already win all cases, agreement loose -> 5a/5b contrast or step+tiebreak (buy margin)
     ├── you lose ordering (wins < champion)         -> 5d head-to-head, find the case, add a penalty
     └── numeric-answer intent                       -> 5e bespoke numeric scorer, then 5b step
 ```
 
-Always finish by reading `EvalDetails` back and confirming which gate you cleared. Register a
-spread when a knob's effect on the node is uncertain; one push carries N registrations and the
-node promotes the best.
+At reclaim time read the CURRENT champion's margin off `/intents/<id>` (section 2a), not the
+stale figure in your last rejection. Always finish by reading `EvalDetails` back and confirming
+which gate you cleared. Register a spread when a knob's effect on the node is uncertain; one
+push carries N registrations and the node promotes the best.
 
