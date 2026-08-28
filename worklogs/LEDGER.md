@@ -890,3 +890,30 @@ Honesty note (private record): this build is a monotone transform of the rival's
 not our own authored algorithm. It stands as a valid scorer and the reverse-engineering is ours,
 but it is not the same as the from-scratch numeric/step builds. The public host repo carries only
 the binary with no authorship claim. Recorded here so it can be defended for exactly what it is.
+
+## 2026-08-28 — defense doctrine + slot vulnerability audit
+
+Question raised: can we "encrypt" our builds so rivals cannot read and supersede them? Full
+answer in `docs/DEFENSE.md`. Short version: no, and it is the wrong goal. A keyless scorer's
+behaviour is observable (black-box probing) and any binary can be mirror-and-sharpened (monotone
+wrap of its output) without reading a line, which is the attack that took the CVE champion. Two
+real facts:
+- We are already ahead on static reading: our vocab is FNV-hashed at compile time, so the binary
+  ships u32 hashes not words (patchsignal shipped its whole vocab in plaintext, which is why it
+  fell in minutes). Keep hashing; never ship a plaintext table; keep strip=true.
+- The only true moat is holding margin at EXACTLY 1.0. The gate is strict `>`, nothing exceeds
+  1.0, and a monotone wrap maps 1->1 / 0->0 so it gains nothing and ties (rejected). Verified by
+  wrapping our own exact-1.0 AI_TEXT_DETECTION build: the attack scores "sep fail, wins fail".
+
+Audit of the 45 held slots by margin (how hard to supersede):
+- AT CEILING (exactly 1.0, wrap-proof): 6 -- AI_TEXT_DETECTION, CONTENT_EXTRACTION, CVE_LOOKUP
+  (0.9999948), DEEPFAKE_DETECTION, SENTIMENT_ANALYSIS, TEXT_CLASSIFICATION.
+- HIGH (0.99-0.9999): 14.
+- MID (<0.99, wrap-vulnerable): 25, incl. the agreement-gated ones that structurally cannot reach
+  1.0 (WEATHER_FORECAST 0.53, CHAT_COMPLETION 0.90, LANGUAGE_GENERATION 0.91, FRAUD 0.87, etc.).
+
+Plan: rebuild every SEPARATION-ONLY slot (hist=0) below 1.0 to the exact-1.0 ceiling (three-band
+/ pure step, METHOD 5f) so it cannot be wrapped: TEXT_AUTHENTICITY_CHECK, LANGUAGE_TRANSLATION,
+STOCK_PRICE, TVL_LOOKUP, GAS_PRICE, AGENT_TASK, URL_SCAN, CRYPTO_PRICE, FINANCIAL_DATA,
+CONTENT_VERIFICATION, MEDIA_AUTHENTICITY_CHECK, VIDEO_VERIFICATION, RESEARCH_SYNTHESIS,
+TWITTER_SEARCH. Agreement-gated slots stay on the reclaim watch (no ceiling available).
