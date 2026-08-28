@@ -62,3 +62,30 @@ Audit each held slot's margin (the bake monitor and `research/` have the numbers
 separation-only slot below 1.0, rebuild to the exact-1.0 ceiling and re-register: that converts
 it from "supersedable in one wrap" to "unbeatable on separation". Leave the agreement-gated ones
 on the reclaim watch. See `worklogs/LEDGER.md` 2026-08-28 for the audit snapshot.
+
+## Race-to-1.0: what the first campaign actually showed (2026-08-28)
+
+zkasuran's sharpening of the doctrine is right: exact 1.0 is a *permanent* lock. If a rival
+reaches exactly 1.0 on a separation-only intent first, we can never take it back on separation
+(nothing exceeds 1.0, a tie loses), so being first there matters. But a batch of 12 exact-1.0
+attempts showed the lock is only reachable under two conditions, and the window is closing:
+
+1. **The intent must still be near-zero traffic.** A pure step is a constant ranking, so the
+   moment an intent has real traffic the agreement gate rejects it (spearman 0). GAS_PRICE built
+   at margin exactly 1.0 and was rejected "disagreed with the champion on real traffic" — it had
+   quietly gained traffic. So traffic FORECLOSES the 1.0 lock for everyone, us and rivals alike:
+   once an intent is traffic-gated it is a perpetual reclaim war, never a permanent hold.
+2. **Our scorer must perfectly separate that intent's 15 fixtures** (every good above every bad
+   at one threshold), or the step loses wins. This holds for verdict/classification intents
+   (the 5 we already lock at 1.0: AI_TEXT_DETECTION, CONTENT_EXTRACTION, DEEPFAKE_DETECTION,
+   SENTIMENT_ANALYSIS, TEXT_CLASSIFICATION) but not for numeric/price intents, whose paraphrase
+   goods and near-miss-number bads overlap in the raw (STOCK/TVL/CRYPTO/URL all lost wins at
+   margin 0.6-0.93). Those need per-intent separation work before a step can reach 1.0, if ever.
+
+So the priority is narrow and genuine: chase exact 1.0 only on **low-traffic verdict/classification
+intents we hold below 1.0** (TEXT_AUTHENTICITY_CHECK 0.66, CONTENT_VERIFICATION 0.99,
+MEDIA_AUTHENTICITY_CHECK 0.99, VIDEO_VERIFICATION 0.99, RESEARCH_SYNTHESIS/TWITTER_SEARCH 0.99),
+per intent, to lock them before a rival does. The numeric and traffic-gated slots cannot be locked
+and stay on the reclaim watch; no build or obfuscation changes that. Do NOT blind-sweep a generic
+step config across all slots — it loses wins on the ones whose fixtures do not cleanly separate,
+and burns evals (this campaign: 12 attempts, 0 new locks).
