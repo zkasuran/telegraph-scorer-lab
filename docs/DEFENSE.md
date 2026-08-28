@@ -89,3 +89,26 @@ per intent, to lock them before a rival does. The numeric and traffic-gated slot
 and stay on the reclaim watch; no build or obfuscation changes that. Do NOT blind-sweep a generic
 step config across all slots — it loses wins on the ones whose fixtures do not cleanly separate,
 and burns evals (this campaign: 12 attempts, 0 new locks).
+
+## Second campaign: the authenticity/verdict targets do not cleanly separate either (2026-08-28)
+
+Applied DEEPFAKE's proven exact-1.0 config (`df_pure`: lexical, SHARPEN 0.82, polarity+entity
+penalties) to the six low-traffic verdict/authenticity targets. All rejected, and WORSE than our
+current builds: TEXT_AUTHENTICITY_CHECK 0.28 (lost ordering), CONTENT_VERIFICATION 0.775,
+RESEARCH_SYNTHESIS 0.615 (lost separation). Reason: unlike DEEPFAKE's clean yes/no fixtures, the
+authenticity family mixes compound verdicts ("image authentic, caption false"), entity naming
+("Midjourney"), numbers ("0.93 high confidence") and hash match/differ, which do not separate to
+the rails under a lexical verdict config. Our existing 0.99 builds beat the lock attempts, so
+they stayed active (no regression, 45/45 intact).
+
+**Settled conclusion.** Exact-1.0 lockability is a property of the intent's fixtures, not a knob:
+it needs 15 fixtures that separate perfectly under a config we can find, AND near-zero traffic.
+Empirically that set is the five clean verdict/classification intents we ALREADY hold at 1.0
+(AI_TEXT_DETECTION, CONTENT_EXTRACTION, DEEPFAKE_DETECTION, SENTIMENT_ANALYSIS, TEXT_CLASSIFICATION).
+Everything else either cannot be separated to the rails with our toolkit (numeric/price,
+compound authenticity, search/synthesis) or is traffic-gated (lock foreclosed). Those stay at
+high-but-below-1.0 and on the reclaim watch; there is no generic build that locks them, and two
+campaigns (18 registrations) produced zero new locks. Do not run a third blind sweep. A genuine
+new lock now requires per-intent, fixture-level separation work (find each overlapping pair, add
+the one signal that splits it) and is worth it only where an intent is both lockable and at real
+risk of a rival reaching 1.0 first.
