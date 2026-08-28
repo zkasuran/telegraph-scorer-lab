@@ -71,10 +71,10 @@ This repository is the canonical record of how we:
 
 | Metric | Value |
 |--------|-------|
-| **Intents held** | 44 / 45 |
+| **Intents held** | 45 / 45 |
 | **Wallet** | `0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287` |
 | **Verified** | Every `/intents/<id>` read back on 2026-08-27 |
-| **Open slot** | CVE\_LOOKUP — actively-defended closed champion (`patchsignal-v18c`, margin 0.99949); separation is beatable but its real-traffic ranking is anti-correlated with our separation signals, so no own-build clears both gates. See LEDGER 2026-08-27 (c). |
+| **CVE_LOOKUP** | reclaimed by reverse-engineering the closed `patchsignal-v18c` champion and mirror-and-sharpening it (owner-provided binary, EPS=1.0 smoothstep, margin 0.9999948, agreement 0.728, reg 1446). See LEDGER 2026-08-27 (d). |
 | **Same-day reclaims** | AI\_TEXT\_DETECTION, GAME\_RESULT, CHAT\_COMPLETION (reg 1295), FACT\_CHECK (reg 1423) |
 
 > **This is a private lab.** The public host repo

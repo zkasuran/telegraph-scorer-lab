@@ -1,0 +1,9 @@
+[package]
+name="wrap"
+version="0.1.0"
+edition="2021"
+[dependencies]
+walrus="0.20"
+[[bin]]
+name="wrap"
+path="wrap.rs"

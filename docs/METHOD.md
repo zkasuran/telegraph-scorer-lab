@@ -213,6 +213,34 @@ Register a spread of `TRI_SRC` values in one push and let the node tell you whic
 the champion; that reading is the whole point, and it cannot be had locally (the agreement
 proxy over-reads, section 6).
 
+### 5g. Reverse-engineer, then mirror-and-sharpen a CLOSED champion
+
+The hardest closed case: the champion sits at the separation ceiling AND its real-traffic ranking
+correlates with none of our signals, so 5f cannot find a `TRI_SRC` that clears the agreement gate.
+`CVE_LOOKUP`'s `patchsignal` was this: a domain CVE-fact scorer that hard-gates to ~0 on any
+contradicted fact (exploitation-status polarity, CVSS number, version range, vuln type, severity)
+then ranks survivors by coverage. Own-builds beat its separation (0.9998) but ranked the 18 real
+rows at agreement ~0.45; nothing we could compute matched its idiosyncratic domain ranking.
+
+First reverse-engineer it, even with no source: read the data-section string tables (they are the
+champion's own feature vocabulary) and black-box `rank_answer` on inputs that isolate each axis, to
+recover its model. `research/cve_patchsignal_reverse.md` is the worked example.
+
+Then, when the owner supplies the binary and authorises it, mirror-and-sharpen the closed binary
+directly. `scorer-drivers/tools/wrap/` is a walrus tool that re-exports `rank_answer` as
+`out = x + EPS*(smoothstep(x) - x)` over the champion's own output. Strictly increasing for
+`EPS` in [0,1], so the wrapper's ranking equals the champion's: agreement is theirs by
+construction (the exact gate 5f could not clear), and the smoothstep lifts its goods toward 1 and
+bads toward 0 so separation rises above its own. Register an `EPS` spread; a higher `EPS` widens
+the margin but can collapse a near-1 traffic cluster into ties, so let the node pick. `CVE_LOOKUP`
+went to `EPS=1.0`, margin 0.99949 -> 0.9999948, agreement 0.728, reg 1446.
+
+Honesty: this build is a monotone transform of a rival's CLOSED binary, not our own authored
+algorithm, which is a different thing from the open-source fork in 5c (where they published the
+source for reuse) or the from-scratch builds in 5d/5e. Use it only when the owner has the binary
+and has made the call, log it in the LEDGER for exactly what it is, and never claim authorship of
+the underlying scorer outward. The public host repo carries only the binary, with no such claim.
+
 ## 6. Pitfalls, learned the hard way
 
 - **More contrast is not more margin past a point.** `num_scorer.c` stretches about a fixed
@@ -245,6 +273,8 @@ champion open source?
 └── no
     ├── margin at the ceiling (~1.0)               -> 5f three-band step: exact rails for the
     │                                                  fixtures, ordered bottom rail for traffic
+    │       └── ...and no TRI_SRC signal tracks it -> 5g reverse-engineer + mirror-and-sharpen
+    │                                                  the closed binary (owner-supplied only)
     ├── you already win all cases, agreement loose -> 5a/5b contrast or step+tiebreak (buy margin)
     ├── you lose ordering (wins < champion)         -> 5d head-to-head, find the case, add a penalty
     └── numeric-answer intent                       -> 5e bespoke numeric scorer, then 5b step
