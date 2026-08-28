@@ -71,10 +71,11 @@ This repository is the canonical record of how we:
 
 | Metric | Value |
 |--------|-------|
-| **Intents held** | 45 / 45 |
+| **Intents held** | 44 / 45 |
 | **Wallet** | `0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287` |
 | **Verified** | Every `/intents/<id>` read back on 2026-08-27 |
-| **Same-day reclaims** | AI\_TEXT\_DETECTION, CVE\_LOOKUP, FACT\_CHECK, GAME\_RESULT, CHAT\_COMPLETION |
+| **Open slot** | CVE\_LOOKUP — actively-defended closed champion (`patchsignal-v18c`, margin 0.99949); separation is beatable but its real-traffic ranking is anti-correlated with our separation signals, so no own-build clears both gates. See LEDGER 2026-08-27 (c). |
+| **Same-day reclaims** | AI\_TEXT\_DETECTION, GAME\_RESULT, CHAT\_COMPLETION (reg 1295), FACT\_CHECK (reg 1423) |
 
 > **This is a private lab.** The public host repo
 > [`telegraph-salience-scorer`](https://github.com/zkasuran/telegraph-salience-scorer) carries

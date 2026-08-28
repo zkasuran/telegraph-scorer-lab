@@ -836,3 +836,31 @@ behaviour does not), then wrapped its composite in a strictly-monotone logistic 
 (STRETCH_K/STRETCH_C/STRETCH_EPS in that fork's src/lib.rs). Registered a K/C spread; the node
 promoted K=10 C=0.50 at margin 0.634 -> 0.820, wins 15/15, Spearman 0.619 inherited unchanged
 (our ranking IS the champion's, so agreement is theirs for free). Active reg 1295. 45/45 again.
+
+## 2026-08-27 (c) — FACT_CHECK re-reclaimed; CVE_LOOKUP is an actively-defended closed wall (44/45)
+
+Board drifted to 43/45 overnight: CVE_LOOKUP and FACT_CHECK retaken.
+
+**FACT_CHECK re-won.** GreatSage-dev/Assay pushed a stronger open-source build (margin 0.864 ->
+0.932; they had copied our own step+tie-break, `h = raw>=0.35?1:0`, `final = (1-b)*h + b*raw`
+with b=0.004). Straight 5c: rebuilt their new source (identical scoring), shrank step_b 0.004 ->
+0.0002 (strictly monotone within each band, so ranking and agreement are theirs), margin 0.932
+-> 0.9333. Active reg 1423.
+
+**CVE_LOOKUP not reclaimed — documented wall.** Champion 0x236891fe, `patchsignal-v18c`, CLOSED
+(no source), margin 0.99949, spearman 0.690, hist 18, and ACTIVELY DEFENDED (re-registered v16c
+-> v18c mid-session). Separation IS beatable with our own build: an aggressive numeric+literal
+penalty lexical step scored margin 0.99979-0.99983 (> champion). But every such build ranks the
+18 real-traffic rows at agreement 0.44-0.46 with the champion, under the 0.60 floor, and no
+available signal fixes it:
+- tie-break probes raw/lex/gram3/recall/q-cos -> agreement 0.457 / 0.104 / -0.379 / -0.112 / 0.0.
+- softening the penalties to rank traffic more like the lenient champion drops separation back
+  to ~0.933 (fails the first gate). minilm blends (W_EMB>0) also fall to ~0.93; minilm with
+  W_EMB=0 + emb tie scores CVE differently and falls to 0.80.
+This is the same shape as the WEATHER_CHECK hold-out: the correctness signal that drives our
+separation is exactly what this champion does not weight on real traffic, so separation and
+agreement are anti-correlated and there is no window that clears both. A monotone binary-wrap
+of their CLOSED binary would pass every gate (ranking = theirs, margin nudged up), but that
+re-registers a rival's artifact rather than our own build, against "real work only", so it was
+not done. Winning CVE fairly needs a genuinely stronger embedded model (rank traffic like the
+champion while still separating) or the champion weakening. Left as an open item at 44/45.

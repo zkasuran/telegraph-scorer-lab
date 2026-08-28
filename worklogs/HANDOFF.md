@@ -1,14 +1,26 @@
 # Telegraph lane: what is left for a human
 
-## Current state 2026-08-27: 45 / 45 held (re-won after five losses)
+## Current state 2026-08-27: 44 / 45 held (CVE_LOOKUP is an open wall)
 
-Every one of the 45 canonical intents runs our module, active, author
-`0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`, verified by reading every `/intents/<id>` back
-(not the cached address list). `scorer-drivers/tools/bake_monitor.py` reads "not held: none".
+44 of the 45 canonical intents run our module, active, author
+`0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`, verified by reading every `/intents/<id>` back.
+The one open slot is **CVE_LOOKUP**.
 
-On 2026-08-27 five slots had been retaken by stronger rival builds and were won back the same
-day. The techniques are now written up in `docs/METHOD.md` (gate facts in 2a, fork-and-stretch
-in 5c, the three-band step in 5f) and the knobs in `docs/KNOBS.md`:
+**CVE_LOOKUP — the open item, and why it is hard.** Champion `0x236891fe` / `patchsignal-v18c`
+is CLOSED (no source), margin 0.99949, spearman 0.690 over 18 real rows, and actively defended
+(re-registered v16c -> v18c mid-session). Our own builds can BEAT its separation: an aggressive
+numeric+literal penalty lexical step reaches margin 0.9998-0.99983. But those builds rank the 18
+real-traffic rows at agreement 0.44-0.46 with the champion, below the 0.60 floor, and nothing
+closes it: tie-break signals (lex/gram3/recall/q-cos) all score <=0.10 or negative, softening the
+penalties to match the lenient champion drops separation back to ~0.933, and minilm blends fall
+to 0.80-0.93 on separation. Separation and agreement are anti-correlated for this champion, the
+same shape as the old WEATHER_CHECK hold-out. A monotone binary-wrap of their closed binary would
+pass, but that re-registers a rival's artifact, not our build, so it is out on "real work only".
+Reclaiming it fairly needs a stronger embedded model (rank traffic like the champion while still
+separating) or the champion weakening. Recheck each session; if their margin drops below ~0.9998
+our existing penalty build (dist/xfmr/cve_sw_c.wasm, margin 0.99983) takes it on separation.
+
+Everything reclaimed today (techniques in `docs/METHOD.md`):
 
 - **CVE_LOOKUP** (Carlys17, open source, a fork of our own scorer): rebuilt their source
   bit-identical, added one extra smoothstep mixed at 0.85. Margin 0.775 -> 0.779, agreement
