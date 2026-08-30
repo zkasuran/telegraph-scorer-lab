@@ -44,6 +44,7 @@ def main():
     send = "--send" in sys.argv
     h, size = dep.keccak(wasm)
     print(f"{intent}: {wasm} size={size} keccak={h}")
+    dep.require_stamp(wasm, intent)
     if not send:
         print("  dry run"); return
     url = host(wasm)

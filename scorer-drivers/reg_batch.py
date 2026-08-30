@@ -40,16 +40,39 @@ def fetch_ok(url, size, tries=12):
     return False
 
 
+def stamped(path):
+    """Does this binary carry our licence notice in its bytes?
+
+    A registered module is fetched as a bare .wasm, so the notice has to be inside it or
+    the holder never sees any terms. rev/stamp.py puts it in an inert custom section that
+    the runtime ignores, so this costs nothing at score time.
+    """
+    r = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "stamp.py"), path, "--check"],
+                       capture_output=True, text=True)
+    return r.returncode == 0
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     send = "--send" in sys.argv
+    unstamped = "--allow-unstamped" in sys.argv
     jobs = []
     for a in args:
         intent, path = a.split("=", 1)
         path = os.path.abspath(path)
+        if not stamped(path):
+            if not unstamped:
+                print(f"{intent:22} {os.path.basename(path)} REFUSED: no licence section.\n"
+                      f"    python3 scorer-drivers/tools/stamp.py {path} --intent {intent}\n"
+                      f"    (or pass --allow-unstamped to register a bare binary anyway)")
+                continue
+            print(f"{intent:22} {os.path.basename(path)} WARNING: no licence section, "
+                  f"registering anyway")
         h, size = dep.keccak(path)
         jobs.append((intent, path, h, size))
         print(f"{intent:22} {os.path.basename(path)} size={size} keccak={h}")
+    if not jobs:
+        print("nothing to register"); return
     if not send:
         print("dry run"); return
     sha, rels = push([j[1] for j in jobs])

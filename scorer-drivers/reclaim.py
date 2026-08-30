@@ -228,6 +228,7 @@ def reclaim(intent, send, by=None):
         vh, _ = dep.keccak("/tmp/reclaim-verify.wasm")
         if vh != h:
             print("  hosted bytes hash mismatch; aborting"); return "error"
+        dep.require_stamp(dst, intent)
         tx, err = dep.register(h, url2, intent)
     finally:
         lock_release()

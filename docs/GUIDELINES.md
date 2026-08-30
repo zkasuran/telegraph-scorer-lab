@@ -30,6 +30,31 @@ been paid for at least once.
   which is all the method needs. Outward, our scorer is "a salience scorer with a from-scratch
   MiniLM blend," which is accurate and enough.
 
+## Licensing a build (every new registration, no exceptions)
+
+The host repo carries `LICENSE`, `NOTICE` and `PROVENANCE.json`, but a node fetches a bare
+`.wasm` from a raw URL and nobody downloading that file sees any of them. So the terms go
+in the binary.
+
+- **Every new build carries the notice in its bytes.** `tools/stamp.py` writes a custom
+  wasm section named `license` holding the licence id, the three URLs and one paragraph
+  saying what is and is not permitted. `build_xfmr.py` calls it on every build, and
+  `deploy.register` refuses a binary without it, so no driver can skip it. The section is
+  inert: a runtime ignores custom sections, the exports are unchanged and `rank_answer`
+  returns the same `f32`, checked under wazero against the unstamped build.
+- **Never re-stamp an already-registered binary.** Changing one byte changes the keccak,
+  which breaks the live registration the node is holding. The 36 slots held before
+  2026-08-30 keep their bytes and the MIT terms they were published under.
+  `TELEGRAPH_ALLOW_UNSTAMPED=1` exists for exactly that case and for nothing else.
+- **A build on someone else's work names them.** If a build forks an upstream module or
+  wraps its binary, add it to the host repo's `NOTICE` and its licence text to `LICENSES/`
+  in the same push that registers it, not afterwards. `tools/provenance.py` regenerates
+  `PROVENANCE.json` from the bytes, so the claim is checkable rather than trusted.
+- **No licence upstream means no build.** An upstream with no licence file grants no
+  permission to redistribute a modified copy. 44 such binaries were published here and had
+  to be withdrawn on 2026-08-30. Check the upstream's licence before building on it, not
+  after registering it.
+
 ## Honesty and real work
 
 - **Report only what the node confirms.** A slot is ours when the active author on the intent

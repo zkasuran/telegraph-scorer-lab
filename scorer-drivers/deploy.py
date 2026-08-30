@@ -201,6 +201,32 @@ def wait_for_gateway(url, size):
     return False
 
 
+def stamped(path):
+    """Does this binary carry our licence notice in its bytes?
+
+    A registered module is fetched as a bare .wasm from a raw URL, so the terms have to be
+    inside the file or the holder never sees them. rev/stamp.py writes them into an inert
+    custom section, which the runtime ignores and which leaves every score unchanged.
+    """
+    r = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "stamp.py"), path, "--check"],
+                       capture_output=True, text=True)
+    return r.returncode == 0
+
+
+def require_stamp(path, intent):
+    """Refuse to register a binary with no licence notice, unless told otherwise.
+
+    Set TELEGRAPH_ALLOW_UNSTAMPED=1 to override, which is only for re-registering a URL
+    that is already live: re-stamping changes the keccak and would break the registration.
+    """
+    if stamped(path) or os.environ.get("TELEGRAPH_ALLOW_UNSTAMPED") == "1":
+        return
+    raise SystemExit(
+        f"refusing to register {os.path.basename(path)} for {intent}: no licence section.\n"
+        f"  python3 scorer-drivers/tools/stamp.py {path} --intent {intent}\n"
+        f"  (TELEGRAPH_ALLOW_UNSTAMPED=1 overrides, for an already-registered binary only)")
+
+
 def register(wasm_hash, url, intent):
     key = [l.split("=", 1)[1].strip() for l in open(WALLET_ENV) if l.startswith("TELEGRAPH_PRIVATE_KEY")][0]
     r = run(["cast", "send", DIAMOND, "registerWasm(bytes32,string,string)", wasm_hash, url, intent,

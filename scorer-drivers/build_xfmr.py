@@ -77,6 +77,18 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     dst = os.path.join(OUT, f"{label}.wasm")
     import shutil; shutil.copy(WASM, dst)
+    # Stamp the licence and provenance notice into the binary before anything can
+    # register it. A scoring module is fetched as a bare .wasm from a raw URL, so whoever
+    # holds the file has no LICENSE and no NOTICE beside it. The notice lives in an inert
+    # custom section: the runtime ignores it and every score is unchanged, verified with
+    # wazero. This runs on every new build, and reg_batch refuses to register a binary
+    # that does not carry it. Already-registered binaries are never re-stamped, because
+    # changing a byte changes the keccak and breaks a live registration.
+    stamp = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "stamp.py"),
+                            dst, "--intent", intent], capture_output=True, text=True)
+    if stamp.returncode != 0:
+        print(stamp.stderr[-600:]); raise SystemExit("licence stamp failed, not shipping")
+    print(stamp.stdout.strip())
     h, size = keccak(dst)
     print(f"BUILT {dst} size={size} keccak={h}")
 
