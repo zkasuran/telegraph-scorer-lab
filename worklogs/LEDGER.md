@@ -935,3 +935,109 @@ binary with the walrus wrapper, `x + EPS*(smoothstep(x)-x)`. Registered EPS {0.6
 promoted at margin 0.8013 (> 0.7875), agreement 0.681, reg 1502. EPS=1.0 lost ordering (collapse),
 EPS=0.6 fell just short on separation. Same honesty note as CVE: this is a monotone transform of
 the rival's closed binary, logged as such. 45/45 verified.
+
+## 2026-08-31, the wrap war: every rival slot decoded as our own binary, and the ROC-ceiling doctrine
+
+Woke to 36/45. The nine rival-held slots were not lost to better scorers. Decoded every one of
+them with `tools/unwrap.py` (read the appended two-band function, rebuild the base with
+`rank_answer` repointed at the inner function, sha256 the result) and matched against an index of
+all 1048 binaries we have published:
+
+| Intent | Their margin | Their map | Our base they wrapped |
+| --- | --- | --- | --- |
+| CONTENT_MODERATION | 0.99982630 | T .45 H .05 L .005 | `dist/xfmr/cmod_rpen.wasm` |
+| CONTENT_VERIFICATION | 0.99992734 | T .45 H .05 L .005 | `dist/xfmr/cv_mini.wasm` |
+| CRYPTO_PRICE | 0.79999846 | T .50 H .20 L 2e-5 | `dist/fork/cry_r2c.wasm` |
+| CVE_LOOKUP | 0.99992263 | T .50 H .20 L 2e-5 | `dist/fork/cve_r2c.wasm` |
+| LANGUAGE_GENERATION | 0.99856390 | T .45 H .05 L .005 | `dist/xfmr/langgen_all.wasm` |
+| LANGUAGE_TRANSLATION | 0.79999983 | T .50 H .002 L 2e-5 | `dist/fork/c2_r1cut.wasm` |
+| TOKEN_HOLDER_COUNT | 0.86664370 | T .45 H .05 L .005 | `dist/xfmr/thc_mini.wasm` |
+| TEXT_AUTHENTICITY_CHECK | 0.66666603 | T .10 H .001 L 2e-4 | `dist/fork/ta_id.wasm`, one byte at offset 193 repointing `rank_answer` at internal func 1 |
+| TWITTER_SEARCH | 0.99885280 | no wrap at all | `dist/xfmr/tw_mini.wasm`, 14 bytes: `STEP_B` 0.02 -> 0.003 at two sites |
+
+Three more went the same way mid-session (IMAGE_VERIFICATION `imgver_rpen`, TELEGRAPH_KNOWLEDGE
+`tele_rpen`, TEXT_GENERATION `txtgen_rpen`), all the same T .45 / H .05 / L .005 map. Full record
+in `research/rival-lineage.json`.
+
+`Harshyadav442277/miner` has no top-level licence but ships our MIT text at
+`track2/calibration/UPSTREAM_LICENSE` with "Copyright (c) 2026 zkasuran" in it, so the provenance is
+not in question. Every base they took entered our tree at or before the MIT boundary commit
+`9250395`, so their copies are lawful and stay lawful. Nothing to dispute; MIT worked as written.
+
+**Licensing cannot win a slot back, and was never going to.** SAND-1.0 stops the *next* wrap of any
+binary registered from 2026-08-30 onward. The nine already taken rest on MIT-era bytes and that
+grant is irrevocable. The licence is the forward half of the defence; the board half is won on the
+node's gates.
+
+### The arithmetic they were exploiting, and where it ends
+
+Their map earns `j/N - (H/N)*D_H - ...`. Both corrections shrink linearly in H, so whoever picks the
+smaller H wins, forever. That is why the same base kept changing hands. The end of the race is the
+ROC ceiling `j/N`, and `docs/DEFENSE.md` is rewritten around it: **the wrap-proof test is
+`margin == f32(j/N)`, not `margin == 1.0`.** The old doctrine was too strong and left slots
+unhardened for want of a 1.0 they could never reach.
+
+Measured the node's promotion epsilon off our own 959 registrations to be sure the race terminates:
+**+9.4e-7 rejected, +1.0e-6 promoted**, no counterexample either way.
+
+### Reclaimed, verified by reading `/intents/<id>` back
+
+| Intent | reg | margin | wins | on ceiling |
+| --- | --- | --- | --- | --- |
+| CONTENT_MODERATION | 2055 | 0.800000000 = `f32(12/15)` | 15/15 | yes |
+| TOKEN_HOLDER_COUNT | 2057 | 0.857142870 = `f32(12/14)` | 14/14 | yes |
+| CRYPTO_PRICE | 2060 | 0.800000000 = `f32(12/15)` | 14/15 | yes |
+| TWITTER_SEARCH | 2061 | 1.000000000 | 32/32 | yes |
+| CONTENT_VERIFICATION | 2062 | 1.000000000 | 15/15 | yes |
+
+Board 36 -> 38/45 with 11 of the held slots now sitting exactly on their ceiling. reg2055's
+recorded champion figure also exposed a trap worth remembering: the rival advertised 0.99982630 on
+32 comparable cases, but our eval ran against 15 and read their live value as 0.7998. **A rival's
+published margin can be stale by orders of magnitude when the fixture set changes under them.**
+
+### What the rejections taught, each one paid for
+
+- **`top` is two-sided.** `margin = j/N - (top/N)*D` with `D = sum_goods(1-g) - sum_hi-bads(1-b)`.
+  I first wrote `D` as the bads term alone, which understates the correction; `tools/railmath.py`
+  now asserts the formula against the real f32 rail (worst error 1.5e-8). Four LT rails at
+  `top=1e-5` were rejected **on ordering** because two pairs straddled the threshold and needed
+  `top > 3.7e-4`. `CRYPTO_PRICE` at `1e-5` was rejected on separation where `1e-6` won.
+- **Sizing from the local bench is useless.** Invert the rival's own margin for `D` instead.
+- **A flat ROC region hides a sweep.** The LT bases are flat from 0.001 up, so `T` 0.55/0.65/0.75/
+  0.85 all measured the same point. `tools/tsweep.py` shows the four pair categories per threshold
+  so this is visible before spending registrations.
+- **Three slots are genuine ROC locks.** LANGUAGE_TRANSLATION (rival at `f32(12/15)` minus 1.8e-7),
+  TEXT_AUTHENTICITY_CHECK (`f32(10/15)` minus 6.6e-7) and CVE_LOOKUP: the rival sits inside the
+  promotion epsilon of the ceiling of every base we own. Across 100 of our registrations on the
+  current fixtures no base family exceeds j=10 for TEXT_AUTH or j=12 for LT. No rail, wrap or
+  threshold gets these back. They need a scorer that separates one more pair, which is
+  fixture-level module work, not calibration. CVE is subtler: 15/15 wins at `f32(14/15)` means one
+  bad shares the top band with its good, and a single threshold cannot see between them (its old
+  reg1433 reached 0.99984 because a 2% raw sliver could).
+
+### Tooling added, all synced to `scorer-drivers/tools/`
+
+`railmath.py` (the formula plus its self-check), `optrail.py` (solve the window per base),
+`ceilcheck.py` (is a registration on its ceiling), `tsweep.py` (pair categories per threshold),
+`ceiling.py` (the ROC bound checked against random monotone and multi-step maps),
+`mkrails.py` / `verify_rails.py` (build then load every rail in wazero and confirm it computes the
+map asked for; 14/14 and 15/15 exact before any registration), `harden3.py` (sweep T to open a
+hardening window on a held slot).
+
+Two tooling bugs fixed: `board.py` read `fixture_wins`/`fixture_cases`, which the node does not
+send (it sends `candidate_wins`/`comparable_cases`), so every N came back None and the ceiling
+audit was blind; and a devnode outage flattened `board.json` to 40 NONE rows, so it now refuses to
+overwrite a snapshot when under half the intents report an active scorer, with the canonical 45
+names pinned to `.scratch/intent-names.json`.
+
+### Open at the end of this session
+
+- 12 registrations still evaluating (IMAGE_VERIFICATION, TELEGRAPH_KNOWLEDGE, TEXT_GENERATION,
+  LANGUAGE_GENERATION rails sized from the inverted `D`), plus 8 CVE high-T probes and 14
+  flat-rail probes on zero-traffic slots. The devnode started timing out at 01:13, so these
+  finish on the next session.
+- 27 held slots are still below their ceiling and wrappable, worst first: GAS_PRICE 4.0e-2,
+  CHAT_COMPLETION 3.4e-2, URL_SCAN 2.1e-2, AGENT_TASK 1.8e-2. Ranked list in
+  `.scratch/wrappable.json`. Traffic-gated ones need the agreement gate respected, so the rail's
+  bottom stays `low*s`.
+- The three ROC locks need module work, not another sweep. Do not run one.

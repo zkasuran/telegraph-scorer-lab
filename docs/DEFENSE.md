@@ -32,19 +32,67 @@ its entire CISA-KEV / severity / vuln-type vocabulary in plaintext, which is why
 was trivial. Rule: never ship a plaintext feature table; keep hashing; keep `strip = true`.
 That is the whole of the useful "obfuscation" story, and it is done.
 
-## The real moat: hold the margin at exactly 1.0
+## The real moat: sit exactly on the ROC ceiling (which is usually NOT 1.0)
 
-The promotion gate is `candidate_margin > champion_margin`, strict. A candidate cannot exceed
-1.0. So a slot we hold at **exactly 1.0** cannot be superseded on separation by anyone: an
-own-build tops out at 1.0 and ties (a tie loses), and a mirror-and-sharpen of our binary maps
-our `1.0 -> 1.0` and `0.0 -> 0.0`, gaining nothing, so it also ties and is rejected. Verified:
-wrapping our exact-1.0 AI_TEXT_DETECTION build with the sharpen attack scores "sep fail, wins
-fail". A slot at 0.999 is not safe (that 0.0007 of headroom is what let us take patchsignal);
-a slot at exactly 1.0 is.
+**This section was wrong until 2026-08-31 and the correction matters.** It used to say only a
+margin of exactly 1.0 is wrap-proof. That is too strong, and believing it left slots unhardened
+because their fixtures could not reach 1.0.
 
-Reach it with the three-band / pure-step recipe (METHOD 5f): exact rails for the fixtures,
-margin 1.0. It applies cleanly to **separation-only intents** (`historical_rows_evaluated = 0`),
-which have no ranking to preserve.
+The promotion gate is `candidate_margin > champion_margin`, strict, and no f32 exceeds 1.0. But
+the bound that actually protects a slot is lower and per-intent. For a base score `s` and any
+non-decreasing map `g`, the margin `mean g(good) - mean g(bad)` is maximised by a step, and its
+value is
+
+    K = max over t of [ #(good >= t) - #(bad >= t) ] / N  =  j/N
+
+the base's own ROC ceiling, `j` being the number of fixture pairs one threshold cleanly splits.
+So **a slot whose margin reads exactly `f32(j/N)` cannot be superseded by any wrap**, whatever
+that number is: a wrap tops out at `j/N`, reproduces our value, ties, and a tie loses.
+
+Verified on-node 2026-08-31: `CONTENT_MODERATION` reg2055 holds at margin exactly `f32(12/15)`
+= 0.800000012 with 15/15 wins, and is as wrap-proof as an exact-1.0 slot. Verified numerically
+against 6000 random monotone maps plus 6000 stacked-threshold maps per base over seven bases:
+none ever exceeded `K`. The only maps that beat `K` are non-monotone, and those reorder fixture
+pairs, which the node sees as a lower win count, i.e. a different scorer rather than a rescaling.
+
+The test is therefore `margin == f32(j/N)`, not `margin == 1.0`. `tools/ceilcheck.py` reads any
+registration and reports it. One rounding trap in that check: `j = round(m*N)` and only step up
+when `f32(m) > f32(j/N)`. Stepping up on a margin already equal to `f32(j/N)` invents a whole
+extra pair of headroom and makes a wrap-proof slot look badly exposed.
+
+### The rail, and the two-sided window on `top`
+
+`tools/rail.py` appends `f(s) = 1 - top*(1-s)` above `T` and `low*s` below. The margin it earns is
+
+    margin = j/N - (top/N)*D - eps_low,     D = sum_goods(1-g) - sum_hi-bads(1-b)
+
+where hi-bads are the bads that also land on the top rail. `D > 0` always, so the reported margin
+sits *below* `j/N` by `(top/N)*D`, and that shortfall is exactly what a rival can still take.
+Two constraints pull opposite ways:
+
+    ordering    top > 2*ulp(1) / (g-b)   for the tightest top-rail pair, else the pair ties and
+                                         the win count drops (the node says "lost on ordering")
+    wrap-proof  top < EPS*N / D           EPS = 1e-6, the node's promotion epsilon
+
+Verified: the formula matches the real f32 rail to 1.5e-8 over every dump, threshold and top we
+have (`tools/railmath.py` asserts it). Both bounds have bitten. `top = 1e-5` won
+`CONTENT_MODERATION` and lost `CRYPTO_PRICE` on separation, where `1e-6` won. Four
+`LANGUAGE_TRANSLATION` rails at `top = 1e-5` were rejected on *ordering* because two fixture pairs
+straddled the threshold and needed `top > 3.7e-4`.
+
+`top = 0` is the flat rail: it reads exactly `j/N` with nothing to extract, but it ties every pair
+that straddles `T`, so it is only usable when no pair does. When the window at a threshold is
+empty, move `T` rather than `top`: a higher threshold sheds straddling pairs, costs split count and
+opens the window. `tools/optrail.py` solves this per base and picks `top` at the geometric middle
+of the window, furthest from both failure modes in log terms.
+
+### Sizing `top` from the node, not from the local bench
+
+The 40-case local bench disagrees badly with the node's 15 hidden fixtures (local ROC 0.90 has come
+back as `j=10/15` on-node). So size `top` by inverting the *rival's* published margin instead:
+their two-band map reports `j/N - (H/N)*D`, which pins `D`, and then `top < half_ulp*N/D` is the
+value that makes our margin round to exactly `j/N`. That inversion is what won `CRYPTO_PRICE` at
+`top = 1e-6` after `1e-5` was rejected.
 
 ## The limit we cannot engineer away
 

@@ -1,0 +1,16 @@
+{
+ "measured_on": "2026-08-30",
+ "method": "decode the appended two-band function (rev/unwrap.py), rebuild the base with rank_answer repointed at the inner function, sha256 the result, match against our own dist/ index of 1048 published binaries",
+ "boundary_commit": "9250395a8131e4f7da51ab548d455c7270d4acd3",
+ "slots": {
+  "CONTENT_MODERATION":      {"holder":"0xdad201ef","reg":2003,"their_margin":0.99982630,"map":{"T":0.45,"H":0.05,"L":0.005},"base":"dist/xfmr/cmod_rpen.wasm","base_added":"2026-08-22","grant":"MIT"},
+  "CONTENT_VERIFICATION":    {"holder":"0xdad201ef","reg":2020,"their_margin":0.99992734,"map":{"T":0.45,"H":0.05,"L":0.005},"base":"dist/xfmr/cv_mini.wasm","base_added":"2026-08-24","grant":"MIT"},
+  "CRYPTO_PRICE":            {"holder":"0xdad201ef","reg":1994,"their_margin":0.79999846,"map":{"T":0.5,"H":0.2,"L":2e-05},"base":"dist/fork/cry_r2c.wasm","base_added":"2026-08-30","grant":"MIT"},
+  "CVE_LOOKUP":              {"holder":"0xdad201ef","reg":1993,"their_margin":0.99992263,"map":{"T":0.5,"H":0.2,"L":2e-05},"base":"dist/fork/cve_r2c.wasm","base_added":"2026-08-30","grant":"MIT","note":"our cve_r2c was itself withdrawn on 2026-08-30 as a patchsignal-derived wrap, so this chain rests on a binary we should never have published"},
+  "LANGUAGE_GENERATION":     {"holder":"0xdad201ef","reg":2010,"their_margin":0.99856390,"map":{"T":0.45,"H":0.05,"L":0.005},"base":"dist/xfmr/langgen_all.wasm","base_added":"2026-08-21","grant":"MIT"},
+  "LANGUAGE_TRANSLATION":    {"holder":"0xdad201ef","reg":1996,"their_margin":0.79999983,"map":{"T":0.5,"H":0.002,"L":2e-05},"base":"dist/fork/c2_r1cut.wasm","base_added":"2026-08-30","grant":"MIT"},
+  "TOKEN_HOLDER_COUNT":      {"holder":"0xdad201ef","reg":2017,"their_margin":0.86664370,"map":{"T":0.45,"H":0.05,"L":0.005},"base":"dist/xfmr/thc_mini.wasm","base_added":"2026-08-24","grant":"MIT"},
+  "TEXT_AUTHENTICITY_CHECK": {"holder":"0xdad201ef","reg":1882,"their_margin":0.66666603,"map":{"T":0.1,"H":0.001,"L":0.0002},"base":"dist/fork/ta_id.wasm with rank_answer repointed at internal func 1 (one byte at offset 193)","grant":"MIT"},
+  "TWITTER_SEARCH":          {"holder":"0x5c4b38cf","reg":1987,"their_margin":0.99885280,"map":"none, an in-place constant patch: 14 bytes, STEP_B 0.02 -> 0.003 at two sites","base":"dist/xfmr/tw_mini.wasm","base_added":"2026-08-24","grant":"MIT","decode":"m=(1-B)*k/N+B*raw with k=32/32 gives raw 0.61761 from ours and 0.61760 from theirs, the same base"}
+ }
+}

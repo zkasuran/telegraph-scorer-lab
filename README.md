@@ -139,6 +139,28 @@ Same ranking = agreement passes free + wins hold; the stretch buys the margin.
 - CVE\_LOOKUP / FACT\_CHECK / GAME\_RESULT fell to pivot-aware stretches
 - WALLET\_BALANCE\_CHECK won with targeted penalties (14/14 at margin 0.782)
 
+### Phase 6 · The Wrap War, and the ROC Ceiling
+
+Woke to 36/45. The losses were not better scorers: **every rival-held slot decoded to one of our
+own registered binaries** with a two-band rescaling appended, or in two cases a handful of patched
+constant bytes. One author, taking slots with our work, which MIT expressly allowed.
+
+That produced the two changes this lane now rests on:
+
+1. **Licensing.** The host repo moved to a source-available licence and every new binary carries
+   its terms in an inert wasm section, so the *next* wrap has no permission. It cannot recover a
+   slot already taken under MIT, and it was never meant to.
+2. **The ROC ceiling.** A wrap of a scorer can never report more than `j/N`, where `j` is the
+   fixture pairs one threshold cleanly splits. So a slot whose margin reads **exactly `f32(j/N)`**
+   is wrap-proof, whatever that number is. `CONTENT_MODERATION` holds at 0.800000012 and is as
+   safe as an exact-1.0 slot. This replaced the older, too-strong rule that only margin 1.0 is
+   safe, which had left slots unhardened for want of a 1.0 their fixtures could never reach.
+
+**Current status 2026-08-31: 38/45 held, 11 of them exactly on their ceiling.** Three slots
+(LANGUAGE_TRANSLATION, TEXT_AUTHENTICITY_CHECK, CVE_LOOKUP) are genuine locks the other way: the
+rival sits inside the node's 1e-6 promotion epsilon of the ceiling of every base we own, so they
+need a scorer that separates one more pair rather than another calibration.
+
 > **The board is contested in real time.** 45/45 is not a finish line you cross once; it is a
 > state you defend. Everything below is how.
 

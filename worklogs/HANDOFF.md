@@ -1,6 +1,38 @@
 # Telegraph lane: what is left for a human
 
-## Current state 2026-08-27: 45 / 45 held
+## Current state 2026-08-31: 38 / 45 held, 11 of them wrap-proof
+
+The board is contested by one author (`0xdad201ef`, `Harshyadav442277/miner`) who takes slots by
+appending a two-band rescaling to **our own registered binaries**. Every rival-held slot decoded to
+one of our bases; see `worklogs/LEDGER.md` 2026-08-31 and `research/rival-lineage.json`.
+
+Reclaimed and verified against `/intents/<id>`: CONTENT_MODERATION reg2055, TOKEN_HOLDER_COUNT
+reg2057, CRYPTO_PRICE reg2060, TWITTER_SEARCH reg2061, CONTENT_VERIFICATION reg2062.
+
+**The defence is the ROC ceiling, not margin 1.0.** A slot whose margin reads exactly `f32(j/N)`
+cannot be superseded by any wrap, whatever that number is. reg2055 holds at 0.800000012 and is as
+safe as an exact-1.0 slot. `docs/DEFENSE.md` carries the derivation and the two-sided window on
+`top`; `tools/ceilcheck.py` reports any registration.
+
+### Needs a human decision, not more sweeping
+
+Three slots are genuine ROC locks: LANGUAGE_TRANSLATION, TEXT_AUTHENTICITY_CHECK, CVE_LOOKUP. The
+rival sits inside the node's 1e-6 promotion epsilon of the ceiling of every base we own, so no rail,
+wrap or threshold reaches them. Winning them needs a scorer that separates one more fixture pair,
+which is module work. Do not run another transform sweep on these.
+
+### Still moving, machine-side
+
+- 34 registrations were evaluating when the devnode began timing out at 01:13 on 2026-08-31
+  (IMAGE_VERIFICATION, TELEGRAPH_KNOWLEDGE, TEXT_GENERATION, LANGUAGE_GENERATION rails, 8 CVE
+  high-T probes, 14 zero-traffic flat-rail probes). Poll with
+  `EXPECT=<n> python3 tools/pollreg.py <floor-regid>`.
+- 27 held slots are below their ceiling and wrappable, ranked in `.scratch/wrappable.json`.
+  Worst: GAS_PRICE 4.0e-2, CHAT_COMPLETION 3.4e-2, URL_SCAN 2.1e-2.
+
+---
+
+## Earlier state 2026-08-27: 45 / 45 held
 
 All 45 canonical intents run our module, active, author
 `0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`, verified by reading every `/intents/<id>` back.
