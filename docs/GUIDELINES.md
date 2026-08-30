@@ -5,22 +5,30 @@ been paid for at least once.
 
 ## Repository visibility
 
-- **The public host repo `telegraph-salience-scorer` must stay public** while any live
-  registration points at it. The node fetches a registered module from its commit-pinned
+- **The host repo `telegraph-salience-scorer` must stay public** while any live registration
+  points at it. The node fetches a registered module from its commit-pinned
   `raw.githubusercontent.com/.../<sha>/dist/*.wasm` URL anonymously. Privating it 404s that
   fetch and silently stalls every new registration "pending" forever. This looks exactly like
-  a node outage and has burned real time. If you must reclaim while it is up, it stays public.
-- **Do method work in this lab, not the public repo.** The public tip carries only `dist/`,
-  the harness, `LICENSE` and a neutral README. Everything else (module source, drivers,
-  research, worklogs, these docs) lives here.
-- **Accepted residual:** the public repo's commit HISTORY still contains method from before the
-  split, recoverable with `git checkout <old-sha>`, and champion bytes are public by necessity
-  (the node fetches them). The split hides the method from casual browsing and keeps NEW work
-  private; it does not seal history. Fully sealing would mean migrating every held slot to a
-  fresh host, which risks losing slots and was declined.
-- **Never name this lab, or any private infrastructure, in outward text.** Not in the public
-  repo, commit messages there, PRs, forms, posts or video. Outward, our scorer is "a salience
-  scorer with a from-scratch MiniLM blend," which is accurate and enough.
+  a node outage and has burned real time.
+- **This repository is going public too.** It was private while the method was the edge. The
+  edge is now the method plus the licence, and a submission a judge cannot read is worth less
+  than one a rival can also read. So the split is by role rather than by secrecy: the host repo
+  carries the registered binaries the node fetches, and this one carries the source, the
+  drivers, the research and the worklogs behind them.
+- **Run `preflight_public.py` before flipping it and before any push once it is public.**
+  It gates on licence files, key material in the tree and in history, the gateway's model ids,
+  third-party parameter blobs, stale slot counts and em dashes. Every one of those has been
+  wrong here at least once.
+- **A public flip publishes history, not just the tip.** `git log --all` reaches every blob
+  ever committed, including two weight blobs since removed from the tree. That is accepted and
+  recorded in `NOTICE` rather than papered over: the removed blobs are third-party parameter
+  data whose source model is public and MIT, so nothing secret is exposed by their presence in
+  history. Never commit anything here on the assumption that deleting it later will unpublish
+  it. It will not.
+- **Nothing outward names the gateway or its exact model ids.** Not here, not in the host repo,
+  not in a form, a post or a video. In the corpora the models are `model-a` through `model-f`,
+  which is all the method needs. Outward, our scorer is "a salience scorer with a from-scratch
+  MiniLM blend," which is accurate and enough.
 
 ## Honesty and real work
 

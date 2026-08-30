@@ -1070,6 +1070,7 @@ licence is more permissive than ours, it governs that component.
 | [`LICENSES/`](LICENSES) | Full licence texts, so they travel with the code |
 | [`docs/KNOBS.md`](docs/KNOBS.md) | Every tunable constant with defaults and effects |
 | [`docs/GUIDELINES.md`](docs/GUIDELINES.md) | Non-negotiable rules: visibility, honesty, cost |
+| [`preflight_public.py`](preflight_public.py) | The gate this repo passes before any public push |
 
 ---
 
