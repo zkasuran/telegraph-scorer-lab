@@ -10,11 +10,15 @@ it.
     python3 tools/ref_minilm.py <triples.json> <out.json>
       triples.json: [{"id":..,"gt":..,"a":..}, ...]  -> cosine of mean-pooled embeddings
 """
-import json, struct, sys
+import json, os, struct, sys
 import numpy as np
 
-MODEL = "/home/asuran/.semantic_search/models/all-MiniLM-L6-v2/model.safetensors"
-TOKJSON = "/home/asuran/.semantic_search/models/all-MiniLM-L6-v2/tokenizer.json"
+# The reference weights are the published all-MiniLM-L6-v2 checkpoint, Apache-2.0, from
+# sentence-transformers/all-MiniLM-L6-v2 on Hugging Face. Point MINILM_DIR at a local
+# copy holding model.safetensors and tokenizer.json.
+MINILM_DIR = os.environ.get("MINILM_DIR", "./all-MiniLM-L6-v2")
+MODEL = os.path.join(MINILM_DIR, "model.safetensors")
+TOKJSON = os.path.join(MINILM_DIR, "tokenizer.json")
 H, LAYERS, HEADS, MAXTOK = 384, 6, 12, 256
 
 

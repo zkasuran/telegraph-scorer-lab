@@ -16,17 +16,27 @@ import json
 import os
 import urllib.request
 
-ROOT = "/home/asuran/Downloads/hackathon-hq"
-GW = os.path.join(ROOT, ".gateway.env")
-
-
 def env():
-    d = {}
-    for line in open(GW):
-        line = line.strip()
-        if line and not line.startswith("#") and "=" in line:
-            k, v = line.split("=", 1)
-            d[k] = v
+    """Endpoint + key for the OpenAI-compatible service that writes the corpus.
+
+    Reads OPENAI_BASE_URL and OPENAI_API_KEY from the environment. If they are not set,
+    reads them from the file named by TELEGRAPH_GATEWAY_ENV, which is a plain KEY=value
+    file. Nothing about the endpoint is baked in, so this runs against whatever
+    OpenAI-compatible service you point it at.
+    """
+    d = {k: v for k, v in os.environ.items()
+         if k in ("OPENAI_BASE_URL", "OPENAI_API_KEY")}
+    path = os.environ.get("TELEGRAPH_GATEWAY_ENV")
+    if path and os.path.exists(path):
+        for line in open(path):
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, v = line.split("=", 1)
+                d.setdefault(k, v)
+    missing = [k for k in ("OPENAI_BASE_URL", "OPENAI_API_KEY") if not d.get(k)]
+    if missing:
+        raise SystemExit("set " + " and ".join(missing)
+                         + ", or point TELEGRAPH_GATEWAY_ENV at a file that carries them")
     return d
 
 

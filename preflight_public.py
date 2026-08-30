@@ -14,8 +14,10 @@ The checks:
   model ids    the gateway's exact model ids appear nowhere
   weights      no third-party parameter blob is tracked
   staleness    no hardcoded "45/45 held" claim that a live board contradicts
+  paths        no absolute path from this machine, so a checkout runs anywhere
   style        no em dashes in our own prose
 """
+import hashlib
 import json
 import os
 import re
@@ -25,9 +27,21 @@ import sys
 ROOT = os.path.dirname(os.path.abspath(__file__))
 REPO = "zkasuran/telegraph-scorer-lab"
 
-# The exact ids the house gateway serves. Never outward, per the workspace rules.
-MODEL_IDS = ["gpt-4o-mini", "gemini-2.5-flash", "deepseek-v4-flash", "qwen3.6-27b",
-             "kimi-k2.5", "glm-5.1"]
+# The check has to know the ids it is looking for, and this file is public, so they are
+# stored as salted digests rather than in the clear. Every token of the right length in a
+# tracked file is hashed and compared. Add an id with:
+#   python3 -c "import hashlib;print(hashlib.sha256(SALT+b'<id>').hexdigest()[:32])"
+MODEL_ID_SALT = b"telegraph-scorer-lab/preflight/v1"
+MODEL_ID_HASHES = {
+    "fd3d891dfb0450ab6d94faf096dd0c92",
+    "c69cb1c8a63c510a270d8a01fa42d15e",
+    "b6bf2a3933d2bd4e14ddf76d65dd14de",
+    "5cf8e4be38da983e45103c32ce94d83e",
+    "abe83cee69f85cbb289fb8e106635dd8",
+    "c02710c1de15832e2b6352b65563525b",
+}
+# a model id looks like this: lowercase, digits, dots and dashes, 6 to 24 characters
+TOKEN = re.compile(rb"[a-z][a-z0-9]*(?:[.\-][a-z0-9]+){1,4}")
 SECRET_PAT = re.compile(
     r"BEGIN [A-Z ]*PRIVATE KEY|TELEGRAPH_PRIVATE_KEY\s*=\s*0x|passphrase\s*[:=]\s*\S")
 SENSITIVE_NAME = re.compile(r"(^|/)\.(env|wallet)|\.pem$|passphrase|id_rsa|\.p12$")
@@ -35,6 +49,9 @@ SENSITIVE_NAME = re.compile(r"(^|/)\.(env|wallet)|\.pem$|passphrase|id_rsa|\.p12
 FOREIGN_BLOBS = {"module/src/vectors-champ.bin", "module/src/gte-small.bin",
                  "module/src/gte-mix.bin", "module/src/gte-int4.bin"}
 PROSE = re.compile(r"\.(md|txt)$|^(LICENSE|NOTICE)$")
+# An absolute path from one machine is a leak of the local layout and a bug for anyone
+# else running the script. Everything reads an env var or a relative path instead.
+LOCAL_PATH = re.compile(r"/home/[a-z0-9_-]+/|/Users/[A-Za-z0-9_-]+/")
 
 
 def git(*a, cwd=ROOT):
@@ -81,15 +98,25 @@ def check_secrets(files):
 
 
 def check_model_ids(files):
+    """Fail if any tracked file names one of the gateway's exact model ids.
+
+    Compares salted digests, so the ids this gate forbids are not themselves written
+    down in a public file. A hit reports the file and the digest, not the id.
+    """
     bad = []
     for f in files:
         p = os.path.join(ROOT, f)
         if not os.path.isfile(p) or os.path.getsize(p) > 4_000_000:
             continue
-        body = open(p, encoding="utf-8", errors="ignore").read()
-        hits = [m for m in MODEL_IDS if m in body]
-        if hits:
-            bad.append(f"{f} names {', '.join(hits)}")
+        body = open(p, "rb").read()
+        for m in TOKEN.finditer(body):
+            tok = m.group(0)
+            if not 6 <= len(tok) <= 24:
+                continue
+            h = hashlib.sha256(MODEL_ID_SALT + tok).hexdigest()[:32]
+            if h in MODEL_ID_HASHES:
+                bad.append(f"{f} names a gateway model id (digest {h[:12]})")
+                break
     return bad
 
 
@@ -111,6 +138,19 @@ def check_staleness(files):
             if f.startswith("worklogs/"):
                 continue          # the ledger is dated history, that is its job
             bad.append(f"{f} claims a live slot count: {m.group(0)[:50]}")
+    return bad
+
+
+def check_paths(files):
+    bad = []
+    for f in files:
+        p = os.path.join(ROOT, f)
+        if not os.path.isfile(p) or os.path.getsize(p) > 4_000_000:
+            continue
+        body = open(p, encoding="utf-8", errors="ignore").read()
+        m = LOCAL_PATH.search(body)
+        if m:
+            bad.append(f"{f} carries a local path: {m.group(0)}")
     return bad
 
 
@@ -136,6 +176,7 @@ def main():
         ("model ids", check_model_ids),
         ("weights", check_weights),
         ("staleness", check_staleness),
+        ("paths", check_paths),
         ("style", check_style),
     ]
     failed = 0
