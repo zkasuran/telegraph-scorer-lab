@@ -4,3 +4,15 @@ harness/dumpscores
 __pycache__/
 *.pyc
 .scratch/
+
+# vectors-champ.bin is a table of another module's embed() outputs (the MIT Telegraph
+# baseline). Nothing in the tree reads it and it is not our trained data, so it is not
+# published. worklogs/LEDGER.md 2026-08-18 documents how it was produced and
+# reference/distill regenerates it. See NOTICE.
+module/src/vectors-champ.bin
+
+# gte-small.bin and its requantisations are unused by any build in this tree
+# (lib.rs embeds vectors.bin, minilm.rs embeds minilm.bin). Kept locally, not shipped.
+module/src/gte-small.bin
+module/src/gte-mix.bin
+module/src/gte-int4.bin

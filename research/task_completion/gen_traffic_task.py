@@ -29,7 +29,7 @@ def env():
 
 
 E = env()
-BASE, KEY, MODEL = E["OPENAI_BASE_URL"], E["OPENAI_API_KEY"], E.get("OPENAI_MODEL", "gpt-4o-mini")
+BASE, KEY, MODEL = E["OPENAI_BASE_URL"], E["OPENAI_API_KEY"], E.get("OPENAI_MODEL", "model-a")
 
 QA = [
     ("What makes an AI agent effective at completing multi-step tasks end to end?",

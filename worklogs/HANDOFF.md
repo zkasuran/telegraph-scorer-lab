@@ -5,7 +5,7 @@
 All 45 canonical intents run our module, active, author
 `0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`, verified by reading every `/intents/<id>` back.
 
-**CVE_LOOKUP — how the last wall fell.** Champion `0x236891fe` / `patchsignal-v18c` is CLOSED,
+**CVE_LOOKUP, how the last wall fell.** Champion `0x236891fe` / `patchsignal-v18c` is CLOSED,
 margin 0.99949, actively defended (v16c -> v18c mid-session). No generic own-build cleared both
 gates: our lexical/numeric step beat its separation (0.9998) but ranked the 18 real rows at
 agreement ~0.45, and softening to match it dropped separation. The owner supplied the champion

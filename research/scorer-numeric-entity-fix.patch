@@ -1,0 +1,63 @@
+--- /tmp/lib.rs.bak	2026-08-28 21:14:37.067919088 +0530
++++ /tmp/lib.patched.rs	2026-08-28 21:21:19.186755907 +0530
+@@ -708,6 +708,25 @@
+ }
+ 
+ /// Two figures agree within 0.5% relative error (formatting-independent).
++/// Does `t` state a figure equal in value to `v`, within rel_close's tolerance?
++///
++/// The numeric miss and wrong penalties below used a token-hash test, which asks whether the
++/// exact same characters appear. That reads "50000" and "50000.0" as different numbers, so an
++/// answer stating a figure correctly in a different format was scored as stating a WRONG one and
++/// took the M_NUM_WRONG multiplier. Same figure, same value, penalised for its spelling.
++///
++/// The value comparison already existed for the numeric bonus (see rel_close). It just was not
++/// wired into the penalties. This is that wiring: the hash test still counts a hit, and a value
++/// match now counts as one too.
++fn has_value(t: &Toks, v: f32) -> bool {
++    let mut i = 0;
++    while i < t.n {
++        if t.val[i] > 0.0 && rel_close(t.val[i], v) { return true; }
++        i += 1;
++    }
++    false
++}
++
+ fn rel_close(a: f32, b: f32) -> bool {
+     let d = if a > b { a - b } else { b - a };
+     let aa = if a < 0.0 { -a } else { a };
+@@ -1741,7 +1760,13 @@
+         // words and the numbers all match.
+         let ef_g = build_entity_figures(tg, ga);
+         let ef_a = build_entity_figures(ta, gb);
+-        if ef_g > 0 && ef_a > 0 {
++        // M_ENTITY = 1.0 means this check is off, so it must not act. It used to set
++        // claim_wrong regardless, which silently suppressed the numeric bonus below: a real
++        // multiplier of 1.0 but a large hidden cost. Worse, it fired on paraphrase rather than
++        // on a wrong claim, because the pairing anchors a figure to the nearest capitalised
++        // token: naming the chain at the start of the sentence instead of beside the block
++        // number built different pairs from the same facts and read as a different assertion.
++        if M_ENTITY < 1.0 && ef_g > 0 && ef_a > 0 {
+             let shared = dice(ga, gb, ef_g, ef_a);
+             if shared < 0.05 && full_coverage {
+                 raw *= M_ENTITY;
+@@ -1775,7 +1800,9 @@
+         while i < tg.n {
+             if tg.numeric[i] {
+                 gt_nums += 1;
+-                if set_get(sa, tg.hash[i]).is_some() { gt_nums_hit += 1; }
++                if set_get(sa, tg.hash[i]).is_some()
++                    || (tg.val[i] > 0.0 && has_value(ta, tg.val[i]))
++                { gt_nums_hit += 1; }
+             }
+             i += 1;
+         }
+@@ -1788,6 +1815,8 @@
+                 if ta.numeric[i]
+                     && set_get(sg, ta.hash[i]).is_none()
+                     && set_get(sq, ta.hash[i]).is_none()
++                    && !(ta.val[i] > 0.0
++                        && (has_value(tg, ta.val[i]) || has_value(tq, ta.val[i])))
+                 {
+                     bad += 1;
+                 }

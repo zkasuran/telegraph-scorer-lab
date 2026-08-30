@@ -94,7 +94,7 @@ guessing, and to sanity-check a reported margin against how many cases you think
 
 Pick the technique by what you are up against. The decision tree is at the end.
 
-### 5a. Monotone contrast — separation-only intents
+### 5a. Monotone contrast, separation-only intents
 
 When the agreement gate barely binds (few traffic rows) and you already rank the fixtures
 correctly, you only need more separation. Apply a monotone contrast to the final score:
@@ -102,7 +102,7 @@ iterated smoothstep (`POST_ITERS`), a logistic (`SIGK`/`SIGC`), or the C scorer'
 Margin rises, ranking holds. This reclaimed the first wave of slots (FINANCIAL_DATA, URL_SCAN,
 CVE_LOOKUP, CRYPTO_PRICE, STORM_ALERT and more) at POST_ITERS=3.
 
-### 5b. Step plus tie-break — margin without losing agreement
+### 5b. Step plus tie-break, margin without losing agreement
 
 The most separation a monotone map can buy is a hard step at the right threshold: goods to 1,
 bads to 0. Add the `STEP_B` tie-break so the tight traffic cluster does not collapse into f32
@@ -111,7 +111,7 @@ keeps the raw ranking inside each band, `STEP_R` gates the good side on actually
 answer, `STEP_W` widens the step into a ramp when the blend's scale is not yet measured. This
 is how the traffic-gated intents were taken to k=32.
 
-### 5c. Mirror and sharpen — an OPEN-SOURCE champion
+### 5c. Mirror and sharpen, an OPEN-SOURCE champion
 
 If the champion's module is open source and its margin is not already near the ceiling, this
 is a near-guaranteed win. Fork its exact source and weights, rebuild (our wasm f32 math is
@@ -148,7 +148,7 @@ same fork-and-stretch (one monotone pass over a rebuilt open-source champion) al
 CVE_LOOKUP (Carlys17, an extra smoothstep mixed at 0.85) and FACT_CHECK (GreatSage-dev/Assay,
 widening its 0.99/0.001 output bands to 1 - 1e-6 / 1e-9).
 
-### 5d. Head-to-head plus penalties — a CLOSED champion
+### 5d. Head-to-head plus penalties, a CLOSED champion
 
 When the champion is not forkable but its binary is downloadable and standalone-runnable (no
 wasm import section), download it and run it head-to-head against your candidate on a fixture
@@ -165,7 +165,7 @@ clearly-bad answers the real-traffic order was undisturbed, so Spearman came bac
 clear of the floor. Verify the candidate DOMINATES the champion on the battery locally before
 you spend a registration.
 
-### 5e. Bespoke numeric scorer — numeric intents
+### 5e. Bespoke numeric scorer, numeric intents
 
 For intents whose answer is a figure (prices, balances, scores) a tiny freestanding C scorer
 beats a transformer: parse numbers to values (strip commas and currency, apply k/m/b/t and
@@ -174,7 +174,7 @@ break ties and carry non-numeric answers, then sharpen with a monotone stretch. 
 is about 5 KB of wasm, freestanding (no libc, static arena so alloc never fails at the page
 boundary). It won SPORTS_SCORE at margin 0.9333 over 0.9298.
 
-### 5f. Three-band step — a CLOSED champion sitting at the separation ceiling
+### 5f. Three-band step, a CLOSED champion sitting at the separation ceiling
 
 The hardest case: the champion is not open source (nothing to fork and stretch) AND its margin
 is already at the ceiling, so section 2a's rule bites: your fixtures must score *exactly* 1.0

@@ -72,7 +72,7 @@ attempts showed the lock is only reachable under two conditions, and the window 
 
 1. **The intent must still be near-zero traffic.** A pure step is a constant ranking, so the
    moment an intent has real traffic the agreement gate rejects it (spearman 0). GAS_PRICE built
-   at margin exactly 1.0 and was rejected "disagreed with the champion on real traffic" — it had
+   at margin exactly 1.0 and was rejected "disagreed with the champion on real traffic", it had
    quietly gained traffic. So traffic FORECLOSES the 1.0 lock for everyone, us and rivals alike:
    once an intent is traffic-gated it is a perpetual reclaim war, never a permanent hold.
 2. **Our scorer must perfectly separate that intent's 15 fixtures** (every good above every bad
@@ -87,7 +87,7 @@ intents we hold below 1.0** (TEXT_AUTHENTICITY_CHECK 0.66, CONTENT_VERIFICATION 
 MEDIA_AUTHENTICITY_CHECK 0.99, VIDEO_VERIFICATION 0.99, RESEARCH_SYNTHESIS/TWITTER_SEARCH 0.99),
 per intent, to lock them before a rival does. The numeric and traffic-gated slots cannot be locked
 and stay on the reclaim watch; no build or obfuscation changes that. Do NOT blind-sweep a generic
-step config across all slots — it loses wins on the ones whose fixtures do not cleanly separate,
+step config across all slots, it loses wins on the ones whose fixtures do not cleanly separate,
 and burns evals (this campaign: 12 attempts, 0 new locks).
 
 ## Second campaign: the authenticity/verdict targets do not cleanly separate either (2026-08-28)

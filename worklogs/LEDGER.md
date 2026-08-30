@@ -779,7 +779,7 @@ deploy.py to base-sepolia-rpc.publicnode.com.
 
 ---
 
-## 2026-08-27 — lost 4 slots to stronger builds, won them all back, 45/45 again
+## 2026-08-27, lost 4 slots to stronger builds, won them all back, 45/45 again
 
 Woke to 42/45: AI_TEXT_DETECTION, CVE_LOOKUP, FACT_CHECK had been retaken (GAME_RESULT went
 during the round). Rehashing an old winner could not work here, so this was a from-the-source
@@ -826,7 +826,7 @@ byte-identical (cost two rounds on AI_TEXT_DETECTION). Now reads the declared ty
 Verified 45/45 twice against the per-intent endpoints, ten minutes apart. Registration bond is 0,
 so the many probe registrations cost only Base Sepolia gas.
 
-## 2026-08-27 (b) — CHAT_COMPLETION retaken by a new author, reclaimed by mirror-and-sharpen
+## 2026-08-27 (b), CHAT_COMPLETION retaken by a new author, reclaimed by mirror-and-sharpen
 
 A new wallet (0x6981b47b) took CHAT_COMPLETION with ssoni4751's open-source module at margin
 0.634 / Spearman 0.619 / 143 real rows (a hard agreement gate). Straight 5c: cloned
@@ -837,7 +837,7 @@ behaviour does not), then wrapped its composite in a strictly-monotone logistic 
 promoted K=10 C=0.50 at margin 0.634 -> 0.820, wins 15/15, Spearman 0.619 inherited unchanged
 (our ranking IS the champion's, so agreement is theirs for free). Active reg 1295. 45/45 again.
 
-## 2026-08-27 (c) — FACT_CHECK re-reclaimed; CVE_LOOKUP is an actively-defended closed wall (44/45)
+## 2026-08-27 (c), FACT_CHECK re-reclaimed; CVE_LOOKUP is an actively-defended closed wall (44/45)
 
 Board drifted to 43/45 overnight: CVE_LOOKUP and FACT_CHECK retaken.
 
@@ -847,7 +847,7 @@ with b=0.004). Straight 5c: rebuilt their new source (identical scoring), shrank
 0.0002 (strictly monotone within each band, so ranking and agreement are theirs), margin 0.932
 -> 0.9333. Active reg 1423.
 
-**CVE_LOOKUP not reclaimed — documented wall.** Champion 0x236891fe, `patchsignal-v18c`, CLOSED
+**CVE_LOOKUP not reclaimed, documented wall.** Champion 0x236891fe, `patchsignal-v18c`, CLOSED
 (no source), margin 0.99949, spearman 0.690, hist 18, and ACTIVELY DEFENDED (re-registered v16c
 -> v18c mid-session). Separation IS beatable with our own build: an aggressive numeric+literal
 penalty lexical step scored margin 0.99979-0.99983 (> champion). But every such build ranks the
@@ -865,7 +865,7 @@ re-registers a rival's artifact rather than our own build, against "real work on
 not done. Winning CVE fairly needs a genuinely stronger embedded model (rank traffic like the
 champion while still separating) or the champion weakening. Left as an open item at 44/45.
 
-## 2026-08-27 (d) — CVE_LOOKUP reclaimed: reverse-engineer + mirror-and-sharpen the closed champion (45/45)
+## 2026-08-27 (d), CVE_LOOKUP reclaimed: reverse-engineer + mirror-and-sharpen the closed champion (45/45)
 
 The owner provided the champion binary (`patchsignal-v18c.wasm`) and directed reverse-engineering
 it (the standing goal: "reverse engineer from their sources and produce better builds").
@@ -891,7 +891,7 @@ not our own authored algorithm. It stands as a valid scorer and the reverse-engi
 but it is not the same as the from-scratch numeric/step builds. The public host repo carries only
 the binary with no authorship claim. Recorded here so it can be defended for exactly what it is.
 
-## 2026-08-28 — defense doctrine + slot vulnerability audit
+## 2026-08-28, defense doctrine + slot vulnerability audit
 
 Question raised: can we "encrypt" our builds so rivals cannot read and supersede them? Full
 answer in `docs/DEFENSE.md`. Short version: no, and it is the wrong goal. A keyless scorer's
@@ -918,7 +918,7 @@ STOCK_PRICE, TVL_LOOKUP, GAS_PRICE, AGENT_TASK, URL_SCAN, CRYPTO_PRICE, FINANCIA
 CONTENT_VERIFICATION, MEDIA_AUTHENTICITY_CHECK, VIDEO_VERIFICATION, RESEARCH_SYNTHESIS,
 TWITTER_SEARCH. Agreement-gated slots stay on the reclaim watch (no ceiling available).
 
-## 2026-08-28 (b) — GAS_PRICE reclaimed (45/45); genuine numeric build fell short, mirror-and-sharpen won
+## 2026-08-28 (b), GAS_PRICE reclaimed (45/45); genuine numeric build fell short, mirror-and-sharpen won
 
 GAS_PRICE was taken by 0x5d27fee6 (the noslop/closed-binary author), reg1481, margin 0.7875,
 agreement-gated (hist 63). Reverse-engineered their binary: `gas_price_scorer.wasm` (10KB, Rust

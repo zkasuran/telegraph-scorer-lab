@@ -24,7 +24,7 @@ def env():
     return d
 
 E = env()
-BASE, KEY, MODEL = E["OPENAI_BASE_URL"], E["OPENAI_API_KEY"], E.get("OPENAI_MODEL", "gpt-4o-mini")
+BASE, KEY, MODEL = E["OPENAI_BASE_URL"], E["OPENAI_API_KEY"], E.get("OPENAI_MODEL", "model-a")
 
 PROMPTS = [
     ("Explain what a blockchain is.", "A blockchain is a distributed, append-only ledger of transactions grouped into cryptographically linked blocks and agreed on by a network through a consensus mechanism, giving a tamper-resistant record without a central authority."),

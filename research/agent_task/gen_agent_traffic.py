@@ -31,7 +31,7 @@ def env():
 
 
 E = env()
-BASE, KEY, MODEL = E["OPENAI_BASE_URL"], E["OPENAI_API_KEY"], E.get("OPENAI_MODEL", "gpt-4o-mini")
+BASE, KEY, MODEL = E["OPENAI_BASE_URL"], E["OPENAI_API_KEY"], E.get("OPENAI_MODEL", "model-a")
 
 # Agentic, multi-step tasks. The ground truth is a compact correct plan naming
 # the steps that matter, the shape a strong agent answer takes.

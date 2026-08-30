@@ -5,301 +5,301 @@
    "q": "Sort this list ascending and return only the list: [3, 1, 2, 10, 7].",
    "gt": "[1, 2, 3, 7, 10]",
    "a": "[1, 2, 3, 7, 10]",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "Sort this list ascending and return only the list: [3, 1, 2, 10, 7].",
    "gt": "[1, 2, 3, 7, 10]",
    "a": "[1, 2, 3, 7, 10]",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "Sort this list ascending and return only the list: [3, 1, 2, 10, 7].",
    "gt": "[1, 2, 3, 7, 10]",
    "a": "[1, 2, 3, 7, 10]",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "Sort this list ascending and return only the list: [3, 1, 2, 10, 7].",
    "gt": "[1, 2, 3, 7, 10]",
    "a": "[1, 2, 3, 7, 10]",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "Sort this list ascending and return only the list: [3, 1, 2, 10, 7].",
    "gt": "[1, 2, 3, 7, 10]",
    "a": "[1, 2, 3, 7, 10]",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "Extract the total from this invoice text: 'Subtotal 90.00, tax 10.00, total 100.00 USD'.",
    "gt": "100.00 USD",
    "a": "The total from the invoice text is 100.00 USD.",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "Extract the total from this invoice text: 'Subtotal 90.00, tax 10.00, total 100.00 USD'.",
    "gt": "100.00 USD",
    "a": "100.00 USD",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "Extract the total from this invoice text: 'Subtotal 90.00, tax 10.00, total 100.00 USD'.",
    "gt": "100.00 USD",
    "a": "100.00 USD",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "Extract the total from this invoice text: 'Subtotal 90.00, tax 10.00, total 100.00 USD'.",
    "gt": "100.00 USD",
    "a": "100.00 USD",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "Extract the total from this invoice text: 'Subtotal 90.00, tax 10.00, total 100.00 USD'.",
    "gt": "100.00 USD",
    "a": "100.00 USD",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "Convert 25 degrees Celsius to Fahrenheit and give only the number.",
    "gt": "77",
    "a": "77",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "Convert 25 degrees Celsius to Fahrenheit and give only the number.",
    "gt": "77",
    "a": "77",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "Convert 25 degrees Celsius to Fahrenheit and give only the number.",
    "gt": "77",
    "a": "77",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "Convert 25 degrees Celsius to Fahrenheit and give only the number.",
    "gt": "77",
    "a": "77",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "Convert 25 degrees Celsius to Fahrenheit and give only the number.",
    "gt": "77",
    "a": "77",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "From this list of emails pick the one on the example.com domain: a@test.io, b@example.com, c@mail.net.",
    "gt": "b@example.com",
    "a": "b@example.com",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "From this list of emails pick the one on the example.com domain: a@test.io, b@example.com, c@mail.net.",
    "gt": "b@example.com",
    "a": "b@example.com",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "From this list of emails pick the one on the example.com domain: a@test.io, b@example.com, c@mail.net.",
    "gt": "b@example.com",
    "a": "b@example.com",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "From this list of emails pick the one on the example.com domain: a@test.io, b@example.com, c@mail.net.",
    "gt": "b@example.com",
    "a": "b@example.com",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "From this list of emails pick the one on the example.com domain: a@test.io, b@example.com, c@mail.net.",
    "gt": "b@example.com",
    "a": "b@example.com",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "Count the words in this sentence and answer with a number only: 'the quick brown fox jumps'.",
    "gt": "5",
    "a": "5",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "Count the words in this sentence and answer with a number only: 'the quick brown fox jumps'.",
    "gt": "5",
    "a": "5",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "Count the words in this sentence and answer with a number only: 'the quick brown fox jumps'.",
    "gt": "5",
    "a": "5",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "Count the words in this sentence and answer with a number only: 'the quick brown fox jumps'.",
    "gt": "5",
    "a": "5",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "Count the words in this sentence and answer with a number only: 'the quick brown fox jumps'.",
    "gt": "5",
    "a": "5",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "Turn this date into ISO 8601: March 4th 2026.",
    "gt": "2026-03-04",
    "a": "2026-03-04",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "Turn this date into ISO 8601: March 4th 2026.",
    "gt": "2026-03-04",
    "a": "2026-03-04",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "Turn this date into ISO 8601: March 4th 2026.",
    "gt": "2026-03-04",
    "a": "2026-03-04",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "Turn this date into ISO 8601: March 4th 2026.",
    "gt": "2026-03-04",
    "a": "2026-03-04",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "Turn this date into ISO 8601: March 4th 2026.",
    "gt": "2026-03-04",
    "a": "2026-03-04",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "Given prices 12.50, 3.25 and 8.00, return the sum with two decimals.",
    "gt": "23.75",
    "a": "The sum of 12.50, 3.25, and 8.00 is 23.75.",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "Given prices 12.50, 3.25 and 8.00, return the sum with two decimals.",
    "gt": "23.75",
    "a": "23.75",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "Given prices 12.50, 3.25 and 8.00, return the sum with two decimals.",
    "gt": "23.75",
    "a": "23.75",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "Given prices 12.50, 3.25 and 8.00, return the sum with two decimals.",
    "gt": "23.75",
    "a": "23.75",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "Given prices 12.50, 3.25 and 8.00, return the sum with two decimals.",
    "gt": "23.75",
    "a": "23.75",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "Write a regular expression that matches a UK postcode like SW1A 1AA.",
    "gt": "^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$",
    "a": "The regular expression that matches a UK postcode like SW1A 1AA is:\n\n`^([A-Z]{1,2}[0-9][A-Z]?)\\s?([0-9][A-Z]{2})$`",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "Write a regular expression that matches a UK postcode like SW1A 1AA.",
    "gt": "^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$",
    "a": "^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "Write a regular expression that matches a UK postcode like SW1A 1AA.",
    "gt": "^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$",
    "a": "```\n^[A-Za-z]{1,2}[0-9][A-Za-z0-9]? ?[0-9][A-Za-z]{2}$\n```",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "Write a regular expression that matches a UK postcode like SW1A 1AA.",
    "gt": "^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$",
    "a": "^[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{2}$\n\nUse with the case-insensitive flag (or replace `[A-Z]` with `[A-Za-z]`). For strict validation including the special case `GIR 0AA`, use: `^(GIR 0AA|[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{2})$`.",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "Write a regular expression that matches a UK postcode like SW1A 1AA.",
    "gt": "^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$",
    "a": "^[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2}$",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "Return this JSON with the name field uppercased: {\"name\": \"ada\", \"age\": 36}.",
    "gt": "{\"name\": \"ADA\", \"age\": 36}",
    "a": "{\"name\": \"ADA\", \"age\": 36}",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "Return this JSON with the name field uppercased: {\"name\": \"ada\", \"age\": 36}.",
    "gt": "{\"name\": \"ADA\", \"age\": 36}",
    "a": "{\"name\": \"ADA\", \"age\": 36}",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "Return this JSON with the name field uppercased: {\"name\": \"ada\", \"age\": 36}.",
    "gt": "{\"name\": \"ADA\", \"age\": 36}",
    "a": "{\"name\": \"ADA\", \"age\": 36}",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "Return this JSON with the name field uppercased: {\"name\": \"ada\", \"age\": 36}.",
    "gt": "{\"name\": \"ADA\", \"age\": 36}",
    "a": "{\"name\": \"ADA\", \"age\": 36}",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "Return this JSON with the name field uppercased: {\"name\": \"ada\", \"age\": 36}.",
    "gt": "{\"name\": \"ADA\", \"age\": 36}",
    "a": "{\"name\": \"ADA\", \"age\": 36}",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "Deduplicate this list, keeping order: [a, b, a, c, b].",
    "gt": "[a, b, c]",
    "a": "[a, b, c]",
-   "model": "gpt-4o-mini"
+   "model": "model-a"
   },
   {
    "q": "Deduplicate this list, keeping order: [a, b, a, c, b].",
    "gt": "[a, b, c]",
    "a": "a, b, c",
-   "model": "gemini-2.5-flash"
+   "model": "model-b"
   },
   {
    "q": "Deduplicate this list, keeping order: [a, b, a, c, b].",
    "gt": "[a, b, c]",
    "a": "[a, b, c]",
-   "model": "deepseek-v4-flash"
+   "model": "model-c"
   },
   {
    "q": "Deduplicate this list, keeping order: [a, b, a, c, b].",
    "gt": "[a, b, c]",
    "a": "[a, b, c]",
-   "model": "kimi-k2.5"
+   "model": "model-e"
   },
   {
    "q": "Deduplicate this list, keeping order: [a, b, a, c, b].",
    "gt": "[a, b, c]",
    "a": "[a, b, c]",
-   "model": "glm-5.1"
+   "model": "model-f"
   },
   {
    "q": "Sort this list ascending and return only the list: [3, 1, 2, 10, 7].",

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/status-45%2F45_intents_held-brightgreen?style=for-the-badge" alt="Status: 45/45 intents held"/>
+  <img src="https://img.shields.io/badge/licence-source--available-blue?style=for-the-badge" alt="Licence: source-available"/>
   <img src="https://img.shields.io/badge/lang-Rust%20%7C%20C%20%7C%20Go%20%7C%20Python-blue?style=for-the-badge" alt="Languages"/>
   <img src="https://img.shields.io/badge/target-wasm32--unknown--unknown-orange?style=for-the-badge" alt="Target: wasm32"/>
   <img src="https://img.shields.io/badge/wallet-0x8b22...5287-blueviolet?style=for-the-badge" alt="Wallet"/>
@@ -8,7 +8,7 @@
 <h1 align="center">⚡ Telegraph Scorer Lab</h1>
 
 <p align="center">
-  <strong>The private method home for Telegraph Protocol Track 2 scoring modules.</strong><br/>
+  <strong>The method home for Telegraph Protocol Track 2 scoring modules.</strong><br/>
   Build, verify, register, and defend all 45 canonical intent slots on-chain.
 </p>
 
@@ -53,7 +53,7 @@
 
 Telegraph runs a **permissionless, on-chain contest** for each of its 45 canonical intents
 (CHAT\_COMPLETION, SPORTS\_SCORE, WALLET\_BALANCE\_CHECK, FINANCIAL\_DATA, WEATHER\_FORECAST,
-AI\_TEXT\_DETECTION, and 39 others). Anyone can register a WebAssembly module that scores a
+AI\_TEXT\_DETECTION and 39 others). Anyone can register a WebAssembly module that scores a
 miner's answer against a question and a ground truth. The validator node promotes the module
 that scores best on that intent's hidden fixtures and real traffic. **Hold the slot and you
 own how that intent is scored network-wide.**
@@ -67,19 +67,23 @@ This repository is the canonical record of how we:
 | 3 | **Register** | Automated Python drivers: batch host, push, verify URL, register on-chain |
 | 4 | **Defend** | Iterate on the node's evaluation feedback, reclaim lost slots same-day |
 
-### Current Status
+### Reading the numbers in this repository
 
-| Metric | Value |
-|--------|-------|
-| **Intents held** | 45 / 45 |
-| **Wallet** | `0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287` |
-| **Verified** | Every `/intents/<id>` read back on 2026-08-27 |
-| **CVE_LOOKUP** | reclaimed by reverse-engineering the closed `patchsignal-v18c` champion and mirror-and-sharpening it (owner-provided binary, EPS=1.0 smoothstep, margin 0.9999948, agreement 0.728, reg 1446). See LEDGER 2026-08-27 (d). |
-| **Same-day reclaims** | AI\_TEXT\_DETECTION, GAME\_RESULT, CHAT\_COMPLETION (reg 1295), FACT\_CHECK (reg 1423) |
+Every margin, win count and agreement figure here came off the node's own `EvalDetails`
+on the date beside it. The board is contested continuously, so any count of held slots
+is true for its timestamp and nothing more. Read the live state instead of trusting a
+number in a README:
 
-> **This is a private lab.** The public host repo
-> [`telegraph-salience-scorer`](https://github.com/zkasuran/telegraph-salience-scorer) carries
-> only `dist/` binaries and a neutral README. All method work happens here.
+```bash
+python3 -c "from Crypto.Hash import keccak;h=keccak.new(digest_bits=256);h.update(b'CHAT_COMPLETION');print(h.hexdigest())"
+curl -s https://devnode.telegraphprotocol.com/engine/validator/v1/intents/<that id>
+```
+
+The wallet behind every registration discussed here is
+`0x8b224783FE5b3c52B7DB0cb9B1754f8812b75287`. The compiled modules live in the public
+host repository [`telegraph-salience-scorer`](https://github.com/zkasuran/telegraph-salience-scorer),
+which is what the node fetches. This repository is the method: the module source, the
+drivers, the harness and the worklogs behind those binaries.
 
 ---
 
@@ -99,7 +103,7 @@ held under one wallet.
 ### Phase 2 · The Field Hits Back (45 → 27)
 
 A strong author (ScoreWire, `0xd4c7...8ef9`) took fifteen slots with one good scorer reused
-across intents. Two others took one each. We fell to **27/45** — fair and square on the exact
+across intents. Two others took one each. We fell to **27/45**, fair and square on the exact
 measure the protocol promotes on.
 
 ### Phase 3 · The Two-Day Climb Back (27 → 45)
@@ -120,7 +124,7 @@ Last slot (`CONTENT_EXTRACTION`) needed character-gram-dominant blend + embeddin
 ### Phase 4 · Better Builds Arrive & The Miner Pivot
 
 Purpose-built challengers (several open-source) took CURRENCY\_EXCHANGE, FRAUD\_DETECTION,
-SPORTS\_SCORE, WALLET\_BALANCE\_CHECK, and CHAT\_COMPLETION. In parallel we opened a second
+SPORTS\_SCORE, WALLET\_BALANCE\_CHECK and CHAT\_COMPLETION. In parallel we opened a second
 front: five keyless miners on the demand side.
 
 ### Phase 5 · Reverse-Engineer, Then Out-Build
@@ -195,7 +199,7 @@ candidate_wins >= champion_wins
 ```
 
 </td>
-<td>Rank good above bad on at least as many fixture cases. <strong>Hardest gate</strong> — no contrast fixes a wins loss.</td>
+<td>Rank good above bad on at least as many fixture cases. <strong>Hardest gate</strong>: no contrast fixes a wins loss.</td>
 </tr>
 <tr>
 <td>
@@ -252,7 +256,7 @@ Every registration returns a labelled measurement:
 | `champion_margin` | The incumbent's separation |
 | `candidate_wins` / `champion_wins` | Fixture cases each ranked correctly |
 | `comparable_cases` | Total fixture cases evaluated |
-| `spearman` | `{INTENT: r}` — rank correlation with champion on real traffic |
+| `spearman` | `{INTENT: r}`: rank correlation with champion on real traffic |
 | `historical_rows_evaluated` | How many real-traffic rows the agreement gate saw |
 | `score_stddev` | Spread of your scores |
 | `worst_self_match` | Lowest score on a known-correct answer |
@@ -373,7 +377,7 @@ telegraph-scorer-lab/
 
 ## 🦀 The Rust Scoring Module
 
-The heart of the system. A `no_std` wasm32 crate — ~1 MB lexical, ~24 MB with MiniLM.
+The heart of the system. A `no_std` wasm32 crate: ~1 MB lexical, ~24 MB with MiniLM.
 
 ### Scoring Pipeline
 
@@ -455,7 +459,7 @@ The heart of the system. A `no_std` wasm32 crate — ~1 MB lexical, ~24 MB with 
 
 The module embeds the **top 14,700 GloVe vectors** (50-dimensional, int8-quantised, 775 KiB).
 Cosine similarity via integer dot product over 50 bytes. Vectors supply **topicality, not
-correctness** — distributional vectors put "rise" and "fall" at cosine 0.88, so direction
+correctness**, distributional vectors put "rise" and "fall" at cosine 0.88, so direction
 stays with the polarity axes.
 
 ### Special Handling
@@ -511,7 +515,7 @@ Text → WordPiece Tokenize → Embeddings (word + position + type)
 | `embB` | Full 6 layers | Deep semantic similarity |
 | `embQ` | Answer-to-question | Relevance to query |
 
-Fine-tuning moves last layers most — shallower taps can track a fine-tuned champion better
+Fine-tuning moves last layers most, shallower taps can track a fine-tuned champion better
 than our own last layer.
 
 ### Caching
@@ -523,7 +527,7 @@ answers against the same question/GT).
 
 ## 🔧 The C Numeric Scorer
 
-For intents whose answer is a **figure** (prices, balances, scores) — ~5 KB of wasm that
+For intents whose answer is a **figure** (prices, balances, scores): ~5 KB of wasm that
 beats a transformer.
 
 ### Design Philosophy
@@ -553,7 +557,7 @@ clang --target=wasm32 -nostdlib -O2 -fno-builtin \
 
 | Property | Detail |
 |----------|--------|
-| Dependencies | None — no libc, no imports, fully freestanding |
+| Dependencies | None: no libc, no imports, fully freestanding |
 | Allocator | Static arena, wraps at page boundary |
 | Binary size | ~5 KB |
 | Determinism | Same input → same output, always |
@@ -633,10 +637,10 @@ reg_batch.py ──────────────────────�
 
 | Script | Purpose |
 |--------|---------|
-| `build_xfmr.py` | Single build entry point — patch, build, output to `dist/` |
+| `build_xfmr.py` | Single build entry point: patch, build, output to `dist/` |
 | `variants.py` | Named full configs (see table above) |
 | `deploy.py` | Low-level on-chain `registerWasm` (wallet key → tx) |
-| `reg_batch.py` | **The workhorse** — host + verify + register N modules in one push |
+| `reg_batch.py` | **The workhorse**: host + verify + register N modules in one push |
 | `reg_xfmr.py` | Single-file register path (large builds) |
 | `reclaim.py` | Build challengers for currently-lost slots |
 | `reclaim_round.py` | Multi-slot reclaim automation |
@@ -662,12 +666,12 @@ reg_batch.py ──────────────────────�
 
 ## 📊 Benchmarks & Attack Suite
 
-### General Benchmark (`benchmark.json` — 40 cases)
+### General Benchmark (`benchmark.json`: 40 cases)
 
 Each case: `question`, `ground_truth`, `good` (correct, rephrased), `bad` (plausible wrong).
 Covers 25+ intent types from CHAT\_COMPLETION to LANGUAGE\_GENERATION.
 
-### Attack Suite (`attacks.json` — 12 adversarial cases)
+### Attack Suite (`attacks.json`: 12 adversarial cases)
 
 | # | Attack | Rule | Tests |
 |---|--------|------|-------|
@@ -695,8 +699,8 @@ Covers 25+ intent types from CHAT\_COMPLETION to LANGUAGE\_GENERATION.
 ### Traffic Proxies
 
 Per-intent synthesised traffic in two densities:
-- **Plain** (`traffic-<intent>.json`) — concise miner answers
-- **Verbose** (`traffic-verbose-<intent>.json`) — LLM-style padded answers
+- **Plain** (`traffic-<intent>.json`): concise miner answers
+- **Verbose** (`traffic-verbose-<intent>.json`): LLM-style padded answers
 
 Used for local Spearman ranking before spending a registration.
 
@@ -897,10 +901,10 @@ Holding the judge is one half. We also field five **keyless** miners:
 
 ### Why This Isn't a Conflict
 
-- The scorer is a **pure function of (question, ground\_truth, answer)** — no author address,
+- The scorer is a **pure function of (question, ground\_truth, answer)**, no author address,
   no wallet, no slug. Cannot distinguish our miner from anyone else's.
 - Runs sandboxed: no network, no filesystem. Could not look up authorship even if it tried.
-- Both miner and scorer code are open source — anyone can audit.
+- Both miner and scorer code are open source, anyone can audit.
 - The protocol's own agreement gate rejects self-favouring: to hold a slot, your scorer must
   rank real traffic the way an independent champion does.
 
@@ -912,10 +916,10 @@ Each lesson paid for in a rejected registration or a lost slot:
 
 | # | Lesson | Detail |
 |---|--------|--------|
-| 1 | **Margin decodes to a fixture count** | `margin ≈ 0.010 + 0.98·(k/cases)` — a rejection is a readout |
+| 1 | **Margin decodes to a fixture count** | `margin ≈ 0.010 + 0.98·(k/cases)`: a rejection is a readout |
 | 2 | **Monotone transforms are the master key** | Wins + Spearman invariant; only margin moves |
 | 3 | **…but monotone can't FIX ranking** | Fix ranking first, then buy margin |
-| 4 | **A flat win count is a confession** | The knob you're turning isn't the cause — suspect your own penalty |
+| 4 | **A flat win count is a confession** | The knob you're turning isn't the cause, suspect your own penalty |
 | 5 | **Two gate-loss modes are named** | "Ordering" = wins shortfall, "Separation" = margin shortfall |
 | 6 | **Agreement binds by traffic volume** | 45+ rows binds hard; 1–3 barely binds |
 | 7 | **Local proxies mislead** | 0.42 local vs 0.93 on-node, seen more than once. Node is the oracle |
@@ -1006,23 +1010,44 @@ python3 scorer-drivers/sw_poll.py
 
 ---
 
+## 📜 Licence
+
+The module source, the drivers, the harness, the research and the worklogs here are the
+work of zkasuran under [`LICENSE`](LICENSE), a source-available no-derivatives licence.
+Read it, compile it, run it against your own inputs, publish what you find. Do not
+redistribute it, ship a modified build or register a build of it as your own scoring
+module.
+
+The method is published on purpose. `docs/METHOD.md` states how the node's three
+promotion gates actually behave, decoded from its own accept and reject numbers, and
+`worklogs/LEDGER.md` records every registration including the ones that failed. That is
+meant to be read and argued with. The licence covers the code, not the ideas.
+
+Parts of this repository are not ours. The embedded model weights, the harness's
+dependencies and the analysis of other authors' modules keep their own licences, listed
+in [`NOTICE`](NOTICE) with full texts in [`LICENSES/`](LICENSES). Where an upstream
+licence is more permissive than ours, it governs that component.
+
+---
+
 ## ⚖️ Guidelines
 
 ### Repository Visibility
-- Public host repo **must stay public** — privating it 404s the node's fetch
-- All method work happens **here** (private lab), never in the public repo
-- Never name this lab in outward-facing text
+- Public host repo **must stay public**. Privating it 404s the node's anonymous fetch and
+  stalls every new registration
+- The host repo carries `dist/` and its licence files; the method lives here
+- Registrations are commit-pinned, so a file is never rewritten in place
 
 ### Honesty
 - Report only what the **node confirms** (not local predictions)
-- Builds are genuine scorers — they win by actually separating/ranking better
+- Builds are genuine scorers: they win by actually separating/ranking better
 - Forking open-source champions is fair (strictly better scorer, not a copy)
 
 ### Operating Discipline
-- **Node is the oracle** — local agreement over-reads (0.69 local vs 0.23 on-node)
-- **Batch registrations** — spread when uncertain, let the node pick
-- **Don't panic-rebuild** during outages — poll and wait
-- **Reproducible builds** — full configs or named presets
+- **Node is the oracle**: local agreement over-reads (0.69 local vs 0.23 on-node)
+- **Batch registrations**: spread when uncertain, let the node pick
+- **Don't panic-rebuild** during outages, poll and wait
+- **Reproducible builds**: full configs or named presets
 - **Verify forks reproduce** before trusting them
 
 ### When a Slot is Lost
@@ -1039,7 +1064,10 @@ python3 scorer-drivers/sw_poll.py
 |----------|---------------|
 | [`docs/METHOD.md`](docs/METHOD.md) | Promotion gates, all techniques, the full decision tree |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | What every file and directory does |
-| [`docs/RUNBOOK.md`](docs/RUNBOOK.md) | Build, host, register, poll, iterate — day-to-day |
+| [`docs/RUNBOOK.md`](docs/RUNBOOK.md) | Build, host, register, poll, iterate: day-to-day |
+| [`LICENSE`](LICENSE) | Terms for this repository's own code |
+| [`NOTICE`](NOTICE) | Third-party components and the licence each one carries |
+| [`LICENSES/`](LICENSES) | Full licence texts, so they travel with the code |
 | [`docs/KNOBS.md`](docs/KNOBS.md) | Every tunable constant with defaults and effects |
 | [`docs/GUIDELINES.md`](docs/GUIDELINES.md) | Non-negotiable rules: visibility, honesty, cost |
 

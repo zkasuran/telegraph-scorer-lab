@@ -19,8 +19,12 @@ from concurrent.futures import ThreadPoolExecutor
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-MODELS = ["gpt-4o-mini", "gemini-2.5-flash", "deepseek-v4-flash",
-          "qwen3.6-27b", "kimi-k2.5", "glm-5.1"]
+# Six distinct commercial chat models, answering the same request. The labels are
+# deliberately neutral: what the corpus needs is several fluent answers per request from
+# genuinely different models, not any particular vendor. Set MODELS to the ids your own
+# OpenAI-compatible endpoint serves.
+MODELS = ["model-a", "model-b", "model-c",
+          "model-d", "model-e", "model-f"]
 
 # A dead miner returns nothing or an apology, which is why several miners sit at
 # score 0.0000 on the node's leaderboard. Those rows are part of the ranking.

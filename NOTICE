@@ -1,0 +1,94 @@
+# Third-party notices
+
+Everything in this repository is the work of zkasuran under [`LICENSE`](LICENSE),
+except the components below. Those keep their own licences, and where an upstream
+licence is more permissive than ours it governs that component. Full texts are in
+[`LICENSES/`](LICENSES).
+
+---
+
+## Embedded model weights
+
+`module/src/*.bin` are sentence-embedding weights, quantised and repacked into a fixed
+binary layout that the no_std module reads sequentially. The layout, the packing tools
+and the inference code are ours. The weights are not.
+
+| Blob | Model | Licence | Text |
+| --- | --- | --- | --- |
+| `minilm.bin` (22.9 MB) | `sentence-transformers/all-MiniLM-L6-v2` | Apache-2.0 | `LICENSES/Apache-2.0-all-MiniLM-L6-v2.txt` |
+| `gte-small.bin` (27.9 MB) | `thenlper/gte-small` | MIT | `LICENSES/MIT-thenlper-gte-small.txt` |
+| `vectors.bin`, `vectors-glove.bin` | GloVe 6B, Pennington, Socher and Manning 2014, Stanford NLP | PDDL-1.0 | `LICENSES/PDDL-1.0-GloVe.txt` |
+
+Apache-2.0 requires its notice to travel with the work, which is what this entry and
+that licence file do. `module/src/minilm.rs` reimplements the MiniLM forward pass from
+the published architecture; the code is ours, the trained parameters are Apache-2.0.
+
+### `vectors-champ.bin` is a distillation of another module and is not published
+
+`vectors-champ.bin` (11.6 MB) is a table of 384-dimensional vectors obtained by running
+words through the `embed()` export of the Telegraph baseline scoring module, which is
+`telegraphprotocol/telegraph-wasm-baseline`, MIT © 2026 telegraphprotocol
+(`LICENSES/MIT-telegraphprotocol-wasm-baseline.txt`). The vectors are that model's
+outputs, not ours.
+
+MIT would permit publishing it. It is still removed from this repository, for two
+reasons worth stating plainly: it is derived parameter data from someone else's model
+rather than anything we trained, and it is dead weight, since nothing in the tree reads
+it (`lib.rs` embeds `vectors.bin`, `minilm.rs` embeds `minilm.bin`). The method that
+produced it stays documented in `worklogs/LEDGER.md` under 2026-08-18, and
+`reference/distill` regenerates it from the baseline module in an afternoon. Removing
+the artefact does not hide anything: the recipe is published, the source model is
+public and MIT.
+
+---
+
+## Analysis of other authors' modules
+
+`research/` contains our own measurements of scoring modules published by other
+Telegraph participants. Reverse engineering a published binary, and writing down what
+it does, is our work and is covered by `LICENSE`. The modules themselves are not ours
+and none of their bytes are reproduced here.
+
+| File | Subject | Author | What is recorded |
+| --- | --- | --- | --- |
+| `research/cve_patchsignal_reverse.md` | `patchsignal-v18c` (CVE_LOOKUP) | `0x236891fe`, no licence published | its feature model and its black-box response, recovered from the binary its owner supplied to us and asked us to analyse |
+| `research/agent_task/champ-scores.json`, `bench/champ-real-scores.json`, `bench/champion-corpus-scores.json` | the Telegraph baseline module | MIT © 2026 telegraphprotocol | scores it produced on inputs we wrote |
+
+Those score files are numbers a public module returned for questions we authored. They
+are measurements, not a copy of the module.
+
+`worklogs/LEDGER.md` also records forks of three MIT-licensed modules, whose notices
+travel with the binaries in the public host repository rather than here:
+
+- `assay`, MIT © GreatSage-dev, <https://github.com/GreatSage-dev/Assay>
+- `telegraph-wasm-scoring`, MIT © 2026 telegraphprotocol, published by ssoni4751
+- `amanat`, MIT © 2026 Pugar Huda Mantoro, <https://github.com/PugarHuda/amanat>
+
+Their licence texts are in `LICENSES/` so this repository carries them too.
+
+---
+
+## Build and test dependencies
+
+| Component | Used by | Licence | Text |
+| --- | --- | --- | --- |
+| wazero | `harness/`, loads a module the same way a node does | Apache-2.0 | `LICENSES/Apache-2.0-wazero.txt` |
+| walrus | `scorer-drivers/tools/wrap/`, rewrites a compiled module's exports | MIT or Apache-2.0 | `LICENSES/MIT-walrus.txt`, `LICENSES/Apache-2.0-walrus.txt` |
+
+The Rust scoring module itself has no dependencies. `module/Cargo.lock` carries one
+package, which is the module.
+
+---
+
+## Test corpora
+
+`bench/traffic-*.json` and `research/*/traffic-*.json` hold answers written by
+commercial language models to questions we authored, generated to approximate the shape
+of the traffic the node's agreement gate ranks. They are model output over our prompts,
+kept as fixtures. No corpus here is a copy of another participant's dataset and none
+reproduces a miner's recorded answers from the network.
+
+`research/task_completion/node-leaderboard.json` is a snapshot of one public
+leaderboard endpoint: miner slugs, scores and ranks the node published at epoch 233.
+Public protocol state, recorded with its epoch so it reads as a snapshot rather than a
+current claim.

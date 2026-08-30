@@ -16,7 +16,7 @@ registration is a measurement.
   build from `./module`, which is this lab's module synced into that checkout).
 - `node` for the head-to-head harness scripts.
 
-## Step 1 — read the live champion
+## Step 1, read the live champion
 
 ```bash
 # intent id = keccak256(NAME); champion is the active entry
@@ -29,7 +29,7 @@ Note the champion's margin, wins, Spearman, `historical_rows_evaluated` and its 
 URL tells you if it is forkable (open-source github) or closed (IPFS, R2, dropbox). The row
 count tells you if agreement binds.
 
-## Step 2 — build a challenger
+## Step 2, build a challenger
 
 Module variant:
 ```bash
@@ -46,7 +46,7 @@ clang --target=wasm32 -nostdlib -O2 -fno-builtin -Wl,--no-entry -Wl,--export-dyn
 Pick the technique from `docs/METHOD.md` section 5. Build a SPREAD when a knob's node effect
 is uncertain; the node promotes the best of them from one push.
 
-## Step 3 — verify locally before spending a registration
+## Step 3, verify locally before spending a registration
 
 For a closed champion, run the head-to-head: download its binary, score it against your
 candidate on a fixture battery, and confirm your candidate wins every case the champion wins.
@@ -60,7 +60,7 @@ ranking (bit-identical scores) and that the sharpen preserves argsort while rais
 The harness in `harness/` runs the node's gates over `bench/` fixtures for a first-cut read.
 Local agreement over-reads, so use it to rank, not to predict the gate.
 
-## Step 4 — host and register
+## Step 4, host and register
 
 ```bash
 python3 scorer-drivers/reg_batch.py \
@@ -70,19 +70,19 @@ python3 scorer-drivers/reg_batch.py \
 serves the exact bytes and keccak, then registers. A dry run (omit `--send`) prints hashes and
 sizes only.
 
-## Step 5 — poll and read back
+## Step 5, poll and read back
 
 ```bash
 python3 scorer-drivers/sw_poll.py     # edit the target-intent map first
 ```
 Watch each challenger's `EvalDetails`. Three outcomes:
-- promoted (active author becomes us) — done, move on.
-- rejected on ordering — you lost a case; go back to step 3 head-to-head and find it.
-- rejected on separation — raise the margin (more step or contrast) but keep the ranking.
-- rejected on agreement (rare, only when rows bind) — your ranking diverged; soften whatever
+- promoted (active author becomes us), done, move on.
+- rejected on ordering, you lost a case; go back to step 3 head-to-head and find it.
+- rejected on separation, raise the margin (more step or contrast) but keep the ranking.
+- rejected on agreement (rare, only when rows bind), your ranking diverged; soften whatever
   penalty or contrast reordered real traffic, or move toward the champion's blend.
 
-## Step 6 — refresh the monitor
+## Step 6, refresh the monitor
 
 ```bash
 python3 scorer-drivers/tools/bake_monitor.py   # rebakes SCORER-MONITOR.html, prints X/45 held
