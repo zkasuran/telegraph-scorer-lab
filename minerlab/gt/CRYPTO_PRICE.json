@@ -1,0 +1,5 @@
+{
+ "question": "What is the current price of Bitcoin (BTC) in USD?",
+ "ground_truth": "The current price of Bitcoin (BTC) is approximately $78,801.00 USD, reflecting a 24-hour change of +1.23%, with a market capitalization of about $1.58 trillion and a circulating supply of about 20.1 million BTC.",
+ "source": "leader chainsight-oracle live answer, self-score >=0.98"
+}

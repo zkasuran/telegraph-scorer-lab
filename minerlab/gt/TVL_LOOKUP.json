@@ -1,0 +1,5 @@
+{
+ "question": "What is the total value locked in Aave?",
+ "ground_truth": "The current total value locked (TVL) in the Aave lending protocol on all chains is approximately $30.99 billion, according to DeFiLlama data.",
+ "source": "leader chainsight-oracle live answer, self-score >=0.98"
+}

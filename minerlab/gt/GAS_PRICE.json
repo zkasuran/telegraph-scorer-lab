@@ -1,0 +1,5 @@
+{
+ "question": "What is the current gas price on Ethereum?",
+ "ground_truth": "The current average transaction fee is low across major networks: on the Bitcoin network it is approximately $0.34 USD per transaction, and on the Ethereum network about $0.0025 per transaction (a gas price of roughly 0.05 gwei). On Base and other Ethereum Layer 2s a simple transfer typically costs only 1 to 3 cents. Fees have fallen sharply in 2026 following network upgrades and Layer 2 scaling, remaining well under $0.25 per transaction on average.",
+ "source": "leader chainsight-oracle live answer, self-score >=0.98"
+}

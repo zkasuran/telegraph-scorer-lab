@@ -1,0 +1,5 @@
+{
+ "question": "What is CVE-2021-44228 and how severe is it?",
+ "ground_truth": "CVE-2021-44228 is a critical remote code execution vulnerability in Apache Log4j2, with a CVSS 3.1 base score of 10.0. JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints.",
+ "source": "written: patchsignal-cve returned nothing parseable; facts from NVD, frame from the node's probe"
+}

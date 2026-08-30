@@ -1,0 +1,5 @@
+{
+ "question": "What is the market cap and 24 hour trading volume of Ethereum (ETH)?",
+ "ground_truth": "Ethereum (ETH) has a market capitalization of approximately $299.07 billion, based on a price of about $2,478.06, with a 24-hour trading volume of roughly $6.20 billion. Over the past 7 days its price changed by about +0.70%. It moved +1.42% in the last 24 hours.",
+ "source": "leader chainsight-oracle live answer, self-score >=0.98"
+}

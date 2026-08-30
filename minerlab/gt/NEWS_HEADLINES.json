@@ -1,0 +1,5 @@
+{
+ "question": "What are the top technology news headlines today?",
+ "ground_truth": "Top technology headlines today cover Gamescom coverage, a new AI model release, and chip supply news.",
+ "source": "written: we already hold rank 1; proxy keeps the harness complete"
+}

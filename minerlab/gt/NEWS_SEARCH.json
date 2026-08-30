@@ -1,0 +1,5 @@
+{
+ "question": "Find recent news articles about artificial intelligence regulation.",
+ "ground_truth": "Recent coverage of artificial intelligence regulation includes reporting on the EU AI Act enforcement timeline and new state level rules in the United States.",
+ "source": "written: tavily needs a key from here; frame from the node's leaked NEWS_SEARCH probe"
+}

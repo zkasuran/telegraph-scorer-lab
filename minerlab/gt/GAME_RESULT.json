@@ -1,0 +1,5 @@
+{
+ "question": "Who won the most recent Los Angeles Lakers game and what was the score?",
+ "ground_truth": "The Charlotte Hornets beat the Los Angeles Lakers 135-117.",
+ "source": "written: fourcast returned nothing parseable; frame from the node's leaked GAME_RESULT probe"
+}

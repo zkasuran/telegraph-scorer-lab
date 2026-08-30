@@ -1,0 +1,5 @@
+{
+ "question": "What was the score of the latest Manchester United match?",
+ "ground_truth": "Ipswich Town and Manchester United are drawing 0-0 in the Premier League.",
+ "source": "written: we already hold rank 1; proxy keeps the harness complete"
+}

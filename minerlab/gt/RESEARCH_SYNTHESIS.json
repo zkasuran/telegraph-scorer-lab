@@ -1,0 +1,5 @@
+{
+ "question": "Synthesise what recent studies conclude about intermittent fasting.",
+ "ground_truth": "Recent studies find intermittent fasting produces weight loss comparable to continuous calorie restriction, with some improvement in insulin sensitivity and no clear advantage for long term adherence.",
+ "source": "written: weerakorn-miner returned nothing parseable"
+}

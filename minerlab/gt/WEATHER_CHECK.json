@@ -1,0 +1,5 @@
+{
+ "question": "What is the current temperature and feels-like temperature in Tokyo, Japan?",
+ "ground_truth": "The current temperature in Tokyo, Japan is 23.1C, and it feels like 27.2C. Over the next 24 hours, temperatures range from 22C to 29C, with a chance of overcast, and precipitation chances ranging from 0% to 9%. As of 2026-08-30T15:30Z.",
+ "source": "leader isobar-weather live answer, self-score >=0.98"
+}

@@ -1,0 +1,5 @@
+{
+ "question": "Is the TLS certificate for example.com valid?",
+ "ground_truth": "valid",
+ "source": "leader livecert live answer, self-score >=0.98"
+}

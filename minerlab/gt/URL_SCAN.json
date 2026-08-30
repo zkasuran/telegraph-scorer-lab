@@ -1,0 +1,5 @@
+{
+ "question": "Is https://example.com safe to visit?",
+ "ground_truth": "The URL https://example.com is assessed as safe, with a risk score of 0.1 on a 0 (safe) to 1 (unsafe) scale, because no phishing, malware, or scam indicators were detected.",
+ "source": "leader chainsight-oracle live answer, self-score >=0.98"
+}

@@ -1,0 +1,5 @@
+{
+ "question": "What is the current exchange rate from USD to EUR?",
+ "ground_truth": "The current exchange rate between US Dollars (USD) and Euros (EUR) is 1 USD = 0.9 EUR. This rate reflects the mid-market value and is updated as of today.",
+ "source": "leader chainsight-oracle live answer, self-score >=0.98"
+}

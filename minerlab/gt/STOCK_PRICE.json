@@ -1,0 +1,5 @@
+{
+ "question": "What is the current stock price of AAPL?",
+ "ground_truth": "The current share price of Apple Inc (AAPL) is $319.70 USD.",
+ "source": "leader chainsight-oracle live answer, self-score >=0.98"
+}

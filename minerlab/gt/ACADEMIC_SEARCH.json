@@ -1,0 +1,5 @@
+{
+ "question": "Find recent peer-reviewed papers on climate change adaptation.",
+ "ground_truth": "papers",
+ "source": "leader livecert live answer, self-score >=0.98"
+}

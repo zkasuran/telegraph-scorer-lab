@@ -1,0 +1,5 @@
+{
+ "question": "Extract the main text content from https://example.com",
+ "ground_truth": "Example Domain",
+ "source": "leader microlink-url-extraction live answer, self-score >=0.98"
+}

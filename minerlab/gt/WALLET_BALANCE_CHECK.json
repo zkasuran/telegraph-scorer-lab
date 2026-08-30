@@ -1,0 +1,5 @@
+{
+ "question": "What is the current native-coin balance of address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on Ethereum?",
+ "ground_truth": "The native-coin balance of wallet address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on the Ethereum chain is 109094.32 ETH.",
+ "source": "leader chainsight-oracle live answer, self-score >=0.98"
+}

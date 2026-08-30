@@ -210,3 +210,31 @@ by hand. GAS_PRICE has two settled ERC-8183 jobs, 50.818198860177751874 MACHINA 
 `SUBMIT-PACKET.md` is the defence document: what was built, every measured number,
 the design rationale, the CHAT_COMPLETION rejections and the questions a judge is
 most likely to ask.
+
+## The miner side, 2026-08-30: 25 miners relicensed and rebuilt on measurement
+
+Separate from the scorer war above. The 25 authored miners had two problems: several read sources
+whose own terms bar a paid miner, while their answers were written to a guess about what the node
+rewards. Both are fixed. The measurement that fixed them is in `minerlab/` with its own README.
+
+**Nothing here needs a human.** Every miner is deployed and answering, all 25 descriptors are
+re-registered on-chain (registrations 343 to 375) and validated against the live workers, with the
+seven previously unpublished lanes now public repos. What remains is node-gated: rank only moves when
+the node re-scores, roughly every 2.5 hours.
+
+**One open item worth a decision when there is budget.** Two intents have no source whose licence
+permits a paid miner to republish its figures. Both now say so in the answer rather than serving a
+figure we may not use:
+
+- STOCK_PRICE. Stooq bars redistribution without written consent (terms 5.3), Yahoo bars commercial
+  reuse and automated collection, while Alpha Vantage, Finnhub, Twelve Data, Polygon and IEX all need
+  a key. The remedy is either written consent from Stooq (www@stooq.com, which their own clause names)
+  or a paid feed.
+- TVL_LOOKUP. DeFiLlama grants a licence "for personal, non-commercial purposes" and forbids
+  republishing "the data in any form without permission". It is also the only keyless source of
+  protocol TVL that exists. The remedy is a DeFiLlama Pro licence or a per-protocol contract build.
+  The Aave v3 Pool and oracle calls were proven to work from the edge, so the build is possible, it
+  is just one adapter per protocol.
+
+Both are recorded in the lane's `DATA-SOURCES.md` as open items rather than hidden, which is the
+posture that keeps the rest of the licence record credible.

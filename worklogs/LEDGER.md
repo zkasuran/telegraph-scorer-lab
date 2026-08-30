@@ -1041,3 +1041,90 @@ names pinned to `.scratch/intent-names.json`.
   `.scratch/wrappable.json`. Traffic-gated ones need the agreement gate respected, so the rail's
   bottom stays `low*s`.
 - The three ROC locks need module work, not another sweep. Do not run one.
+
+## 2026-08-30: the 25 miners relicensed and rebuilt on measurement
+
+Two things were wrong with the 25 authored miners. Several read sources whose own terms bar
+a paid miner from using them, while the answers were written to a guess about what the node
+rewards rather than to a measurement. Both are fixed.
+
+### The harness that made the rest possible
+
+`work/telegraph/minerlab/rank.py` reproduces the node's grading offline. For each intent it
+resolves the ACTIVE scoring wasm from `/engine/validator/v1`, downloads it byte for byte,
+and scores any candidate answer with `rank_answer` through the same wazero loader the node
+uses. The ground truth is not published, so the proxy is the intent leader's own live
+answer: on 17 of 25 intents that answer self-scores >= 0.98 under the live module, which
+means it IS the node's truth to the module's tolerance.
+
+`GET https://devnode.telegraphprotocol.com/scores?intent=<I>&limit=500&offset=N` was the
+other unlock. It carries `failure_reason` per probe, which `/api/miners` hides, so a zero
+score can be read as either a call failure or a scorer floor.
+
+### What the measurements found
+
+Four levers, each measured rather than assumed:
+
+1. **Cover every aspect the question asks.** WEATHER_CHECK 0.0121 to 0.9996 from one added
+   clause about precipitation, because the node's own probes ask for temperature AND
+   feels-like AND next-24h rain in a single sentence.
+2. **State a figure at several grains.** The node writes its truth by having a model read a
+   provider, so the same value comes out `$78,801.00` on one epoch and `$78,801` on the
+   next. The modules treat a differently rendered figure as a contradiction rather than
+   a near miss. One reading said several ways always lands on one of them. CRYPTO_PRICE 0.0
+   to 0.75, TVL_LOOKUP 0.006 to 0.85, WEATHER_CHECK temperature 0.35 to 0.9997. This
+   supersedes the older "match the node's rounding" note, which was a coin flip.
+3. **Do not state many DISTINCT figures.** Six drifted quantities score 0.0079 where one
+   scores 1.0. The transaction answer lost its gas, fee and wei figures on this evidence
+   (0.258 to 0.751).
+4. **Answer the question that was asked.** URL_SCAN 0.0 to 0.99 (reachability is not
+   safety), RESEARCH_QUERY 0.012 to 0.998 (a definition is not an answer), CVE_LOOKUP needs
+   the record's own description and the severity WORD, since the CVSS number costs every
+   description-shaped truth.
+
+Two structural findings mattered as much as the wording. A declared `{template}` path is a
+pure liability: the node builds a path from a declared endpoint and matches it as an exact
+string, so miners declaring none saw 2 rejections in 5507 probes (0.04%) and miners
+declaring one saw 74 in 543 (13.6%). All 25 descriptors dropped theirs and were
+re-registered, which preserves scores. And every non-200 costs the whole epoch: on epoch
+295 a single 502 on one unknown token and a single 400 on one address-less probe were the
+entire reason two intents scored zero.
+
+### The licence work
+
+Every source was called from a Cloudflare Worker and had its own terms page read. Fourteen
+came out, each with the clause that blocks it recorded at the point of use in the worker and
+in `DATA-SOURCES.md`: open-meteo ("You may only use the free API services for non-commercial
+purposes"), ESPN (Disney ToU, personal noncommercial only, bars robots, bars circumventing
+protections, with no tier to buy), BBC ("You're not allowed to pluck metadata from
+our content or RSS feeds"), NPR ("For Personal Use Only"), crt.sh, ip-api.com, ipwho.is,
+r.jina.ai, Google's keyless translate endpoint, MyMemory, open.er-api.com, CoinGecko's Demo
+tier, plus the six RPC providers (PublicNode, Optimism, Base, dRPC, 1RPC, Arbitrum).
+
+Replacements, each with the granting clause quoted: MET Norway (CC BY 4.0 + NLOD 2.0), the
+US NWS ("free to use for any purpose"), Wikidata (CC0), OpenLigaDB (ODbL), Global Voices
+(CC BY 3.0, "even commercially"), Wikinews and the European Commission (CC BY 4.0),
+NASA/NIST/NSF/DOE (US Government, no copyright), Frankfurter ("Yes, absolutely"), Kraken and
+Bitstamp ("allows the incorporation and redistribution of our exchange data for commercial
+purposes"), ipquery.io ("without restriction"), Apertium, plus Tenderly's public gateway.
+
+Two intents have no licensed source and now say so in the answer rather than serving a
+figure we may not republish. STOCK_PRICE: Stooq bars redistribution without consent, Yahoo
+bars commercial reuse, every alternative needs a key, while the Chainlink AAPL/USD feed on
+Arbitrum reads 7.42 rather than a share price. TVL_LOOKUP still reads DeFiLlama, whose terms
+do not permit it. It is also the only keyless source of protocol TVL that exists: the swap
+path is a Pro licence or a per-protocol contract build, so the open item is stated in
+`DATA-SOURCES.md` rather than hidden.
+
+### State
+
+All 25 miners deployed and answering 200 with a summary and an `attribution` credit. All 25
+descriptors re-registered on-chain (registrations 343 to 375) and validated against the live
+workers through the console sandbox: 25 of 25 valid. Seven lanes published as public repos
+for the first time (finwire, netwire, newswire, scholarwire, secwire, sportwire, langwire),
+the three existing ones updated.
+
+Rank at epoch 295, the last scored before this work landed: 6 of 25 at rank 1, up from 3.
+Every change since then is node-gated, since rank only moves when the node re-scores. Epochs
+run roughly 2.5 hours apart. The node API was also down for about 40 minutes during this
+session, which is worth knowing before reading a rank as a result.

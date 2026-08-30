@@ -1,0 +1,5 @@
+{
+ "question": "What does the research say about the effect of sleep on memory consolidation?",
+ "ground_truth": "Research finds that sleep supports memory consolidation, with slow wave sleep strengthening declarative memory and REM sleep supporting procedural memory.",
+ "source": "written: sarzops returned nothing parseable; frame from the node's leaked RESEARCH_QUERY probe"
+}

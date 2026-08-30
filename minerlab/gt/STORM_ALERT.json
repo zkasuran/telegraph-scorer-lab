@@ -1,0 +1,5 @@
+{
+ "question": "Will there be disruptive wind gusts in Chicago, Illinois over the next 48 hours?",
+ "ground_truth": "low",
+ "source": "leader livecert live answer, self-score >=0.98"
+}

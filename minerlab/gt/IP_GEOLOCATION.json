@@ -1,0 +1,5 @@
+{
+ "question": "Where is the IP address 8.8.8.8 located?",
+ "ground_truth": "Ashburn, Virginia, United States",
+ "source": "leader livecert live answer, self-score >=0.98"
+}

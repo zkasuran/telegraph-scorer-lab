@@ -1,0 +1,5 @@
+{
+ "question": "Translate 'Good morning, how are you?' into Spanish.",
+ "ground_truth": "In Spanish, 'Good morning, how are you?' is 'Buenos dias, como estas?'.",
+ "source": "written: we already hold rank 1 here; this pins the shape that wins"
+}

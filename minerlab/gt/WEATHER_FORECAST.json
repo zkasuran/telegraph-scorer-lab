@@ -1,0 +1,5 @@
+{
+ "question": "What is the weather forecast for London over the next 3 days?",
+ "ground_truth": "London, United Kingdom forecast for 2026-08-30 through 2026-09-01: temperatures range from 13.7C to 21.6C; total precipitation 3.1mm; precipitation probability up to 88%; conditions include overcast, partly cloudy, mainly clear; wind speeds up to 20.2 km/h; dew points range from 7.7C to 15.7C. Hourly data contains 72 rows.",
+ "source": "leader isobar-weather live answer, self-score >=0.98"
+}

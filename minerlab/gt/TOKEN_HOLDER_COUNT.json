@@ -1,0 +1,5 @@
+{
+ "question": "How many holders does USDT on Ethereum have?",
+ "ground_truth": "Token 0x0000\u20260000: 0 holders",
+ "source": "leader chainsight-oracle live answer, self-score >=0.98"
+}
