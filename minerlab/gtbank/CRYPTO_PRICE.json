@@ -14,28 +14,55 @@
     "symbol": "BTC"
    },
    "field": "change_24h_percent"
+  },
+  "price_h": {
+   "from": "price",
+   "round": -2
+  },
+  "price_k": {
+   "from": "price",
+   "round": -3
+  },
+  "price_kw": {
+   "from": "price",
+   "divide": 1000
   }
  },
  "truths": [
   {
-   "label": "preflight",
-   "source": "preflight-ssl-verification live /crypto-price reason field, rank 1 at epoch 295, value substituted from our own live read so only wording varies",
+   "label": "preflight_2dp",
+   "source": "preflight-ssl-verification live /crypto-price reason field, rank 1 at epoch 295",
    "text": "The current price of Bitcoin (BTC) is approximately ${price:,.2f} USD. The price has shown a 24-hour change of about {chg:.2f}%."
   },
   {
-   "label": "formatted",
+   "label": "formatted_2dp",
    "source": "preflight live price_formatted field, the shape a formatted-price miner returns",
    "text": "${price:,.2f}"
   },
   {
    "label": "whole",
-   "source": "written: a model reading a ticker and rounding to whole dollars as reporting does",
+   "source": "written: a model rounding to whole dollars as reporting does",
    "text": "Bitcoin (BTC) is trading at about ${price:,.0f} USD."
   },
   {
-   "label": "terse_dec",
+   "label": "no_dollar_2dp",
    "source": "written: the bare number at the grain an exchange ticker publishes",
    "text": "Bitcoin (BTC) is trading at {price:,.2f} USD."
+  },
+  {
+   "label": "hundreds",
+   "source": "written: a model rounding to the nearest hundred, which reporting also does",
+   "text": "Bitcoin (BTC) is trading at around ${price_h:,.0f} USD."
+  },
+  {
+   "label": "thousands",
+   "source": "written: a model rounding to the nearest thousand",
+   "text": "Bitcoin is worth about ${price_k:,.0f} right now."
+  },
+  {
+   "label": "words",
+   "source": "written: a model answering conversationally in scaled words",
+   "text": "Bitcoin is trading at roughly ${price_kw:.1f} thousand US dollars."
   }
  ]
 }

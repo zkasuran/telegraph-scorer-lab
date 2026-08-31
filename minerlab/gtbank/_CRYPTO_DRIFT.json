@@ -1,0 +1,131 @@
+{
+ "question": "What is the current price of Bitcoin (BTC) in USD?",
+ "module": "CRYPTO_PRICE",
+ "truths": [
+  {
+   "label": "0.02%2dp",
+   "source": "synthetic: our reading moved 0.02% and was rendered at 2dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $77,923.58 USD."
+  },
+  {
+   "label": "0.02%0dp",
+   "source": "synthetic: our reading moved 0.02% and was rendered at 0dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $77,924 USD."
+  },
+  {
+   "label": "0.02%h",
+   "source": "synthetic: our reading moved 0.02% and was rendered at h, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $77,900 USD."
+  },
+  {
+   "label": "0.02%k",
+   "source": "synthetic: our reading moved 0.02% and was rendered at k, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,000 USD."
+  },
+  {
+   "label": "0.02%words",
+   "source": "synthetic: our reading moved 0.02% and was rendered at words, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $77.9 thousand USD."
+  },
+  {
+   "label": "0.1%2dp",
+   "source": "synthetic: our reading moved 0.1% and was rendered at 2dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $77,985.91 USD."
+  },
+  {
+   "label": "0.1%0dp",
+   "source": "synthetic: our reading moved 0.1% and was rendered at 0dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $77,986 USD."
+  },
+  {
+   "label": "0.1%h",
+   "source": "synthetic: our reading moved 0.1% and was rendered at h, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,000 USD."
+  },
+  {
+   "label": "0.1%k",
+   "source": "synthetic: our reading moved 0.1% and was rendered at k, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,000 USD."
+  },
+  {
+   "label": "0.1%words",
+   "source": "synthetic: our reading moved 0.1% and was rendered at words, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78.0 thousand USD."
+  },
+  {
+   "label": "0.3%2dp",
+   "source": "synthetic: our reading moved 0.3% and was rendered at 2dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,141.72 USD."
+  },
+  {
+   "label": "0.3%0dp",
+   "source": "synthetic: our reading moved 0.3% and was rendered at 0dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,142 USD."
+  },
+  {
+   "label": "0.3%h",
+   "source": "synthetic: our reading moved 0.3% and was rendered at h, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,100 USD."
+  },
+  {
+   "label": "0.3%k",
+   "source": "synthetic: our reading moved 0.3% and was rendered at k, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,000 USD."
+  },
+  {
+   "label": "0.3%words",
+   "source": "synthetic: our reading moved 0.3% and was rendered at words, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78.1 thousand USD."
+  },
+  {
+   "label": "0.8%2dp",
+   "source": "synthetic: our reading moved 0.8% and was rendered at 2dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,531.26 USD."
+  },
+  {
+   "label": "0.8%0dp",
+   "source": "synthetic: our reading moved 0.8% and was rendered at 0dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,531 USD."
+  },
+  {
+   "label": "0.8%h",
+   "source": "synthetic: our reading moved 0.8% and was rendered at h, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78,500 USD."
+  },
+  {
+   "label": "0.8%k",
+   "source": "synthetic: our reading moved 0.8% and was rendered at k, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $79,000 USD."
+  },
+  {
+   "label": "0.8%words",
+   "source": "synthetic: our reading moved 0.8% and was rendered at words, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $78.5 thousand USD."
+  },
+  {
+   "label": "2%2dp",
+   "source": "synthetic: our reading moved 2% and was rendered at 2dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $79,466.16 USD."
+  },
+  {
+   "label": "2%0dp",
+   "source": "synthetic: our reading moved 2% and was rendered at 0dp, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $79,466 USD."
+  },
+  {
+   "label": "2%h",
+   "source": "synthetic: our reading moved 2% and was rendered at h, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $79,500 USD."
+  },
+  {
+   "label": "2%k",
+   "source": "synthetic: our reading moved 2% and was rendered at k, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $79,000 USD."
+  },
+  {
+   "label": "2%words",
+   "source": "synthetic: our reading moved 2% and was rendered at words, modelling the node writing its truth at another moment in another grain",
+   "text": "Bitcoin (BTC) is trading at $79.5 thousand USD."
+  }
+ ]
+}

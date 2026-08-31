@@ -1,0 +1,51 @@
+{
+ "question": "What is the current temperature and 'feels like' temperature in Tokyo, Japan, and will there be any precipitation in the next 24 hours?",
+ "values": {
+  "t": {
+   "url": "https://telegraph-sky.margyn.workers.dev/weather",
+   "params": {
+    "location": "Tokyo"
+   },
+   "field": "temperature_c"
+  },
+  "fl": {
+   "url": "https://telegraph-sky.margyn.workers.dev/weather",
+   "params": {
+    "location": "Tokyo"
+   },
+   "field": "apparent_temperature_c"
+  },
+  "tf": {
+   "from": "t",
+   "multiply": 1.8,
+   "add": 32
+  },
+  "flf": {
+   "from": "fl",
+   "multiply": 1.8,
+   "add": 32
+  }
+ },
+ "truths": [
+  {
+   "label": "isobar",
+   "source": "isobar-weather is rank 1 on this intent; this is its answer frame with our live figures substituted",
+   "text": "The current temperature in Tokyo, Japan is {t:.1f}C and it feels like {fl:.1f}C. No precipitation is expected in the next 24 hours."
+  },
+  {
+   "label": "whole",
+   "source": "written: a model reading a forecast and rounding to whole degrees, which is how weather is reported",
+   "text": "It is currently {t:.0f}C in Tokyo, Japan, feeling like {fl:.0f}C, with no rain expected over the next 24 hours."
+  },
+  {
+   "label": "fahrenheit_too",
+   "source": "written: a model answering a question that asked for both scales",
+   "text": "Tokyo, Japan is currently {t:.1f}C ({tf:.1f}F) and feels like {fl:.1f}C ({flf:.1f}F). No precipitation is forecast in the next 24 hours."
+  },
+  {
+   "label": "terse",
+   "source": "written: the shortest answer covering all three asked aspects",
+   "text": "{t:.1f}C, feels like {fl:.1f}C, no precipitation in the next 24 hours."
+  }
+ ]
+}

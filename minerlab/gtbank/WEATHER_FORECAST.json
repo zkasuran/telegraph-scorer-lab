@@ -1,0 +1,43 @@
+{
+ "question": "What is the weather forecast for London over the next 3 days?",
+ "values": {
+  "hi": {
+   "url": "https://telegraph-sky.margyn.workers.dev/forecast",
+   "params": {
+    "location": "London",
+    "days": "3"
+   },
+   "field": "forecast.0.high_c"
+  },
+  "lo": {
+   "url": "https://telegraph-sky.margyn.workers.dev/forecast",
+   "params": {
+    "location": "London",
+    "days": "3"
+   },
+   "field": "forecast.1.low_c"
+  }
+ },
+ "truths": [
+  {
+   "label": "isobar",
+   "source": "isobar-weather is rank 1 on this intent; its answer frame, with our live figures",
+   "text": "Over the next 3 days in London, United Kingdom temperatures range from {lo:.1f}C to {hi:.1f}C, with some rain expected."
+  },
+  {
+   "label": "whole",
+   "source": "written: a model rounding to whole degrees, which is how a forecast is reported",
+   "text": "London's forecast for the next 3 days has temperatures between {lo:.0f}C and {hi:.0f}C, with showers at times."
+  },
+  {
+   "label": "highs_lows",
+   "source": "written: a model framing the same two figures as highs and lows",
+   "text": "London will see highs near {hi:.0f}C and lows near {lo:.0f}C over the next three days, with some rain."
+  },
+  {
+   "label": "terse",
+   "source": "written: the shortest answer covering the range and the rain",
+   "text": "{lo:.0f}C to {hi:.0f}C in London over the next 3 days, with rain at times."
+  }
+ ]
+}

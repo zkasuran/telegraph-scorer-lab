@@ -1,25 +1,57 @@
 {
- "question": "What is the market cap and 24 hour trading volume of Ethereum (ETH)?",
+ "question": "What was the trading volume and price change percentage for Ethereum (ETH)?",
+ "values": {
+  "vol": {
+   "url": "https://telegraph-fin.margyn.workers.dev/financial",
+   "params": {
+    "query": "ethereum"
+   },
+   "field": "volume_24h_usd"
+  },
+  "price": {
+   "url": "https://telegraph-fin.margyn.workers.dev/financial",
+   "params": {
+    "query": "ethereum"
+   },
+   "field": "price_usd"
+  },
+  "chg": {
+   "url": "https://telegraph-fin.margyn.workers.dev/financial",
+   "params": {
+    "query": "ethereum"
+   },
+   "field": "change_24h_percent"
+  },
+  "vol_m": {
+   "from": "vol",
+   "divide": 1000000.0
+  }
+ },
  "truths": [
   {
-   "label": "leader_frame",
-   "source": "kriterion-pramagraph is rank 1; this is the frame its answer field uses on the sibling price intent",
-   "text": "Ethereum (ETH) has a market capitalisation of approximately $286.4 billion and a 24 hour trading volume of about $12.7 billion, at a price of $2,371.50."
+   "label": "vol_and_chg",
+   "source": "written in the frame the node's own leaked probe uses, with our live figures substituted",
+   "text": "Ethereum (ETH) had a 24 hour trading volume of ${vol_m:.2f} million and a price change of {chg:.2f}% over the same period."
   },
   {
-   "label": "cap_only",
-   "source": "written: a model answering only the first half of the question",
-   "text": "Ethereum's market capitalisation is approximately $286.4 billion."
+   "label": "vol_chg_price",
+   "source": "written: the same frame with the price added, which a model reading a market page would include",
+   "text": "Ethereum (ETH) traded ${vol_m:.2f} million over 24 hours at a price of ${price:,.2f}, a change of {chg:.2f}%."
   },
   {
    "label": "vol_only",
-   "source": "written: a model answering only the second half",
-   "text": "Ethereum's 24 hour trading volume is about $12.7 billion."
+   "source": "written: a model answering only the volume half",
+   "text": "Ethereum's 24 hour trading volume was ${vol_m:.1f} million."
   },
   {
-   "label": "prose_all",
-   "source": "written: a model reading a market data page and answering in prose",
-   "text": "Ethereum (ETH) trades at about $2,371.50 with a market cap near $286 billion and roughly $12.7 billion of volume over the past 24 hours."
+   "label": "chg_only",
+   "source": "written: a model answering only the change half",
+   "text": "Ethereum's price changed by {chg:.2f}% over the past 24 hours."
+  },
+  {
+   "label": "coarse",
+   "source": "written: a model rounding both figures as reporting does",
+   "text": "Ethereum (ETH) saw roughly ${vol_m:.0f} million of volume and moved about {chg:.1f}% in the last day."
   }
  ]
 }

@@ -1,0 +1,21 @@
+{
+ "question": "What is the current price of Bitcoin (BTC) in USD?",
+ "truths": [
+  {
+   "label": "stale_prose",
+   "text": "The current price of Bitcoin (BTC) is approximately $77,390.26 USD. The price has shown a 24-hour change of about 0.23%.",
+   "source": "synthetic: our own reading moved 0.6% to model the node writing its truth at a different moment"
+  },
+  {
+   "label": "stale_short",
+   "text": "Bitcoin (BTC) is trading at $77,390.26 USD.",
+   "source": "synthetic: our own reading moved 0.6% to model the node writing its truth at a different moment"
+  },
+  {
+   "label": "stale_words",
+   "text": "Bitcoin is worth about $77.4 thousand US dollars right now.",
+   "source": "synthetic: our own reading moved 0.6% to model the node writing its truth at a different moment"
+  }
+ ],
+ "module": "CRYPTO_PRICE"
+}

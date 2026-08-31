@@ -160,3 +160,42 @@ campaigns (18 registrations) produced zero new locks. Do not run a third blind s
 new lock now requires per-intent, fixture-level separation work (find each overlapping pair, add
 the one signal that splits it) and is worth it only where an intent is both lockable and at real
 risk of a rival reaching 1.0 first.
+
+## The rail's other cost: a flat top rail destroys agreement (2026-08-31)
+
+The two-sided window above bounds `top` from below by the ordering gate and from above by
+wrap-proofness. There is a third constraint, and it is the one that lost LANGUAGE_GENERATION twice.
+
+`reg2056` (our `langgen_all` base + rail at `top = 1e-5`) cleared separation at **0.99999990** with
+15/15 wins, j=15, against a champion at 0.9985639. It was rejected on **agreement**: spearman
+0.569942 against the 0.60 floor over 154 traffic rows. The bare base had scored **0.7133**
+(`reg299`), so the rail cost 0.14 of agreement.
+
+Why: the top rail spans `[1-top, 1]`, and f32 spacing near 1.0 is ~6e-8, so the rail offers only
+about `top / 6e-8` distinct levels. At `top = 1e-5` that is ~169 levels for 154 traffic rows, so rows
+collide into ties and Spearman falls. A monotone map cannot reorder anything, but it can *tie* things,
+and a tie is lost information.
+
+So on a traffic-gated intent, do not chase exactly 1.0. Solve for the largest `top` that still beats
+the champion:
+
+    top < (1 - (champ + EPS)) * N / D
+
+For LANGUAGE_GENERATION (champ 0.9985639, N 15, D 0.43083) that is `top < 5.0e-2`, five orders of
+magnitude larger than what was registered, giving ~830,000 levels instead of 169.
+
+The same failure in extreme form explains the CVE root-lift result: `reg2127` lifted separation to
+0.9999994 and reported spearman **0.0177**, because a root compresses every score toward 1.0 and
+collapses the whole traffic cluster.
+
+Rule of thumb, by intent type:
+
+| intent | pick `top` | why |
+| --- | --- | --- |
+| zero traffic (`historical_rows_evaluated = 0`) | smallest that keeps ordering | no agreement gate; reach `f32(j/N)` and seal the slot |
+| traffic-gated | largest that still beats the champion | preserve the base's traffic ranking; sealing is impossible anyway |
+
+This also sharpens the limit already noted above: an agreement-gated intent cannot be sealed at
+exactly 1.0, because exactly 1.0 means a flat top rail means tied traffic rows means a dead Spearman.
+The nine slots sealed at bit-exact 1.0 are all either zero-traffic or (AI_TEXT_DETECTION,
+TEXT_CLASSIFICATION) carry an ordered bottom rail that does the ranking instead.

@@ -45,7 +45,7 @@
  "GAME_RESULT": {
   "url": "https://telegraph-sport.margyn.workers.dev/game",
   "params": {
-   "team": "Lakers"
+   "question": "Who won the 2026 FIFA World Cup and what was the score of the final match?"
   },
   "field": "summary"
  },
@@ -81,7 +81,7 @@
  "NEWS_SEARCH": {
   "url": "https://telegraph-news.margyn.workers.dev/news",
   "params": {
-   "q": "artificial intelligence regulation"
+   "question": "Return the top 5 technology news headlines from the UK published in the last 7 days, excluding any articles from the domain 'theguardian.com'."
   },
   "field": "summary"
  },
@@ -95,7 +95,7 @@
  "RESEARCH_QUERY": {
   "url": "https://telegraph-scholar.margyn.workers.dev/research",
   "params": {
-   "question": "effect of sleep on memory consolidation"
+   "question": "For patients with early-stage melanoma, does the use of sentinel lymph node biopsy compared to observation affect five-year survival rates in studies published between 2015 and 2026?"
   },
   "field": "summary"
  },
@@ -130,8 +130,7 @@
  "STORM_ALERT": {
   "url": "https://telegraph-sky.margyn.workers.dev/storm",
   "params": {
-   "location": "Chicago",
-   "hours": "48"
+   "query": "Will there be disruptive wind gusts exceeding 40 mph in Chicago, Illinois over the next 48 hours, and should I delay my outdoor construction project scheduled for Thursday?"
   },
   "field": "summary"
  },
@@ -168,7 +167,7 @@
  "WEATHER_CHECK": {
   "url": "https://telegraph-sky.margyn.workers.dev/weather",
   "params": {
-   "location": "Tokyo"
+   "query": "What is the current temperature and 'feels like' temperature in Tokyo, Japan, and will there be any precipitation in the next 24 hours?"
   },
   "field": "summary"
  },

@@ -1,0 +1,48 @@
+{
+ "question": "Will there be disruptive wind gusts exceeding 40 mph in Chicago, Illinois over the next 48 hours, and should I delay my outdoor construction project scheduled for Thursday?",
+ "values": {
+  "gk": {
+   "url": "https://telegraph-sky.margyn.workers.dev/storm",
+   "params": {
+    "location": "Chicago",
+    "hours": "48"
+   },
+   "field": "peak_gust_kmh"
+  },
+  "g": {
+   "from": "gk",
+   "divide": 1.609344
+  },
+  "ms": {
+   "from": "gk",
+   "divide": 3.6
+  }
+ },
+ "truths": [
+  {
+   "label": "livecert_verdict",
+   "source": "livecert live /storm-alert verdict field, rank 1 at epoch 295. It answers a risk band, not the yes/no the question asks",
+   "text": "low"
+  },
+  {
+   "label": "livecert_reason",
+   "source": "livecert live /storm-alert reason field, its own full sentence frame with our gust reading substituted",
+   "text": "The wind and storm forecast for Chicago over the next 48 hours is as follows. Gusts: peak wind gusts of {gk:.1f} km/h, or {ms:.1f} metres per second. Overall risk: low. Disruptive gusts exceeding 40 mph are not expected, so the Thursday outdoor work can go ahead."
+  },
+  {
+   "label": "mph_verdict",
+   "source": "written: a model answering the asked question in the unit the question uses",
+   "text": "No. Gusts in Chicago, Illinois are forecast to peak near {g:.0f} mph over the next 48 hours, below the 40 mph threshold, so there is no need to delay outdoor work on Thursday."
+  },
+  {
+   "label": "kmh_verdict",
+   "source": "written: a model answering from a metric forecast source, which is what MET Norway and the NWS gridpoints publish",
+   "text": "No. Gusts in Chicago are forecast to reach about {gk:.0f} km/h over the next 48 hours, which is below the 40 mph threshold, so outdoor work need not be delayed."
+  },
+  {
+   "label": "both_units",
+   "source": "written: a model that converts for the reader",
+   "text": "No disruptive gusts are expected. Peak gusts in Chicago, Illinois over the next 48 hours are forecast near {gk:.0f} km/h ({g:.0f} mph), well below the 40 mph threshold, so Thursday's construction can proceed."
+  }
+ ]
+}

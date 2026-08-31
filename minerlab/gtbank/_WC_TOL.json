@@ -1,0 +1,41 @@
+{
+ "question": "What is the current temperature and 'feels like' temperature in Tokyo, Japan, and will there be any precipitation in the next 24 hours?",
+ "module": "WEATHER_CHECK",
+ "truths": [
+  {
+   "label": "gt24.6C",
+   "source": "synthetic: the same reading stated as 24.6C, to test whether this module gates on the exact digits or tolerates a near value",
+   "text": "The current temperature in Tokyo, Japan is 24.6C and it feels like 24.6C. No precipitation is expected in the next 24 hours."
+  },
+  {
+   "label": "gt25C",
+   "source": "synthetic: the same reading stated as 25C, to test whether this module gates on the exact digits or tolerates a near value",
+   "text": "The current temperature in Tokyo, Japan is 25C and it feels like 25C. No precipitation is expected in the next 24 hours."
+  },
+  {
+   "label": "gt24C",
+   "source": "synthetic: the same reading stated as 24C, to test whether this module gates on the exact digits or tolerates a near value",
+   "text": "The current temperature in Tokyo, Japan is 24C and it feels like 24C. No precipitation is expected in the next 24 hours."
+  },
+  {
+   "label": "gt22C",
+   "source": "synthetic: the same reading stated as 22C, to test whether this module gates on the exact digits or tolerates a near value",
+   "text": "The current temperature in Tokyo, Japan is 22C and it feels like 22C. No precipitation is expected in the next 24 hours."
+  },
+  {
+   "label": "gt20C",
+   "source": "synthetic: the same reading stated as 20C, to test whether this module gates on the exact digits or tolerates a near value",
+   "text": "The current temperature in Tokyo, Japan is 20C and it feels like 20C. No precipitation is expected in the next 24 hours."
+  },
+  {
+   "label": "gt30C",
+   "source": "synthetic: the same reading stated as 30C, to test whether this module gates on the exact digits or tolerates a near value",
+   "text": "The current temperature in Tokyo, Japan is 30C and it feels like 30C. No precipitation is expected in the next 24 hours."
+  },
+  {
+   "label": "gt76.3F",
+   "source": "synthetic: the same reading stated as 76.3F, to test whether this module gates on the exact digits or tolerates a near value",
+   "text": "The current temperature in Tokyo, Japan is 76.3F and it feels like 76.3F. No precipitation is expected in the next 24 hours."
+  }
+ ]
+}

@@ -50,6 +50,11 @@ def live_values(spec):
       {"const": 123}                              a fixed value
       {"from": "other", "divide": 1e9}            derived, so "$18.19 billion" and
                                                   "$18,186,347,469" are the same reading
+      {"from": "other", "round": -2}              the same reading at a coarser grain, so a
+                                                  truth that rounds to the nearest hundred is
+                                                  still the same value rather than a wrong one
+      {"from":"c","multiply":1.8,"add":32}         a unit conversion, so a truth in Fahrenheit
+                                                  states the same reading as one in Celsius
     """
     out = {}
     derived = {}
@@ -65,7 +70,10 @@ def live_values(spec):
         body = rank.jget(url + ("?" + q if q else ""), tries=2, timeout=45)
         cur = body
         for key in str(how["field"]).split("."):
-            cur = (cur or {}).get(key)
+            if isinstance(cur, list) and key.isdigit():
+                cur = cur[int(key)] if int(key) < len(cur) else None
+            else:
+                cur = (cur or {}).get(key)
         if cur is None:
             sys.exit(f"value '{name}' read null from {url} field {how['field']}")
         out[name] = cur
@@ -74,10 +82,14 @@ def live_values(spec):
         if base is None:
             sys.exit(f"derived value '{name}' has no base '{how['from']}'")
         v = float(base)
+        if how.get("round") is not None:
+            v = round(v, int(how["round"]))
         if how.get("divide"):
             v /= float(how["divide"])
         if how.get("multiply"):
             v *= float(how["multiply"])
+        if how.get("add"):
+            v += float(how["add"])
         out[name] = v
     return out
 
@@ -100,10 +112,10 @@ def bank(intent):
     return b
 
 
-def score_against(intent, truth_text, question, cands):
-    mod = os.path.join(rank.MODULES, intent + ".wasm")
+def score_against(intent, truth_text, question, cands, module=None):
+    mod = os.path.join(rank.MODULES, (module or intent) + ".wasm")
     if not os.path.exists(mod):
-        sys.exit(f"no module cached for {intent}: run `rank.py sync`")
+        sys.exit(f"no module cached for {module or intent}: run `rank.py sync`")
     trips = [{"id": k, "q": question, "gt": truth_text, "a": v} for k, v in cands.items()]
     tin = os.path.join(rank.CACHE, "sweep-in.json")
     tout = os.path.join(rank.CACHE, "sweep-out.json")
@@ -120,11 +132,15 @@ def score_against(intent, truth_text, question, cands):
 def sweep(intent, cands, question=None):
     b = bank(intent)
     q = question or b["question"]
+    # A bank whose name starts with an underscore is a scratch bank: it studies one intent's
+    # module under a hypothesis (a stale figure, a differently framed truth) rather than
+    # standing for the intent itself, so it names the module it wants to be scored under.
+    module = b.get("module") or (intent.lstrip("_").split("__")[0] if intent.startswith("_") else None)
     cols = []
     table = {k: {} for k in cands}
     for t in b["truths"]:
         cols.append(t["label"])
-        s = score_against(intent, t["text"], q, cands)
+        s = score_against(intent, t["text"], q, cands, module)
         for k in cands:
             table[k][t["label"]] = s[k]
     return cols, table
@@ -133,14 +149,21 @@ def sweep(intent, cands, question=None):
 def report(intent, cands, question=None):
     cols, table = sweep(intent, cands, question)
     w = max(len(k) for k in cands) + 1
-    head = f"{'cand':<{w}}" + "".join(f"{c[:11]:>12}" for c in cols) + f"{'worst':>10}{'mean':>10}"
-    print(head)
     rows = []
     for k, row in table.items():
         vals = [row[c] for c in cols]
         rows.append((min(vals), sum(vals) / len(vals), k, vals))
+    # On a figure-gated intent every candidate can sit at the contradiction floor (1e-13 and
+    # below), and that is exactly the regime the live board is in: the node writes its truth at a
+    # moment we do not control, so no miner's digits match and rank is decided inside the floor.
+    # Fixed-point would print a column of zeros and hide the ordering, so switch to significant
+    # digits when nothing clears a thousandth.
+    tiny = max((max(v) for _, _, _, v in rows), default=0) < 1e-3
+    cell = (lambda v: f"{v:12.4g}") if tiny else (lambda v: f"{v:12.6f}")
+    head = f"{'cand':<{w}}" + "".join(f"{c[:11]:>12}" for c in cols) + f"{'worst':>12}{'mean':>12}"
+    print(head)
     for worst, mean, k, vals in sorted(rows, key=lambda r: (-r[0], -r[1])):
-        print(f"{k:<{w}}" + "".join(f"{v:12.6f}" for v in vals) + f"{worst:10.6f}{mean:10.6f}")
+        print(f"{k:<{w}}" + "".join(cell(v) for v in vals) + cell(worst) + cell(mean))
     return rows
 
 
