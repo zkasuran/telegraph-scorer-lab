@@ -1,0 +1,89 @@
+{
+ "note": "LANGUAGE_TRANSLATION pairs written for this lane: each bad answer is a shape a real weak miner returns (untranslated source, wrong script, flipped negation, wrong figure, antonym, truncation).",
+ "cases": [
+  {
+   "id": "lt0",
+   "question": "Translate 'The meeting has been postponed to next Friday' into Spanish.",
+   "ground_truth": "La reunion se ha aplazado al proximo viernes.",
+   "good": "La reunion fue postergada para el viernes proximo.",
+   "bad": "The meeting has been postponed to next Friday."
+  },
+  {
+   "id": "lt1",
+   "question": "Translate 'The parcel will be delivered tomorrow morning' into French.",
+   "ground_truth": "Le colis sera livre demain matin.",
+   "good": "Le colis va etre livre demain matin.",
+   "bad": "Le colis a ete perdu hier soir."
+  },
+  {
+   "id": "lt2",
+   "question": "Translate 'The train leaves at 14:35 from platform 7' into German.",
+   "ground_truth": "Der Zug fahrt um 14:35 Uhr von Gleis 7 ab.",
+   "good": "Um 14:35 Uhr fahrt der Zug von Gleis 7 ab.",
+   "bad": "Der Zug fahrt um 15:35 Uhr von Gleis 4 ab."
+  },
+  {
+   "id": "lt3",
+   "question": "Translate 'Please turn off your phones during the show' into Italian.",
+   "ground_truth": "Per favore, spegnete i telefoni durante lo spettacolo.",
+   "good": "Si prega di spegnere i telefoni durante lo spettacolo.",
+   "bad": "Please turn off your phones during the show."
+  },
+  {
+   "id": "lt4",
+   "question": "Translate 'The bill was paid last week' into Portuguese.",
+   "ground_truth": "A conta foi paga na semana passada.",
+   "good": "O pagamento da conta ocorreu na semana passada.",
+   "bad": "A conta nao foi paga na semana passada."
+  },
+  {
+   "id": "lt5",
+   "question": "Translate 'The meeting will start at nine' into Russian.",
+   "ground_truth": "Встреча начнется в девять часов.",
+   "good": "Собрание начнется в девять утра.",
+   "bad": "The meeting will start at nine."
+  },
+  {
+   "id": "lt6",
+   "question": "Translate 'The annual report shows a 12 percent rise in exports' into Spanish.",
+   "ground_truth": "El informe anual muestra un aumento del 12 por ciento en las exportaciones.",
+   "good": "Segun el informe anual, las exportaciones crecieron un 12 por ciento.",
+   "bad": "El informe anual muestra una caida del 12 por ciento en las exportaciones."
+  },
+  {
+   "id": "lt7",
+   "question": "Translate 'The meeting takes place in room three' into Dutch.",
+   "ground_truth": "De vergadering vindt plaats in zaal drie.",
+   "good": "De bijeenkomst is in zaal drie.",
+   "bad": "De vergadering vindt plaats in zaal negen."
+  },
+  {
+   "id": "lt8",
+   "question": "Translate 'The meeting begins tomorrow at ten in the morning' into Japanese.",
+   "ground_truth": "会議は明日の午前十時に始まります。",
+   "good": "明日の午前十時から会議が始まります。",
+   "bad": "The meeting begins tomorrow at ten in the morning."
+  },
+  {
+   "id": "lt9",
+   "question": "Translate 'exit' into French.",
+   "ground_truth": "Sortie.",
+   "good": "Sortie",
+   "bad": "Entree."
+  },
+  {
+   "id": "lt10",
+   "question": "Translate 'Many thanks for your quick reply' into German.",
+   "ground_truth": "Vielen Dank fur Ihre schnelle Antwort.",
+   "good": "Herzlichen Dank fur die schnelle Antwort.",
+   "bad": "Vielen Dank fur Ihre schnelle Anfrage."
+  },
+  {
+   "id": "lt11",
+   "question": "Translate 'The contract will be signed on Monday at head office' into Spanish.",
+   "ground_truth": "El contrato se firmara el lunes en la oficina central.",
+   "good": "El lunes se firmara el contrato en la oficina central.",
+   "bad": "El contrato se firmara."
+  }
+ ]
+}

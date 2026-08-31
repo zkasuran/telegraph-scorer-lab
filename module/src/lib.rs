@@ -44,21 +44,49 @@ const R_FLOOR: f32 = 0.3;
 /// Polarity multipliers. Lower on contradiction separates good from bad harder;
 /// higher keeps a wrong-but-on-topic answer inside the pack, which is where the
 /// champion puts it, and the traffic gate scores agreement with the champion.
-const M_CONTRA: f32 = 0.9;
+const M_CONTRA: f32 = 1.0;
+/// How much of the contradiction penalty scales with the answer's character-trigram
+/// overlap with the ground truth. 0 keeps the flat multiplier. Above 0, an answer that
+/// contradicts the truth *and* reuses its wording is punished harder than one that
+/// contradicts in its own words, which is the ordering the authenticity fixtures need:
+/// there the wrong answer is a one-word edit of the truth and the right answer is a
+/// paraphrase sharing almost nothing, so a flat penalty leaves the wrong one on top.
+const M_CONTRA_ECHO: f32 = 0.0;
 const M_TWO_FACED: f32 = 0.5;
 const M_SILENT: f32 = 1.0;
 const B_AGREE: f32 = 0.0;
+/// Verdict banding, and the gate it is aimed at.
+///
+/// On a yes/no intent the verdict is the answer and the wording is commentary, so a right
+/// verdict cannot be worth less than a wrong one however the words fall. Multiplying by
+/// M_CONTRA does not deliver that: it scales a wrong answer down from wherever its wording
+/// put it, so a wrong answer that quotes the truth still outscores a right answer phrased
+/// tersely in its own words. That is the pattern that leaves an authenticity build ranking
+/// 14 of 15 fixture pairs correctly while only 10 of them sit on one side of any single
+/// threshold, which is what the separation gate measures.
+///
+/// So put the two classes in disjoint bands, affinely, which keeps the ranking inside each
+/// band intact (nothing is reordered, so the traffic agreement is untouched): a verdict that
+/// agrees is squeezed into [hi, 1], one that contradicts into [0, lo], with
+/// lo = (1 - V_BAND)/2 and hi = (1 + V_BAND)/2. Any threshold between them then splits every
+/// pair the verdict axis decides. Pairs where both sides carry the same verdict (a compound
+/// truth such as "image authentic, caption false") land in the same band and keep their raw
+/// order, so banding never costs a win it did not already lose. 0 is off.
+const V_BAND: f32 = 0.0;
+/// 1 turns on the severity polarity axis (SEV_POS / SEV_NEG). Off everywhere but the
+/// vulnerability intents, because "high" and "low" are both correct in one weather answer.
+const SEV_AXIS: u32 = 0;
 /// Numbers: floor when a stated figure is missing, multiplier when a different one
 /// is asserted instead.
-const M_NUM_MISS_BASE: f32 = 0.8;
-const M_NUM_WRONG: f32 = 0.05;
+const M_NUM_MISS_BASE: f32 = 1.0;
+const M_NUM_WRONG: f32 = 0.01;
 /// Numeric agreement bonus (default 0, off for every intent but the pure-figure ones).
 /// When the answer carries every figure the ground truth states and states no wrong
 /// one, the figure IS the answer, so pull the score up toward 1 the way B_AGREE does
 /// for a right verdict. This is what lifts a correct numeric paraphrase ("roughly
 /// $3,120 per ETH" for "3,120 USD") from mid-range word-overlap up to near-perfect,
 /// which is where the FINANCIAL_DATA champion separates and our lexical build did not.
-const M_NUM_MATCH: f32 = 1.0;
+const M_NUM_MATCH: f32 = 0.0;
 
 /// Literal-order multiplier. Character trigrams are stored as a set, so an answer that
 /// transposes characters inside a literal ("LS4 1AB" for "LS1 4AB", "0072-451-898" for
@@ -68,18 +96,18 @@ const M_NUM_MATCH: f32 = 1.0;
 /// order-preserving character subsequence of the ground truth's alphanumeric runs against
 /// the answer's: a run that appears with its characters out of order scores below
 /// M_LITERAL_MIN of its length and costs this multiplier. 1.0 keeps it off.
-const M_LITERAL: f32 = 0.8;
+const M_LITERAL: f32 = 1.0;
 const M_LITERAL_MIN: f32 = 0.9;
 /// Same words, no shared adjacency.
-const M_ORDER: f32 = 0.9;
+const M_ORDER: f32 = 1.0;
 /// A figure attached to a different entity. Harder than a plain reordering, because
 /// "Base at 2.6 billion" when the truth is "Arbitrum at 2.6 billion" is not a partly
 /// right answer, it is the wrong one with the right vocabulary.
-const M_ENTITY: f32 = 0.7;
+const M_ENTITY: f32 = 1.0;
 /// How much of the score a negated match costs. "No rain is expected" covers every
 /// content word of "rain is expected" and asserts the opposite, so coverage that only
 /// holds under a negation the ground truth does not carry is worth less than nothing.
-const M_NEGCOV: f32 = 0.0;
+const M_NEGCOV: f32 = 0.32;
 /// How much of the final score comes from the contrast curve rather than the raw
 /// similarity. All contrast sharpens separation, all raw ranks more smoothly.
 const SHARPEN: f32 = 0.0;
@@ -173,7 +201,7 @@ const STEP_B: f32 = 0.0;
 /// the ranking (STEP_B still spreads the whole cluster out); a fixture's bad answer covers
 /// none of the truth and lands on the bad side however topical an embedding finds it. That
 /// is separation bought without moving the ranking the agreement gate measures. 0 is off.
-const STEP_R: f32 = 0.08;
+const STEP_R: f32 = 0.0;
 
 /// Half-width of the step. 0 is the hard step, which is the most separation a monotone
 /// transform can buy once the threshold is right. A width above 0 turns it into a linear
@@ -187,6 +215,27 @@ const STEP_W: f32 = 0.0;
 /// How much of the topical score is the answer-to-question cosine rather than the
 /// answer-to-ground-truth one. See the note at the blend for why the champion needs this.
 const W_QA: f32 = 0.2;
+
+/// Per-item difficulty normalisation, and the failure it fixes.
+///
+/// Two answers to different questions are not on one scale. A ground truth with six
+/// answer-bearing clauses presses even a right answer down, because covering all six is
+/// hard; a one-clause truth lifts a mediocre one. Within a single fixture that drift
+/// cancels, since the good answer and the bad one are graded against the same truth, which
+/// is why a scorer can rank 15 of 15 pairs correctly and still have only 10 of them
+/// splittable by one threshold. The node's separation gate wants one threshold across all
+/// the fixtures, so the drift is what caps it, not the ranking.
+///
+/// So shift the score's log-odds by the item's own size: ln k = NORM_LEN * (n - NORM_REF),
+/// which is a constant per item, so no two answers to the same question are ever reordered
+/// (the traffic ranking inside a request is untouched) while items move onto a common scale.
+/// Positive NORM_LEN lifts long truths, negative presses them. 0 is off.
+const NORM_LEN: f32 = 0.0;
+/// The item size the shift is measured against, in ground-truth content tokens.
+const NORM_REF: f32 = 12.0;
+/// Which size to read: 1 ground-truth content tokens, 2 the answer-bearing tokens the
+/// question did not already give away, 3 how much of the truth the question gives away.
+const NORM_SRC: u32 = 1;
 
 /// What to do when the validator holds no ground truth for a row. The node's fixtures always
 /// carry one, but real traffic is a live request, and a request has no reference answer until
@@ -527,7 +576,7 @@ pub unsafe extern "C" fn dealloc(_ptr: i32, _size: i32) {}
 /// can be traced back to the configuration it was measured with. Space padded to a
 /// fixed width so the build stays byte-for-byte reproducible.
 #[unsafe(no_mangle)]
-pub static TELEGRAPH_INTENT: [u8; 32] = *b"CVE_LOOKUP                      ";
+pub static TELEGRAPH_INTENT: [u8; 32] = *b"LANGUAGE_TRANSLATION            ";
 
 // ---------------------------------------------------------------------------
 // Byte-level primitives
@@ -646,6 +695,61 @@ const NUMERALS: &[(u32, u32)] = &[
     (h(b"hundred"), h(b"100")), (h(b"thousand"), h(b"1000")),
     (h(b"million"), h(b"1000000")), (h(b"billion"), h(b"1000000000")),
     (h(b"trillion"), h(b"1000000000000")),
+    // The same words in the languages a translation intent actually asks for. A number is
+    // the part of a translation that is either right or wrong, never a paraphrase: "zaal
+    // negen" for "zaal drie" keeps nine tenths of the sentence and answers the wrong room,
+    // and with an English-only table the figure machinery never sees a figure at all. Small
+    // words that collide with a common English word (once, due, sept, otto, cent) are left
+    // out on purpose: a false numeral match costs more than a missed one.
+    // Spanish, Portuguese.
+    (h(b"dos"), h(b"2")), (h(b"tres"), h(b"3")), (h(b"cuatro"), h(b"4")), (h(b"cinco"), h(b"5")),
+    (h(b"seis"), h(b"6")), (h(b"siete"), h(b"7")), (h(b"ocho"), h(b"8")), (h(b"nueve"), h(b"9")),
+    (h(b"diez"), h(b"10")), (h(b"doce"), h(b"12")), (h(b"trece"), h(b"13")),
+    (h(b"catorce"), h(b"14")), (h(b"quince"), h(b"15")), (h(b"veinte"), h(b"20")),
+    (h(b"treinta"), h(b"30")), (h(b"cuarenta"), h(b"40")), (h(b"cincuenta"), h(b"50")),
+    (h(b"sesenta"), h(b"60")), (h(b"setenta"), h(b"70")), (h(b"ochenta"), h(b"80")),
+    (h(b"noventa"), h(b"90")), (h(b"cien"), h(b"100")), (h(b"ciento"), h(b"100")),
+    (h(b"mil"), h(b"1000")), (h(b"dois"), h(b"2")), (h(b"duas"), h(b"2")),
+    (h(b"sete"), h(b"7")), (h(b"oito"), h(b"8")), (h(b"nove"), h(b"9")), (h(b"dez"), h(b"10")),
+    (h(b"doze"), h(b"12")), (h(b"treze"), h(b"13")), (h(b"vinte"), h(b"20")),
+    (h(b"trinta"), h(b"30")), (h(b"quarenta"), h(b"40")), (h(b"cem"), h(b"100")),
+    // French.
+    (h(b"deux"), h(b"2")), (h(b"trois"), h(b"3")), (h(b"quatre"), h(b"4")), (h(b"cinq"), h(b"5")),
+    (h(b"huit"), h(b"8")), (h(b"neuf"), h(b"9")), (h(b"dix"), h(b"10")), (h(b"onze"), h(b"11")),
+    (h(b"douze"), h(b"12")), (h(b"treize"), h(b"13")), (h(b"quatorze"), h(b"14")),
+    (h(b"quinze"), h(b"15")), (h(b"seize"), h(b"16")), (h(b"vingt"), h(b"20")),
+    (h(b"trente"), h(b"30")), (h(b"quarante"), h(b"40")), (h(b"cinquante"), h(b"50")),
+    (h(b"soixante"), h(b"60")), (h(b"mille"), h(b"1000")),
+    // German, Dutch.
+    (h(b"zwei"), h(b"2")), (h(b"drei"), h(b"3")), (h(b"vier"), h(b"4")), (h(b"funf"), h(b"5")),
+    (h(b"f\xc3\xbcnf"), h(b"5")), (h(b"sechs"), h(b"6")), (h(b"sieben"), h(b"7")),
+    (h(b"acht"), h(b"8")), (h(b"neun"), h(b"9")), (h(b"zehn"), h(b"10")), (h(b"elf"), h(b"11")),
+    (h(b"zwolf"), h(b"12")), (h(b"zw\xc3\xb6lf"), h(b"12")), (h(b"dreizehn"), h(b"13")),
+    (h(b"vierzehn"), h(b"14")), (h(b"sechzehn"), h(b"16")), (h(b"siebzehn"), h(b"17")),
+    (h(b"achtzehn"), h(b"18")), (h(b"neunzehn"), h(b"19")), (h(b"zwanzig"), h(b"20")),
+    (h(b"dreissig"), h(b"30")), (h(b"vierzig"), h(b"40")), (h(b"sechzig"), h(b"60")),
+    (h(b"siebzig"), h(b"70")), (h(b"achtzig"), h(b"80")), (h(b"neunzig"), h(b"90")),
+    (h(b"hundert"), h(b"100")), (h(b"tausend"), h(b"1000")),
+    (h(b"twee"), h(b"2")), (h(b"drie"), h(b"3")), (h(b"vijf"), h(b"5")), (h(b"zes"), h(b"6")),
+    (h(b"zeven"), h(b"7")), (h(b"negen"), h(b"9")), (h(b"tien"), h(b"10")),
+    (h(b"twaalf"), h(b"12")), (h(b"dertien"), h(b"13")), (h(b"veertien"), h(b"14")),
+    (h(b"zestien"), h(b"16")), (h(b"twintig"), h(b"20")), (h(b"dertig"), h(b"30")),
+    (h(b"veertig"), h(b"40")), (h(b"honderd"), h(b"100")), (h(b"duizend"), h(b"1000")),
+    // Italian.
+    (h(b"tre"), h(b"3")), (h(b"quattro"), h(b"4")), (h(b"cinque"), h(b"5")), (h(b"sette"), h(b"7")),
+    (h(b"dieci"), h(b"10")), (h(b"undici"), h(b"11")), (h(b"dodici"), h(b"12")),
+    (h(b"tredici"), h(b"13")), (h(b"quindici"), h(b"15")), (h(b"venti"), h(b"20")),
+    (h(b"trenta"), h(b"30")), (h(b"cento"), h(b"100")),
+    // Russian.
+    (h(b"\xd0\xb4\xd0\xb2\xd0\xb0"), h(b"2")), (h(b"\xd1\x82\xd1\x80\xd0\xb8"), h(b"3")),
+    (h(b"\xd1\x87\xd0\xb5\xd1\x82\xd1\x8b\xd1\x80\xd0\xb5"), h(b"4")),
+    (h(b"\xd0\xbf\xd1\x8f\xd1\x82\xd1\x8c"), h(b"5")),
+    (h(b"\xd1\x88\xd0\xb5\xd1\x81\xd1\x82\xd1\x8c"), h(b"6")),
+    (h(b"\xd1\x81\xd0\xb5\xd0\xbc\xd1\x8c"), h(b"7")),
+    (h(b"\xd0\xb2\xd0\xbe\xd1\x81\xd0\xb5\xd0\xbc\xd1\x8c"), h(b"8")),
+    (h(b"\xd0\xb4\xd0\xb5\xd0\xb2\xd1\x8f\xd1\x82\xd1\x8c"), h(b"9")),
+    (h(b"\xd0\xb4\xd0\xb5\xd1\x81\xd1\x8f\xd1\x82\xd1\x8c"), h(b"10")),
+    (h(b"\xd1\x81\xd1\x82\xd0\xbe"), h(b"100")),
 ];
 
 /// Scale words and their single-letter forms. A figure and its magnitude are one
@@ -1278,6 +1382,24 @@ const NEG: &[u32] = &[
     h(b"not"), h(b"no"), h(b"never"), h(b"none"), h(b"neither"), h(b"nor"), h(b"cannot"), h(b"cant"),
     h(b"isn"), h(b"aren"), h(b"wasn"), h(b"weren"), h(b"doesn"), h(b"don"), h(b"didn"), h(b"won"),
     h(b"unable"), h(b"without"),
+    // Not every answer is in English. On LANGUAGE_TRANSLATION the ground truth and the
+    // answer are both in the target language, so an English-only table reads a dropped or
+    // added negation as a paraphrase: "a conta nao foi paga" covers every content word of
+    // "a conta foi paga" and asserts the opposite, and a scorer that cannot see the "nao"
+    // scores it at 0.99. These are the negation markers of the languages the intent's own
+    // probes use, in the lowercase form the tokeniser produces.
+    h(b"nao"), h(b"n\xc3\xa3o"), h(b"nunca"), h(b"ningun"), h(b"ninguna"), h(b"tampoco"),
+    h(b"ni"), h(b"sin"),
+    h(b"ne"), h(b"pas"), h(b"non"), h(b"jamais"), h(b"aucun"), h(b"aucune"), h(b"sans"),
+    h(b"rien"),
+    h(b"mai"), h(b"nessun"), h(b"nessuna"), h(b"senza"),
+    h(b"nicht"), h(b"nichts"), h(b"kein"), h(b"keine"), h(b"keinen"), h(b"nie"), h(b"niemals"),
+    h(b"ohne"),
+    h(b"niet"), h(b"geen"), h(b"nooit"), h(b"zonder"),
+    h(b"inte"), h(b"ikke"), h(b"ingen"), h(b"aldrig"), h(b"utan"), h(b"uten"), h(b"uden"),
+    h(b"bez"), h(b"\xd0\xbd\xd0\xb5"), h(b"\xd0\xbd\xd0\xb5\xd1\x82"), h(b"\xd0\xbd\xd0\xb8"),
+    h(b"\xd0\xb1\xd0\xb5\xd0\xb7"), h(b"\xd0\xbd\xd0\xb8\xd0\xba\xd0\xbe\xd0\xb3\xd0\xb4\xd0\xb0"),
+    h(b"\xce\xb4\xce\xb5\xce\xbd"),
 ];
 
 // Polarity axes. One axis per kind of claim, because they are independent: "No,
@@ -1302,10 +1424,39 @@ const VERDICT_NEG: &[u32] = &[
 const AUTH_POS: &[u32] = &[
     h(b"human"), h(b"real"), h(b"authentic"), h(b"genuine"), h(b"clean"), h(b"benign"), h(b"safe"),
     h(b"legitimate"), h(b"organic"),
+    // The authenticity intents do not ask "is it good", they ask "is this the original".
+    // The words that answer that are provenance words, and without them a verdict flip
+    // reads as a paraphrase: "the hash matches the original" and "the hash differs from
+    // the original" share every content word and mean opposite things. An axis only
+    // engages when the ground truth itself takes a side on it, so these cost nothing on
+    // an intent whose truth never mentions provenance.
+    h(b"original"), h(b"unaltered"), h(b"unedited"), h(b"untouched"), h(b"matches"),
+    h(b"match"), h(b"matched"), h(b"matching"), h(b"identical"), h(b"intact"),
+    h(b"handwritten"), h(b"authored"),
 ];
 const AUTH_NEG: &[u32] = &[
     h(b"ai"), h(b"fake"), h(b"forged"), h(b"synthetic"), h(b"malicious"), h(b"phishing"),
     h(b"infected"), h(b"spam"), h(b"fraudulent"), h(b"deepfake"), h(b"bot"),
+    h(b"generated"), h(b"llm"), h(b"gpt"), h(b"chatgpt"), h(b"midjourney"), h(b"dalle"),
+    h(b"diffusion"), h(b"sora"), h(b"firefly"), h(b"manipulated"), h(b"edited"),
+    h(b"altered"), h(b"doctored"), h(b"tampered"), h(b"spliced"), h(b"retouched"),
+    h(b"plagiarised"), h(b"plagiarized"), h(b"differs"), h(b"differ"), h(b"differed"),
+    h(b"mismatch"), h(b"mismatched"), h(b"unmatched"), h(b"stripped"),
+    h(b"paraphrased"),
+];
+
+/// Severity, as a polarity axis, for the vulnerability intents. Behind SEV_AXIS because it
+/// is wrong everywhere else: a forecast states a high AND a low in the same sentence, so on
+/// WEATHER this table would read every complete answer as self-contradicting. On CVE_LOOKUP
+/// the severity IS the answer's verdict, and the champion we are up against gates a wrong
+/// one to zero, which is why matching its real-traffic ranking needs the same axis.
+const SEV_POS: &[u32] = &[
+    h(b"critical"), h(b"severe"), h(b"high"), h(b"maximum"), h(b"urgent"), h(b"exploited"),
+    h(b"weaponised"), h(b"weaponized"), h(b"kev"),
+];
+const SEV_NEG: &[u32] = &[
+    h(b"low"), h(b"minor"), h(b"medium"), h(b"moderate"), h(b"informational"), h(b"negligible"),
+    h(b"unexploited"), h(b"theoretical"),
 ];
 
 const DIR_POS: &[u32] = &[
@@ -1862,10 +2013,11 @@ fn score(q: &[u8], gt: &[u8], ma: &[u8]) -> f32 {
         // Polarity, per axis. Getting the verdict right in your own words counts
         // for something even when the wording shares little with the ground truth;
         // getting it backwards while reusing every word counts for almost nothing.
-        let axes: [(&[u32], &[u32]); 3] = [
+        let axes: [(&[u32], &[u32]); 4] = [
             (VERDICT_POS, VERDICT_NEG),
             (AUTH_POS, AUTH_NEG),
             (DIR_POS, DIR_NEG),
+            (SEV_POS, SEV_NEG),
         ];
         let mut agree = 0;
         let mut contra = 0;
@@ -1873,6 +2025,7 @@ fn score(q: &[u8], gt: &[u8], ma: &[u8]) -> f32 {
         let mut two_faced = 0;
         let mut c = 0;
         while c < axes.len() {
+            if c == 3 && SEV_AXIS == 0 { c += 1; continue; }
             let (pos, neg) = axes[c];
             let (g, _) = axis_sign(tg, pos, neg);
             if g != 0 {
@@ -1890,7 +2043,16 @@ fn score(q: &[u8], gt: &[u8], ma: &[u8]) -> f32 {
             c += 1;
         }
         if contra > 0 {
-            raw *= M_CONTRA;
+            // Scale the penalty by how much the contradicting answer echoes the ground
+            // truth. A flat multiplier here is what the comment above says we do NOT want:
+            // "getting it backwards while reusing every word counts for almost nothing."
+            // A wrong answer that also reuses the truth's wording is the worst case, not a
+            // partial-credit one, and on the authenticity fixtures it is exactly the case
+            // that outscores a correctly-worded paraphrase ("Bond prices usually fall" against
+            // a truth of "Bond prices usually rise" shares four words of five). At
+            // M_CONTRA_ECHO = 0 this is the old flat behaviour.
+            let echo = if gram3 > 1.0 { 1.0 } else if gram3 < 0.0 { 0.0 } else { gram3 };
+            raw *= M_CONTRA * (1.0 - M_CONTRA_ECHO * echo);
             claim_wrong = true;
         } else if two_faced > 0 {
             // Leads with the right verdict, then asserts the opposite, while
@@ -1908,6 +2070,15 @@ fn score(q: &[u8], gt: &[u8], ma: &[u8]) -> f32 {
             claim_wrong = true;
         }
 
+        // Disjoint bands for the two verdict classes, ordering preserved inside each.
+        // See V_BAND.
+        if V_BAND > 0.0 && (contra > 0 || two_faced > 0 || agree > 0) {
+            let lo = 0.5 * (1.0 - V_BAND);
+            let hi = 0.5 * (1.0 + V_BAND);
+            let x = clamp01(raw);
+            raw = if contra > 0 || two_faced > 0 { lo * x } else { hi + (1.0 - hi) * x };
+        }
+
         // Numeric agreement bonus. The answer stated every figure and no wrong one,
         // and nothing above flagged it as wrong-but-vocabulary-right (reordered,
         // wrong entity, negated, contradicted). For a pure-figure intent the figure
@@ -1921,6 +2092,17 @@ fn score(q: &[u8], gt: &[u8], ma: &[u8]) -> f32 {
         // flattening the middle: a scorer whose outputs barely vary is rejected,
         // and one that is all-or-nothing cannot rank the answers in between.
         let raw = clamp01(raw);
+        // Put the items on one scale before any threshold is applied. See NORM_LEN.
+        let raw = if NORM_LEN != 0.0 && raw > 0.0 && raw < 1.0 {
+            let n = match NORM_SRC {
+                2 => k_tot,
+                3 => r_tot - k_tot,
+                _ => cc_g as f32,
+            };
+            let k = fexp(NORM_LEN * (n - NORM_REF));
+            let d = raw * k + (1.0 - raw);
+            if d > 0.0 { clamp01(raw * k / d) } else { raw }
+        } else { raw };
         // Three-band step: rails exact for the fixtures, ordered ramp for real traffic.
         // See TRI_LO / TRI_HI. Checked before the STEP_T path because it subsumes it.
         if TRI_HI > 0.0 {

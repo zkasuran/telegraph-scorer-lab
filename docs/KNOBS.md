@@ -113,3 +113,26 @@ TRI_HI=0.20, STEP_R=0.30, TRI_FLOOR=1e-9, TRI_SRC=2`.
 Named presets in `variants.py`: `rawB` (pure embB), `rawR`/`rawRp` (champion-mimic blend, with
 PEN), `rawG35`/`rawG35p` (blend + lexical gate, with PEN), `rawLex` (lexical only), and the
 `PEN` set (all correctness penalties on). Prefer these for reproducible builds.
+
+## Ordering levers added 2026-08-31
+
+These four came out of the winback campaign (`worklogs/LEDGER.md` 2026-08-31 (c)). Each is off
+by default, so every earlier build is byte-identical without them.
+
+| const | default | effect |
+|---|---|---|
+| `V_BAND` | 0.0 | verdict banding. Squeezes a verdict that agrees with the truth into `[(1+V_BAND)/2, 1]` and one that contradicts into `[0, (1-V_BAND)/2]`, affinely, so the ranking inside each band is untouched. A threshold between the bands then splits every pair the verdict decides, which is what turns "orders the pairs right" into "one threshold separates them". This is what lifted TEXT_AUTHENTICITY_CHECK ordering from 6 of 12 to 11 of 12 on `bench/ta-pairs.json` |
+| `SEV_AXIS` | 0 | adds severity (`SEV_POS`/`SEV_NEG`) as a fourth polarity axis. Only for the vulnerability intents: a forecast states a high and a low in one sentence, so on WEATHER this table reads every complete answer as self-contradicting |
+| `NORM_LEN` | 0.0 | per-item difficulty normalisation: shifts the score's log-odds by `NORM_LEN * (n - NORM_REF)`, a constant per item, so nothing inside one request is reordered while items land on a common scale. Positive lifts long truths |
+| `NORM_SRC` | 1 | which size `n` is: 1 ground-truth content tokens, 2 the answer-bearing tokens the question did not give away, 3 how much of the truth the question gives away |
+
+Vocabulary added in the same round, and it moves `j` more than any knob did. `NEG` carries the
+negation markers of the languages LANGUAGE_TRANSLATION actually asks for, `NUMERALS` carries
+their number words, and `AUTH_POS`/`AUTH_NEG` carry provenance words (match, differs, stripped,
+generator names). An English-only table reads "a conta nao foi paga" as a paraphrase of "a
+conta foi paga" and reads "zaal negen" for "zaal drie" as nine tenths right.
+
+One trap worth stating in the knob doc, because it cost several rounds: `M_NUM_MATCH` at 1.0
+lifts ANY answer carrying every figure of the truth to exactly 1.0, wrong words and all. On a
+figure intent that is the point. On a description intent it hands a wrong answer the top rail,
+so it caps the fixture split. Keep it 0 unless the figure IS the answer.
