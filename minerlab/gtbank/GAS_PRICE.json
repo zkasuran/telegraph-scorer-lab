@@ -1,0 +1,25 @@
+{
+ "question": "What is the current average transaction fee level on Ethereum?",
+ "truths": [
+  {
+   "label": "leader",
+   "source": "txlens live /gas-price answer field, rank 1 on this intent",
+   "text": "current gas price on Ethereum is 0.0397 gwei, about $0.0021 for a standard transfer"
+  },
+  {
+   "label": "cost_led",
+   "source": "written: the frame the node's own leaked probe uses, which asks for the fee level",
+   "text": "The current average transaction fee on Ethereum is about $0.0021 for a standard transfer, at a gas price of 0.04 gwei, which is low."
+  },
+  {
+   "label": "gwei_only",
+   "source": "written: the answer a miner that reads eth_gasPrice and stops there gives",
+   "text": "The current gas price on Ethereum is 0.04 gwei, which is low for this network."
+  },
+  {
+   "label": "prose",
+   "source": "written: a model reading a gas tracker and answering in prose",
+   "text": "Gas on Ethereum is currently very cheap, around 0.04 gwei, so a simple ETH transfer costs roughly $0.002 at the moment."
+  }
+ ]
+}

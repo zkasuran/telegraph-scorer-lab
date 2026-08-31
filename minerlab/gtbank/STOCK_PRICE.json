@@ -1,0 +1,26 @@
+{
+ "question": "What is the current stock price of AAPL?",
+ "values": {},
+ "truths": [
+  {
+   "label": "leader",
+   "source": "chainsight-oracle live /stock signal, rank 1 on this intent",
+   "text": "The current share price of Apple Inc (AAPL) is $319.70 USD."
+  },
+  {
+   "label": "terse",
+   "source": "written: the shortest true answer",
+   "text": "$319.70"
+  },
+  {
+   "label": "prose",
+   "source": "written: a model reading a quote page and answering in prose",
+   "text": "Apple (AAPL) is trading at $319.70 per share, up from its previous close."
+  },
+  {
+   "label": "unavailable",
+   "source": "written: the answer a miner with no licensed quote source can give",
+   "text": "No share price can be served for AAPL, because the keyless quote sources available all bar redistribution or commercial use of their prices."
+  }
+ ]
+}

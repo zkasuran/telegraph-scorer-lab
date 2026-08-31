@@ -30,11 +30,11 @@ fn panic(_info: &PanicInfo) -> ! {
 
 /// Weight on token-level precision and recall, on character triples, on character
 /// pairs. Pairs matter only as a tail breaker for short or unusual answers.
-const W_LEX: f32 = 0.76;
-const W_GRAM3: f32 = 0.2;
+const W_LEX: f32 = 0.6;
+const W_GRAM3: f32 = 0.36;
 const W_GRAM2: f32 = 0.04;
 /// F-beta squared. Below 1 leans on precision, above 1 leans on recall.
-const F_BETA2: f32 = 0.36;
+const F_BETA2: f32 = 0.6;
 /// 1 to forgive dilution (concave in precision), 0 to score precision as it is.
 const P_CONCAVE: f32 = 1.0;
 /// How much of recall must come from the answer-bearing part of the ground truth,
@@ -44,13 +44,13 @@ const R_FLOOR: f32 = 0.3;
 /// Polarity multipliers. Lower on contradiction separates good from bad harder;
 /// higher keeps a wrong-but-on-topic answer inside the pack, which is where the
 /// champion puts it, and the traffic gate scores agreement with the champion.
-const M_CONTRA: f32 = 0.25;
-const M_TWO_FACED: f32 = 0.35;
+const M_CONTRA: f32 = 0.9;
+const M_TWO_FACED: f32 = 0.5;
 const M_SILENT: f32 = 1.0;
 const B_AGREE: f32 = 0.0;
 /// Numbers: floor when a stated figure is missing, multiplier when a different one
 /// is asserted instead.
-const M_NUM_MISS_BASE: f32 = 0.4;
+const M_NUM_MISS_BASE: f32 = 0.8;
 const M_NUM_WRONG: f32 = 0.05;
 /// Numeric agreement bonus (default 0, off for every intent but the pure-figure ones).
 /// When the answer carries every figure the ground truth states and states no wrong
@@ -58,7 +58,7 @@ const M_NUM_WRONG: f32 = 0.05;
 /// for a right verdict. This is what lifts a correct numeric paraphrase ("roughly
 /// $3,120 per ETH" for "3,120 USD") from mid-range word-overlap up to near-perfect,
 /// which is where the FINANCIAL_DATA champion separates and our lexical build did not.
-const M_NUM_MATCH: f32 = 0.0;
+const M_NUM_MATCH: f32 = 1.0;
 
 /// Literal-order multiplier. Character trigrams are stored as a set, so an answer that
 /// transposes characters inside a literal ("LS4 1AB" for "LS1 4AB", "0072-451-898" for
@@ -68,18 +68,18 @@ const M_NUM_MATCH: f32 = 0.0;
 /// order-preserving character subsequence of the ground truth's alphanumeric runs against
 /// the answer's: a run that appears with its characters out of order scores below
 /// M_LITERAL_MIN of its length and costs this multiplier. 1.0 keeps it off.
-const M_LITERAL: f32 = 1.0;
+const M_LITERAL: f32 = 0.8;
 const M_LITERAL_MIN: f32 = 0.9;
 /// Same words, no shared adjacency.
-const M_ORDER: f32 = 0.85;
+const M_ORDER: f32 = 0.9;
 /// A figure attached to a different entity. Harder than a plain reordering, because
 /// "Base at 2.6 billion" when the truth is "Arbitrum at 2.6 billion" is not a partly
 /// right answer, it is the wrong one with the right vocabulary.
-const M_ENTITY: f32 = 0.72;
+const M_ENTITY: f32 = 0.7;
 /// How much of the score a negated match costs. "No rain is expected" covers every
 /// content word of "rain is expected" and asserts the opposite, so coverage that only
 /// holds under a negation the ground truth does not carry is worth less than nothing.
-const M_NEGCOV: f32 = 0.1;
+const M_NEGCOV: f32 = 0.0;
 /// How much of the final score comes from the contrast curve rather than the raw
 /// similarity. All contrast sharpens separation, all raw ranks more smoothly.
 const SHARPEN: f32 = 0.0;
@@ -98,15 +98,15 @@ const SOFT_CAP_FRAC: f32 = 0.35;
 /// the traffic gate rewards agreeing with its topical ranking; the distilled table
 /// (tools/pack_distilled.py) lets a static mean-pool track it, and this weight blends
 /// that in. Set high only for the CHAT_COMPLETION build.
-const W_EMB: f32 = 0.45;
+const W_EMB: f32 = 0.6;
 
 /// Blend weights for the transformer path (only used when W_EMB > 0 and the minilm feature
 /// is on). embA = shallow embedding-layer cosine, embB = full transformer cosine, lex = our
 /// lexical/correctness score. The champion's own blend is 0.25/0.50/0.25; the promoted
 /// CHAT_COMPLETION build used 0.28/0.56/0.16. Lexical builds keep W_EMB = 0 and never touch these.
-const EMB_A_W: f32 = 0.25;
-const EMB_B_W: f32 = 0.5;
-const EMB_LEX_W: f32 = 0.25;
+const EMB_A_W: f32 = 0.3;
+const EMB_B_W: f32 = 0.55;
+const EMB_LEX_W: f32 = 0.15;
 
 /// Weights on the mid-depth transformer cosines (after layer 2 and after layer 4). They join
 /// EMB_A_W (embedding layer) and EMB_B_W (all six layers) in the same sum, so the four
@@ -173,7 +173,7 @@ const STEP_B: f32 = 0.0;
 /// the ranking (STEP_B still spreads the whole cluster out); a fixture's bad answer covers
 /// none of the truth and lands on the bad side however topical an embedding finds it. That
 /// is separation bought without moving the ranking the agreement gate measures. 0 is off.
-const STEP_R: f32 = 0.3;
+const STEP_R: f32 = 0.08;
 
 /// Half-width of the step. 0 is the hard step, which is the most separation a monotone
 /// transform can buy once the threshold is right. A width above 0 turns it into a linear
@@ -203,7 +203,7 @@ const NOGT_Q: f32 = 1.0;
 /// with no question and 0.998 with the real one, so its exact matches are still ordered. With
 /// EXACT_TIE > 0 ours are too, by how well the answer addresses the question, and the score
 /// stays within EXACT_TIE of 1.0 so the perfect-answer gate is untouched.
-const EXACT_TIE: f32 = 0.02;
+const EXACT_TIE: f32 = 0.0;
 
 /// Which quantity breaks ties inside a step band. The step decides separation, the tie-break
 /// decides the ranking, and for an intent whose real traffic all lands in one band the
@@ -254,12 +254,12 @@ const BAND_EPS: f32 = 0.0;
 ///
 /// The whole function is non-decreasing in raw, so no ordering is inverted anywhere.
 /// TRI_HI = 0 keeps this path off.
-const TRI_LO: f32 = 0.06;
-const TRI_HI: f32 = 0.2;
+const TRI_LO: f32 = 0.3;
+const TRI_HI: f32 = 0.0;
 
 /// Depth of the ordering carved into the top rail. See the TRI_HI block for why this exists
 /// and how the size was chosen from the node's own accept/reject numbers. 0 = flat rail.
-const TRI_RANK: f32 = 0.0;
+const TRI_RANK: f32 = 0.002;
 
 /// Scale of the ordering carved into the BOTTOM rail. 0 = flat rail.
 ///
@@ -277,7 +277,7 @@ const TRI_RANK: f32 = 0.0;
 /// within itself, numerically indistinguishable from zero at the precision the margin is
 /// reported in. Whichever side of TRI_HI the real traffic rows fall on, they now carry a
 /// defined ranking rather than a constant, which is what the agreement gate needs.
-const TRI_FLOOR: f32 = 1e-09;
+const TRI_FLOOR: f32 = 0.002;
 
 /// Which signal orders the bottom rail. The rail carries agreement, not separation, so this
 /// selects the signal whose ordering of real traffic tracks the champion's best. Each option
@@ -290,7 +290,7 @@ const TRI_FLOOR: f32 = 1e-09;
 /// question is which single signal does. Same encoding as TIE_SRC.
 /// 0 raw, 1 lexical, 2 character trigrams, 3 ground-truth recall, 4 answer-to-question
 /// cosine, 5 shallow embedding cosine, 6 half lexical half transformer.
-const TRI_SRC: u32 = 3;
+const TRI_SRC: u32 = 0;
 
 /// Logistic calibration of the blended score, reverse-engineered from the rival topical
 /// champion (its exported breakdown_answer shows final = 1/(1+e^-SIGK*(blend-SIGC)), with
@@ -300,7 +300,7 @@ const TRI_SRC: u32 = 3;
 /// curve out-separates it on the fixture set. 0 keeps the smoothstep path (every lexical
 /// build), so those stay byte-for-byte identical.
 const SIGK: f32 = 0.0;
-const SIGC: f32 = 0.4545;
+const SIGC: f32 = 0.45;
 
 /// no_std exp, copied from minilm.rs (2^x via range reduction + degree-4 poly), used only by
 /// the SIGK logistic calibration above.
@@ -481,17 +481,34 @@ fn soft_best(from: &Toks, i: usize, to: &Toks) -> f32 {
 // ---------------------------------------------------------------------------
 
 /// The node writes question / ground truth / answer into this heap before every
-/// call. 4 MB leaves room for the "tens of KB" stress inputs with margin to
-/// spare; zeroed statics cost nothing in the compiled binary.
-const HEAP_SIZE: usize = 4 * 1024 * 1024;
+/// call. A miner can reply with anything, and one TVL_LOOKUP miner sends a 10.3 MB
+/// answer, so the size that matters is not "tens of KB with margin" but whatever the
+/// largest real answer on the network happens to be. 16 MB covers that with room, and
+/// a zeroed static costs nothing in the compiled binary.
+const HEAP_SIZE: usize = 16 * 1024 * 1024;
 static mut HEAP: [u8; HEAP_SIZE] = [0u8; HEAP_SIZE];
 static mut HEAP_OFFSET: usize = 0;
 
+/// Hand back a slice of the static heap, or 0 when the request cannot be served.
+///
+/// The old version wrapped `HEAP_OFFSET` to 0 on an oversized request and returned a
+/// pointer anyway, so a request larger than the whole heap got a pointer to a buffer
+/// that could not hold it, and the node's write ran off the end. That is what
+/// "miner_answer too large" was: not a limit we chose, but this allocator silently
+/// failing on a 10.3 MB answer. Returning 0 is the honest answer, and `read_bytes`
+/// already treats a null pointer as an empty input, so the module scores rather than
+/// traps.
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn alloc(size: i32) -> i32 {
     let size = size.max(0) as usize;
+    if size > HEAP_SIZE {
+        return 0;
+    }
     unsafe {
         let aligned = (HEAP_OFFSET + 3) & !3;
+        // Wrap only when this request still fits from the start of the heap. Each call
+        // writes q, gt and ma before scoring, so the reset has to leave room for all
+        // three; the node never holds a pointer across calls.
         if aligned + size > HEAP_SIZE {
             HEAP_OFFSET = 0;
         } else {
@@ -510,7 +527,7 @@ pub unsafe extern "C" fn dealloc(_ptr: i32, _size: i32) {}
 /// can be traced back to the configuration it was measured with. Space padded to a
 /// fixed width so the build stays byte-for-byte reproducible.
 #[unsafe(no_mangle)]
-pub static TELEGRAPH_INTENT: [u8; 32] = *b"AI_TEXT_DETECTION               ";
+pub static TELEGRAPH_INTENT: [u8; 32] = *b"CVE_LOOKUP                      ";
 
 // ---------------------------------------------------------------------------
 // Byte-level primitives

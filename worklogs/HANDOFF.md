@@ -1,13 +1,17 @@
 # Telegraph lane: what is left for a human
 
-## Current state 2026-08-31: 38 / 45 held, 11 of them wrap-proof
+## Current state 2026-08-31: 40 / 45 held, 13 wrap-proof, 9 of those sealed at exactly 1.0
 
 The board is contested by one author (`0xdad201ef`, `Harshyadav442277/miner`) who takes slots by
 appending a two-band rescaling to **our own registered binaries**. Every rival-held slot decoded to
 one of our bases; see `worklogs/LEDGER.md` 2026-08-31 and `research/rival-lineage.json`.
 
 Reclaimed and verified against `/intents/<id>`: CONTENT_MODERATION reg2055, TOKEN_HOLDER_COUNT
-reg2057, CRYPTO_PRICE reg2060, TWITTER_SEARCH reg2061, CONTENT_VERIFICATION reg2062.
+reg2057, CRYPTO_PRICE reg2060, TWITTER_SEARCH reg2061, CONTENT_VERIFICATION reg2062, STOCK_PRICE
+reg2147, IMAGE_VERIFICATION reg2101, TELEGRAPH_KNOWLEDGE reg2104.
+
+**Read the raw JSON, not a parsed float, when checking whether a slot is sealed.** A printed `1` can
+be `1 - 6e-8`, which is one ulp below and therefore beatable. `tools/ceilcheck.py` does this.
 
 **The defence is the ROC ceiling, not margin 1.0.** A slot whose margin reads exactly `f32(j/N)`
 cannot be superseded by any wrap, whatever that number is. reg2055 holds at 0.800000012 and is as
@@ -16,10 +20,24 @@ safe as an exact-1.0 slot. `docs/DEFENSE.md` carries the derivation and the two-
 
 ### Needs a human decision, not more sweeping
 
-Three slots are genuine ROC locks: LANGUAGE_TRANSLATION, TEXT_AUTHENTICITY_CHECK, CVE_LOOKUP. The
-rival sits inside the node's 1e-6 promotion epsilon of the ceiling of every base we own, so no rail,
-wrap or threshold reaches them. Winning them needs a scorer that separates one more fixture pair,
-which is module work. Do not run another transform sweep on these.
+Five slots remain, and each is blocked for a different measured reason (full detail in
+`worklogs/LEDGER.md` 2026-08-31 (b)):
+
+- **CVE_LOOKUP** is a licence decision, not a technical one. Separation is winnable (root-lifted
+  builds reached 0.9999994 against their 0.99992263) but every build of ours that has ever cleared
+  its 0.60 agreement floor is one of the 44 patchsignal derivatives withdrawn on 2026-08-30. Our own
+  bases cap at sp 0.4572. Leave it.
+- **LANGUAGE_TRANSLATION** and **TEXT_AUTHENTICITY_CHECK** have a rival parked inside the 1e-6
+  promotion epsilon just below our attainable ceiling (`f32(12/15)` and `f32(10/15)`). All families
+  measured; both need one more separated fixture pair, which is module work, not calibration. Do not
+  run another transform sweep on these.
+- **TEXT_GENERATION** and **LANGUAGE_GENERATION** are winnable at their current j=15 and need a
+  margin of exactly 1.0. Rails on their own 24MB bases are registered and queued (reg2107-2109,
+  reg2110-2112), the same construction that won IMAGE_VERIFICATION and TELEGRAPH_KNOWLEDGE. The 1MB
+  alternatives are ruled out on-node (reg2253/2255 returned j=12).
+
+**Local ROC does not predict the node's j.** Measured on five bases this session: local 0.925 -> node
+j=13, local 0.900 -> j=12 (twice), local 0.475 -> j=10. Use the bench to rank variants only.
 
 ### Still moving, machine-side
 

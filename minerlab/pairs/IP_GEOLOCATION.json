@@ -1,0 +1,36 @@
+{
+ "intent": "IP_GEOLOCATION",
+ "question": "Where is the IP address 8.8.8.8 located?",
+ "ours": {
+  "url": "https://telegraph-net.margyn.workers.dev/ip-geolocate?ip=8.8.8.8",
+  "text": "8.8.8.8 is located in the United States.",
+  "readings": null,
+  "raw_keys": [
+   "as_of",
+   "asn",
+   "attribution",
+   "bgp_prefix",
+   "city",
+   "confidence",
+   "country",
+   "country_code",
+   "hostname",
+   "intent",
+   "ip",
+   "latitude",
+   "longitude",
+   "org",
+   "region",
+   "registry",
+   "source",
+   "summary",
+   "timezone"
+  ]
+ },
+ "leader": {
+  "slug": "livecert",
+  "field": "verdict",
+  "url": "https://miner-wine.vercel.app/ip-geolocate?ip=8.8.8.8",
+  "text": "Ashburn, Virginia, United States"
+ }
+}

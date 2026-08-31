@@ -1128,3 +1128,89 @@ Rank at epoch 295, the last scored before this work landed: 6 of 25 at rank 1, u
 Every change since then is node-gated, since rank only moves when the node re-scores. Epochs
 run roughly 2.5 hours apart. The node API was also down for about 40 minutes during this
 session, which is worth knowing before reading a rank as a result.
+
+## 2026-08-31 (b), the reclaim campaign: 36 -> 40/45, and what each remaining slot is blocked by
+
+Continuation of the entry above. Eight slots reclaimed, every one verified by reading `/intents/<id>`
+back and checking the author is our wallet.
+
+| Intent | reg | margin | wins | on ceiling |
+| --- | --- | --- | --- | --- |
+| CONTENT_MODERATION | 2055 | 0.800000000 = `f32(12/15)` | 15/15 | yes |
+| TOKEN_HOLDER_COUNT | 2057 | 0.857142870 = `f32(12/14)` | 14/14 | yes |
+| CRYPTO_PRICE | 2060 | 0.800000000 = `f32(12/15)` | 14/15 | yes |
+| TWITTER_SEARCH | 2061 | 1.000000000 | 32/32 | yes, sealed |
+| CONTENT_VERIFICATION | 2062 | 1.000000000 | 15/15 | yes, sealed |
+| STOCK_PRICE | 2147 | 0.800002930 | 15/15, sp 1.0 | no |
+| IMAGE_VERIFICATION | 2101 | 1 (raw JSON) | 6/6 | yes, sealed |
+| TELEGRAPH_KNOWLEDGE | 2104 | 1 (raw JSON) | 14/14 | yes, sealed |
+
+Board audit against raw f32 bits: **9 sealed at bit-exact 1.0** (AI_TEXT_DETECTION, CONTENT_EXTRACTION,
+CONTENT_VERIFICATION, DEEPFAKE_DETECTION, IMAGE_VERIFICATION, SENTIMENT_ANALYSIS,
+TELEGRAPH_KNOWLEDGE, TEXT_CLASSIFICATION, TWITTER_SEARCH), 4 more wrap-proof on their own ceiling
+below 1.0, 27 below it. Read the raw JSON text for this, not a parsed float: a printed `1` can be
+`1 - 6e-8`, and the two differ in whether the slot is sealed.
+
+### The measurement that governs everything: local ROC over-reads the node
+
+Five bases, local ROC against the j the node actually reported:
+
+| base | local ROC | node j |
+| --- | --- | --- |
+| cve_c3 (foreign carrier) | 0.925 | 13 |
+| ...language_generation-lex | 0.900 | 12 |
+| c2_r1cut (LANGUAGE_TRANSLATION) | 0.900 | 12 |
+| ta_id (TEXT_AUTHENTICITY_CHECK) | 0.475 | 10 |
+
+So the 40-case bench ranks variants and cannot predict `j`. Every "this base will reach j=15"
+inference from a local dump was wrong this session. The only construction that has reached j=15 on
+the generation intents is the intent's own 24MB transformer build.
+
+### Four theories tested and discarded, each with the measurement that killed it
+
+- **"A monotone wrap cannot raise j."** False in f32. Monotone maps preserve an ordering of distinct
+  reals, but `cve_tie3` crushes bads into a range where distinct values collapse to one f32, and
+  `sqrt` pulls them apart: the root-lifted CVE builds went from `f32(14/15)` to 0.9999994.
+- **"24MB times out on the gate."** No: reg2101 and reg2104 are 24MB and both won at margin exactly
+  1 after a ~3h queue. reg2105 (same construction) ran 10m26s and had `comparable_cases` truncated
+  14 -> 11. It is node-side variance, not a size limit.
+- **"Shrink the blob to fit the budget."** Requantised `minilm.bin` 22.9MB -> 13.7MB (13 FFN tensors
+  to per-row int4, `/tmp/mlm_int4.py`). Module 24MB -> 14.77MB, loads clean, but ROC collapsed
+  0.90 -> 0.40 and per-call cost was unchanged at 3.9s. Timing is per-call inference, not load.
+- **"Cut per-call work instead."** MAXTOK 128 -> 64 with TOK_SPAN 2: 3.91s -> 3.48s per call, an 11%
+  saving against a ~600s budget where 30 fixture calls cost ~104s. Not the bottleneck either.
+
+Also corrected: `W_EMB` is NOT inert without `--features minilm`. `lib.rs` has a
+`#[cfg(not(feature = "minilm"))]` branch blending GloVe `sentence_cos` from `vectors.bin`, which is
+compiled into the 1MB build. Tuning it explicitly (W_EMB 0.35/0.55) lowered ROC to 0.575/0.500, below
+pure lexical, so the GloVe path does not help these intents.
+
+### Why each remaining slot is where it is
+
+- **CVE_LOOKUP.** Separation is winnable (root-lifted builds hit 0.9999994 vs their 0.99992263) but
+  every build of ours that has ever cleared its 0.60 agreement floor is one of the 44 patchsignal
+  derivatives withdrawn on 2026-08-30 (sp 0.87, 0.86, 0.73). Our own bases top out at sp 0.4572.
+  Winning it means re-registering that lineage, so it stays theirs. A licence decision, not a
+  technical one.
+- **LANGUAGE_TRANSLATION.** Champion at `f32(12/15) - 8.2e-7`, i.e. parked inside the promotion
+  epsilon just below our ceiling. All three families measured: lexical c2 j=12 (38 regs), lexical
+  retunes ROC 0.63-0.68, transformer minilm ROC 0.43-0.53 (worse, because translation answers are
+  literal string matches that an embedding blurs). Needs j=13.
+- **TEXT_AUTHENTICITY_CHECK.** Champion at `f32(10/15) - 6.6e-7`. 112 regs across 19 families all cap
+  at j=10, and exactly one ever reached 15/15 wins (`to_agree`, at j=8). The fixture set needs
+  opposite `M_CONTRA` settings at once: some pairs have the bad reusing the GT wording (crush it),
+  others have the good reusing it (do not). Three polarity probes (reg2185-2187) each fixed the
+  inverted pairs and broke previously-ordered ones: wins 13/15, 13/15, 12/15.
+- **TEXT_GENERATION / LANGUAGE_GENERATION.** Both winnable at j=15, both need exactly 1.0. Rails on
+  their own 24MB bases are queued (reg2107-2109, reg2110-2112) with `top` sized so `(top/N)*D` rounds
+  away. The 1MB alternatives are ruled out on-node: reg2253/2255 came back at j=12.
+
+### Fixed this session
+
+A real allocator bug. `HEAP_SIZE` was 4MB and a live TVL_LOOKUP miner submits a 10.3MB answer, and
+worse, `alloc` wrapped `HEAP_OFFSET` to 0 on an oversized request and returned a pointer anyway, so
+the node's write ran past the end of a buffer that could never hold it. That is what
+"miner_answer too large" was. Now 16MB with an explicit refusal (return 0) above it; `read_bytes`
+already treats null as empty so the module scores instead of trapping. Gated behaviour-neutral: the
+same config at 4MB and 16MB gives 0 differing scores over all 80 bench cases, and the 10.4MB answer
+scores 0.0869 where the old build returned "write outside memory".

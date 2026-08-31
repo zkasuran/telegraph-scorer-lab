@@ -1,0 +1,25 @@
+{
+ "question": "What is CVE-2021-44228 and how severe is it?",
+ "truths": [
+  {
+   "label": "leader",
+   "source": "patchsignal-cve live /v1/cve, self-scores 1.0 at the node",
+   "text": "CVE-2021-44228. Severity: CRITICAL. CVSS base score: 10.0. Earliest affected version: 2.0-beta9. Impact/details: Apache Log4j2; unsafe JNDI lookup handling; can lead to remote/arbitrary code execution. Known exploitation: confirmed exploitation in the wild."
+  },
+  {
+   "label": "prose",
+   "source": "preflight-ssl-verification live /cve reason field, rank-1 on other intents",
+   "text": "CVE-2021-44228, also known as Log4Shell, is rated as Critical with a CVSS score of 10. It affects Apache Log4j versions from 2.0-beta9 to 2.14.1. The vulnerability allows remote attackers to execute arbitrary code via JNDI LDAP endpoints when message lookup substitution is enabled. It has been actively exploited in the wild since disclosure. The fixed versions are Apache Log4j 2.15.0 and later."
+  },
+  {
+   "label": "nvd_desc",
+   "source": "the NVD description verbatim, which is what a model reading NVD would write",
+   "text": "Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled."
+  },
+  {
+   "label": "terse",
+   "source": "written: the shortest true answer to the asked question, as a model summarising NVD would give it",
+   "text": "CVE-2021-44228 is a critical remote code execution vulnerability in Apache Log4j2, with a CVSS 3.1 base score of 10.0. It is known as Log4Shell and has been exploited in the wild."
+  }
+ ]
+}

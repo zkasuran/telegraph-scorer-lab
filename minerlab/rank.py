@@ -23,7 +23,6 @@ epoch has passed.
 Modules are 1 to 29 MB and take seconds to instantiate, so scoring is batched: one load
 per intent, every candidate scored inside it.
 """
-import hashlib
 import json
 import os
 import subprocess
@@ -36,7 +35,9 @@ NODE = "https://devnode.telegraphprotocol.com"
 US = "0x8b224783fe5b3c52b7db0cb9b1754f8812b75287"
 CACHE = os.path.join(ROOT, ".rank")
 MODULES = os.path.join(CACHE, "modules")
-DUMP = os.path.join(ROOT, "..", "scorer", "harness", "dumpscores")
+DUMP = next((p for p in (os.environ.get("DUMP"), "/tmp/dump",
+                         os.path.join(ROOT, "..", "..", "scorer", "harness", "dumpscores"))
+             if p and os.path.exists(p)), "/tmp/dump")
 UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
       "Chrome/151.0.0.0 Safari/537.36")
 
@@ -44,7 +45,7 @@ UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
 def keccak(s):
     from Crypto.Hash import keccak as k
     h = k.new(digest_bits=256)
-    h.update(s.encode())
+    h.update(s.encode() if isinstance(s, str) else s)
     return h.hexdigest()
 
 
@@ -98,11 +99,10 @@ def sync():
             return rec["intent"], "no active module"
         path = os.path.join(MODULES, rec["intent"] + ".wasm")
         if os.path.exists(path):
-            got = hashlib.sha256(open(path, "rb").read()).hexdigest()
-            if got == (rec.get("hash") or ""):
+            if keccak(open(path, "rb").read()) == (rec.get("hash") or ""):
                 return rec["intent"], f"cached {os.path.getsize(path) >> 20} MB"
         subprocess.run(["curl", "-sL", "--max-time", "300", rec["url"], "-o", path], check=False)
-        got = hashlib.sha256(open(path, "rb").read()).hexdigest() if os.path.exists(path) else ""
+        got = keccak(open(path, "rb").read()) if os.path.exists(path) else ""
         ok = "hash ok" if got == (rec.get("hash") or "") else f"HASH MISMATCH {got[:12]}"
         return rec["intent"], f"{os.path.getsize(path) >> 20} MB {ok}"
 

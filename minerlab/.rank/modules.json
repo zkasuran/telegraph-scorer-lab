@@ -1,0 +1,177 @@
+[
+ {
+  "intent": "ACADEMIC_SEARCH",
+  "reg": 688,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/5a0a5b7f5189ae26fc158385c8d69b5cebf20856/dist/xfmr/acad_pen.wasm",
+  "hash": "782f7631221ef558040f646ea825a4a42b7d15f6918091c5e204cdb7ef3fa03b",
+  "author": "US"
+ },
+ {
+  "intent": "CONTENT_EXTRACTION",
+  "reg": 935,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/5ecc663c68c7a6d4cf311ea86f5b139886b40726/dist/xfmr/win_b0.wasm",
+  "hash": "d86a840c1873f2a754cbf6bfc150ab59f55ecb7e8219ce06d4c1f2c87c24895e",
+  "author": "US"
+ },
+ {
+  "intent": "CRYPTO_PRICE",
+  "reg": 2060,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/0e84e751775d88a6c0f90ee32016a92ec1a7c270/dist/lock/cry_r6.wasm",
+  "hash": "3b55dcd261486930fdda38344d81f97c5e8fa72a36f29cbd9dbdda15137c3c40",
+  "author": "US"
+ },
+ {
+  "intent": "CURRENCY_EXCHANGE",
+  "reg": 1616,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/7b8a16d6fbe9bcc90bb12a8b71e13e6a90f71345/dist/xfmr/fx_kE.wasm",
+  "hash": "ec5726d77bab46d2934e47fb3c3d331cce4cdc2266059afdf9dd0c1d27f1d88a",
+  "author": "US"
+ },
+ {
+  "intent": "CVE_LOOKUP",
+  "reg": 1993,
+  "url": "https://raw.githubusercontent.com/Harshyadav442277/miner/6a3e01c75674359c0d4b1a66a9107f8277c1446e/track2/calibration/dist/cve_lookup_w2.wasm",
+  "hash": "6f7170f1dc00a14f20cef655e622f64d581fabcc9b6a431530b0dc8d9c3f5fbe",
+  "author": "0xdad201ef"
+ },
+ {
+  "intent": "FINANCIAL_DATA",
+  "reg": 219,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/c04c6e42d975af11ddd9f7ef9b3414e57a78149a/dist/xfmr/fin_c3.wasm",
+  "hash": "6aee4fcbfae61a5c9b0ac5b8eefa0799619b7dff80bef2b72bd9e7aead8372cf",
+  "author": "US"
+ },
+ {
+  "intent": "GAME_RESULT",
+  "reg": 1265,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/7d7b7cc8c072723495c6b8b0ab7774b19528a77f/dist/xfmr/game_fork_pivot10.wasm",
+  "hash": "698f4d1cd585239babdf6beaf9b8b288a0012fc2be50139efa6fd7a22cee88b4",
+  "author": "US"
+ },
+ {
+  "intent": "GAS_PRICE",
+  "reg": 1535,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/0d33b2d983fbaf4802e5d38c0be10a8a4fc1e544/dist/reclaim/gasc_ms_09.wasm",
+  "hash": "7d636da223f2b2052febc3ef55e0c974b6dc5904ff5a2c82d9f3478c490ccc18",
+  "author": "US"
+ },
+ {
+  "intent": "IP_GEOLOCATION",
+  "reg": 630,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/8dcc6b775400c48bf0895923f0407aa3d2b2bfb2/dist/subagent/IP_GEOLOCATION.wasm",
+  "hash": "636983a2fd5a72974977d62cbd50ff97df87efa0b16287ce24ca254369703094",
+  "author": "US"
+ },
+ {
+  "intent": "LANGUAGE_TRANSLATION",
+  "reg": 1996,
+  "url": "https://raw.githubusercontent.com/Harshyadav442277/miner/6a3e01c75674359c0d4b1a66a9107f8277c1446e/track2/calibration/dist/language_translation_w1.wasm",
+  "hash": "2552f95c8fa9879fe59c2847ee52a8ca11ecbe9362384321c0dd6f497c206a73",
+  "author": "0xdad201ef"
+ },
+ {
+  "intent": "NEWS_HEADLINES",
+  "reg": 635,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/f009d2d778bd49611dcc0a7e3819a8dca74d1aad/dist/xfmr/nh_mini.wasm",
+  "hash": "bd5175afa466481e522d80103b2569f0a00c71fdcc87d3d55b0e30d2fd1bbfbb",
+  "author": "US"
+ },
+ {
+  "intent": "NEWS_SEARCH",
+  "reg": 330,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/c88cc06ec3d03e6b9367a3c39908d92798626fa2/dist/xfmr/news_q40s.wasm",
+  "hash": "85a44d7b224c3bdd423f2a798155358505dc953510f9b86d03dff2755e4f54b0",
+  "author": "US"
+ },
+ {
+  "intent": "ONCHAIN_TX_LOOKUP",
+  "reg": 642,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/92167ea85229156e2e761afa36a6b50fcc9fedfa/dist/xfmr/otx_t74.wasm",
+  "hash": "2780ba63d46a6fe0b4ea5ea8e6ff4070358c9087a4ee5d81848d2f5b78aef24f",
+  "author": "US"
+ },
+ {
+  "intent": "RESEARCH_QUERY",
+  "reg": 452,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/72616195155200974eac9982e3121aa48f5f8373/dist/xfmr/rquery_rpen.wasm",
+  "hash": "29b39599d762c61c0f8adf622d3204c85618cdc3803591fc8624ea9393c716b8",
+  "author": "US"
+ },
+ {
+  "intent": "RESEARCH_SYNTHESIS",
+  "reg": 627,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/b0807b7bf048729951b6f8ef722d2ff55e735914/dist/xfmr/rs_mini.wasm",
+  "hash": "4ff6cf7232402c9f77992ce0dbd1f4e1546f50e9c69a543442825f69f81386a8",
+  "author": "US"
+ },
+ {
+  "intent": "SPORTS_SCORE",
+  "reg": 990,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/a9f304df4dca6a672f9819efae5e294410b6c8f5/dist/xfmr/sports_score_rawG35p_s072.wasm",
+  "hash": "05fb6f7451a88350c8136f729ebdc175c5edfc3fd3486d7d7b9903a6a3065b07",
+  "author": "US"
+ },
+ {
+  "intent": "SSL_VERIFICATION",
+  "reg": 631,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/8dcc6b775400c48bf0895923f0407aa3d2b2bfb2/dist/subagent/SSL_VERIFICATION.wasm",
+  "hash": "88021c164d64d4f571bda4b714eda48a9e68f30acbe561ee2be611b483669d1e",
+  "author": "US"
+ },
+ {
+  "intent": "STOCK_PRICE",
+  "reg": 2147,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/adb56a848b8050d3b76dfbe07774f7abe5e8d924/dist/lock/sp3_0.wasm",
+  "hash": "bc4d09f7d6eebbe3bc448adb2bd01ea29e3d0d476a6d6d6facbf3cf5e6f971d9",
+  "author": "US"
+ },
+ {
+  "intent": "STORM_ALERT",
+  "reg": 453,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/72616195155200974eac9982e3121aa48f5f8373/dist/xfmr/storm_rpen.wasm",
+  "hash": "f30451baead010294d0adcd679bd328c8bc324d175758588028c1c19cb0cb536",
+  "author": "US"
+ },
+ {
+  "intent": "TOKEN_HOLDER_COUNT",
+  "reg": 2057,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/0e84e751775d88a6c0f90ee32016a92ec1a7c270/dist/lock/thc_r5.wasm",
+  "hash": "02b596f3fc07b4d031a85558c15b4d918349983af7993dd3a30fb196eaeabb74",
+  "author": "US"
+ },
+ {
+  "intent": "TVL_LOOKUP",
+  "reg": 49,
+  "url": "https://gateway.pinata.cloud/ipfs/QmNV1RufiyPjkkZseWAeXpoSrtWzDPBVhyMXmMQoDvoLKi",
+  "hash": "52bf95ab9ad37da230a26f7b580b60293988b930124826003614bd523b8e3869",
+  "author": "US"
+ },
+ {
+  "intent": "URL_SCAN",
+  "reg": 220,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/0174a85639c398a0e898dcb11b54367eb2723b2b/dist/xfmr/url_c3.wasm",
+  "hash": "71581b142ca88090e795ffaaa95442e7403c49018f94e7c0b41ce938cef97c6a",
+  "author": "US"
+ },
+ {
+  "intent": "WALLET_BALANCE_CHECK",
+  "reg": 1066,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/4005fbb5cb6720a4302921077ed60929a55ffcac/dist/xfmr/wl_penstep40.wasm",
+  "hash": "55afa8d7a4da2a0c0edd3ad2c33b175e0fb9f92e9528adab354c1148e798e97d",
+  "author": "US"
+ },
+ {
+  "intent": "WEATHER_CHECK",
+  "reg": 510,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/d734f291817596332ec23e1ef9b6b67fc32631ef/dist/xfmr/wchk_tol45.wasm",
+  "hash": "b08701bb8eb40c901c472e67949bf9cc9d3a52cfe0b2163a8510a43f90e8473f",
+  "author": "US"
+ },
+ {
+  "intent": "WEATHER_FORECAST",
+  "reg": 636,
+  "url": "https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/f009d2d778bd49611dcc0a7e3819a8dca74d1aad/dist/xfmr/wf_mini.wasm",
+  "hash": "dd7dc9e9adab581c6f124050bd76a5f88b6f4bcdedf64dbc79993bc055f963ff",
+  "author": "US"
+ }
+]

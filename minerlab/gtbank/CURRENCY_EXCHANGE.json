@@ -1,0 +1,35 @@
+{
+ "question": "What is the current exchange rate from USD to EUR?",
+ "values": {
+  "rate": {
+   "url": "https://telegraph-fin.margyn.workers.dev/fx",
+   "params": {
+    "from": "USD",
+    "to": "EUR"
+   },
+   "field": "rate"
+  }
+ },
+ "truths": [
+  {
+   "label": "leader",
+   "source": "chainsight-oracle live /fx signal, rank 1 on this intent",
+   "text": "1 USD = {rate:.4f} EUR"
+  },
+  {
+   "label": "prose",
+   "source": "preflight live /fx-rate reason field frame, rank 1 on sibling intents",
+   "text": "The current mid-market exchange rate is 1 USD to {rate:.4f} EUR."
+  },
+  {
+   "label": "buys",
+   "source": "written: a model answering in plain words at two decimals",
+   "text": "One US dollar buys about {rate:.2f} euros right now."
+  },
+  {
+   "label": "terse",
+   "source": "written: the bare figure",
+   "text": "{rate:.4f}"
+  }
+ ]
+}

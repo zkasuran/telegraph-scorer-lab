@@ -1,0 +1,34 @@
+{
+ "intent": "ONCHAIN_TX_LOOKUP",
+ "question": "Look up Ethereum transaction 0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
+ "ours": {
+  "url": "https://telegraph-chain.margyn.workers.dev/tx?hash=0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
+  "text": "Ethereum transaction 0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060 is pending: 0xa1e4380a3b1f749673e270229993ee55f35663b4 is sending 0.000000000000031337 ETH (31337 wei) to 0x5df9b87991262f6ba471f09758cde1c0fc1de734, not yet mined.",
+  "readings": null,
+  "raw_keys": [
+   "as_of",
+   "attribution",
+   "block_number",
+   "chain",
+   "chain_id",
+   "confidence",
+   "confirmations",
+   "from",
+   "hash",
+   "intent",
+   "nonce",
+   "status",
+   "summary",
+   "symbol",
+   "to",
+   "value",
+   "value_wei"
+  ]
+ },
+ "leader": {
+  "slug": "chainsight-oracle",
+  "field": "signal",
+  "url": "https://hub.shadrakbessanh.me/tx?hash=0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060&chain=ethereum",
+  "text": "No, it was not a contract call: it was a simple transfer of 0.000000000000031337 ETH to 0x5df9b87991262f6ba471f09758cde1c0fc1de734 from 0xa1e4380a3b1f749673e270229993ee55f35663b4, in block 46147."
+ }
+}

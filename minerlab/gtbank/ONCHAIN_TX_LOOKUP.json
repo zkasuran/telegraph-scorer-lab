@@ -1,0 +1,25 @@
+{
+ "question": "Look up Ethereum transaction 0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
+ "truths": [
+  {
+   "label": "leader",
+   "source": "chainsight-oracle live /tx, the rank-1 miner on this intent",
+   "text": "No, it was not a contract call: it was a simple transfer of 0.000000000000031337 ETH to 0x5df9b87991262f6ba471f09758cde1c0fc1de734 from 0xa1e4380a3b1f749673e270229993ee55f35663b4, in block 46147."
+  },
+  {
+   "label": "status_led",
+   "source": "written: a model reading a block explorer receipt and answering the asked question",
+   "text": "The transaction succeeded. It was a simple ETH transfer of 0.000000000000031337 ETH from 0xa1e4380a3b1f749673e270229993ee55f35663b4 to 0x5df9b87991262f6ba471f09758cde1c0fc1de734, included in block 46147 on Ethereum mainnet."
+  },
+  {
+   "label": "wei_and_eth",
+   "source": "written: a model reading a receipt where the value is dust, so it gives both units",
+   "text": "Transaction 0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060 is confirmed and successful. It transferred 0.000000000000031337 ETH (31337 wei) from 0xa1e4380a3b1f749673e270229993ee55f35663b4 to 0x5df9b87991262f6ba471f09758cde1c0fc1de734 in block 46147."
+  },
+  {
+   "label": "explorer",
+   "source": "written: the frame a block explorer summary uses",
+   "text": "Success. Block 46147. From 0xa1e4380a3b1f749673e270229993ee55f35663b4 to 0x5df9b87991262f6ba471f09758cde1c0fc1de734, value 0.000000000000031337 ETH, a plain ETH transfer with no contract interaction."
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "question": "Is https://example.com safe to visit?",
+ "truths": [
+  {
+   "label": "leader",
+   "source": "chainsight-oracle live /urlscan signal, rank 1 on this intent",
+   "text": "The URL https://example.com is assessed as safe, with a risk score of 0.1 on a 0 (safe) to 1 (unsafe) scale, because no phishing, malware, or scam indicators were detected."
+  },
+  {
+   "label": "verdict_word",
+   "source": "preflight-ssl-verification live /url-scan verdict field",
+   "text": "safe"
+  },
+  {
+   "label": "prose",
+   "source": "written: a model reading a reputation feed and answering the question",
+   "text": "Yes, https://example.com is safe to visit. It is not listed in any malware or phishing feed, it resolves normally and it is served over a valid HTTPS certificate."
+  },
+  {
+   "label": "terse",
+   "source": "written: the shortest true answer",
+   "text": "https://example.com is safe to visit. No malware or phishing listing was found for it."
+  }
+ ]
+}

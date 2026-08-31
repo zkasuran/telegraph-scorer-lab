@@ -1,0 +1,1322 @@
+[
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/weather",
+  "label": "bare",
+  "url": "https://telegraph-sky.margyn.workers.dev/weather",
+  "code": "200",
+  "summary": "The current temperature in London, United Kingdom is 16C and rain is expected in the next 24 hours.",
+  "body": "{\n \"intent\": \"WEATHER_CHECK\",\n \"location\": \"London\",\n \"country\": \"United Kingdom\",\n \"latitude\": 51.5072,\n \"longitude\": -0.1275,\n \"wikidata_id\": \"Q84\",\n \"temperature_c\": 16,\n \"apparent_temperature_c\": 16,\n \"condition\": \"partly cloudy\",\n \"relative_humidity_percent\": 90,\n \"wind_speed_kmh\": 19.4,\n \"wind",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/weather",
+  "label": "location",
+  "url": "https://telegraph-sky.margyn.workers.dev/weather?location=Tokyo",
+  "code": "200",
+  "summary": "The current temperature in Tokyo, Japan is 23.3C (23C) and no precipitation is expected in the next 24 hours.",
+  "body": "{\n \"intent\": \"WEATHER_CHECK\",\n \"location\": \"Tokyo\",\n \"country\": \"Japan\",\n \"latitude\": 35.6894,\n \"longitude\": 139.6917,\n \"wikidata_id\": \"Q1490\",\n \"temperature_c\": 23.3,\n \"apparent_temperature_c\": 23.3,\n \"condition\": \"cloudy\",\n \"relative_humidity_percent\": 89,\n \"wind_speed_kmh\": 9.4,\n \"wind_gust_kmh\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/weather",
+  "label": "query-full",
+  "url": "https://telegraph-sky.margyn.workers.dev/weather?query=What%20is%20the%20current%20temperature%20and%20%27feels%20like%27%20temperature%20in%20Tokyo%2C%20Japan%2C%20and%20will%20there%20be%20any%20precipitation%20in%20the%20next%2024%20hours%3F",
+  "code": "200",
+  "summary": "The current temperature in Tokyo, Japan is 23.3C (23C), it feels like 23.3C (23C) and no precipitation is expected in the next 24 hours.",
+  "body": "{\n \"intent\": \"WEATHER_CHECK\",\n \"location\": \"Tokyo\",\n \"country\": \"Japan\",\n \"latitude\": 35.6894,\n \"longitude\": 139.6917,\n \"wikidata_id\": \"Q1490\",\n \"temperature_c\": 23.3,\n \"apparent_temperature_c\": 23.3,\n \"condition\": \"cloudy\",\n \"relative_humidity_percent\": 89,\n \"wind_speed_kmh\": 9.4,\n \"wind_gust_kmh\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/weather",
+  "label": "nonsense-place",
+  "url": "https://telegraph-sky.margyn.workers.dev/weather?location=Zzzqqx%20Nowhereville",
+  "code": "200",
+  "summary": "A live weather reading for Zzzqqx Nowhereville could not be retrieved at this time.",
+  "body": "{\n \"error\": \"weather data unavailable for Zzzqqx Nowhereville\",\n \"detail\": \"Error: could not find a place named Zzzqqx Nowhereville\",\n \"summary\": \"A live weather reading for Zzzqqx Nowhereville could not be retrieved at this time.\",\n \"confidence\": 0.1,\n \"as_of\": \"2026-08-30T22:44:47.097Z\"\n}",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/weather",
+  "label": "empty",
+  "url": "https://telegraph-sky.margyn.workers.dev/weather?location=",
+  "code": "200",
+  "summary": "The current temperature in London, United Kingdom is 16C and rain is expected in the next 24 hours.",
+  "body": "{\n \"intent\": \"WEATHER_CHECK\",\n \"location\": \"London\",\n \"country\": \"United Kingdom\",\n \"latitude\": 51.5072,\n \"longitude\": -0.1275,\n \"wikidata_id\": \"Q84\",\n \"temperature_c\": 16,\n \"apparent_temperature_c\": 16,\n \"condition\": \"partly cloudy\",\n \"relative_humidity_percent\": 90,\n \"wind_speed_kmh\": 19.4,\n \"wind",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/weather",
+  "label": "coords",
+  "url": "https://telegraph-sky.margyn.workers.dev/weather?location=35.6895%2C139.6917",
+  "code": "200",
+  "summary": "A live weather reading for 35.6895,139.6917 could not be retrieved at this time.",
+  "body": "{\n \"error\": \"weather data unavailable for 35.6895,139.6917\",\n \"detail\": \"Error: could not find a place named 35.6895,139.6917\",\n \"summary\": \"A live weather reading for 35.6895,139.6917 could not be retrieved at this time.\",\n \"confidence\": 0.1,\n \"as_of\": \"2026-08-30T22:44:46.361Z\"\n}",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/weather",
+  "label": "unicode",
+  "url": "https://telegraph-sky.margyn.workers.dev/weather?location=M%C3%BCnchen",
+  "code": "200",
+  "summary": "The current temperature in Munich, Germany is 17.8C (18C) and rain is expected in the next 24 hours.",
+  "body": "{\n \"intent\": \"WEATHER_CHECK\",\n \"location\": \"Munich\",\n \"country\": \"Germany\",\n \"latitude\": 48.1375,\n \"longitude\": 11.575,\n \"wikidata_id\": \"Q1726\",\n \"temperature_c\": 17.8,\n \"apparent_temperature_c\": 17.8,\n \"condition\": \"clear\",\n \"relative_humidity_percent\": 85,\n \"wind_speed_kmh\": 7.2,\n \"wind_gust_kmh\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/weather",
+  "label": "huge",
+  "url": "https://telegraph-sky.margyn.workers.dev/weather?query=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "code": "200",
+  "summary": "A live weather reading for xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx could not be retrieved at this time.",
+  "body": "{\n \"error\": \"weather data unavailable for xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/forecast",
+  "label": "bare",
+  "url": "https://telegraph-sky.margyn.workers.dev/forecast",
+  "code": "200",
+  "summary": "London, United Kingdom forecast over the next 3 days: temperatures range from 12.5C (13C) to 21.8C (22C). Light rain showers at first, then partly cloudy.",
+  "body": "{\n \"intent\": \"WEATHER_FORECAST\",\n \"location\": \"London\",\n \"country\": \"United Kingdom\",\n \"latitude\": 51.5072,\n \"longitude\": -0.1275,\n \"wikidata_id\": \"Q84\",\n \"window\": \"over the next 3 days\",\n \"days_covered\": 3,\n \"forecast\": [\n  {\n   \"date\": \"2026-08-30\",\n   \"day\": \"Sunday\",\n   \"condition\": \"light rain",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/forecast",
+  "label": "location-days",
+  "url": "https://telegraph-sky.margyn.workers.dev/forecast?location=London&days=3",
+  "code": "200",
+  "summary": "London, United Kingdom forecast over the next 3 days: temperatures range from 12.5C (13C) to 21.8C (22C). Light rain showers at first, then partly cloudy.",
+  "body": "{\n \"intent\": \"WEATHER_FORECAST\",\n \"location\": \"London\",\n \"country\": \"United Kingdom\",\n \"latitude\": 51.5072,\n \"longitude\": -0.1275,\n \"wikidata_id\": \"Q84\",\n \"window\": \"over the next 3 days\",\n \"days_covered\": 3,\n \"forecast\": [\n  {\n   \"date\": \"2026-08-30\",\n   \"day\": \"Sunday\",\n   \"condition\": \"light rain",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/forecast",
+  "label": "days-absurd",
+  "url": "https://telegraph-sky.margyn.workers.dev/forecast?location=London&days=99",
+  "code": "200",
+  "summary": "London, United Kingdom forecast over the next 3 days: temperatures range from 12.5C (13C) to 21.8C (22C). Light rain showers at first, then partly cloudy.",
+  "body": "{\n \"intent\": \"WEATHER_FORECAST\",\n \"location\": \"London\",\n \"country\": \"United Kingdom\",\n \"latitude\": 51.5072,\n \"longitude\": -0.1275,\n \"wikidata_id\": \"Q84\",\n \"window\": \"over the next 3 days\",\n \"days_covered\": 3,\n \"forecast\": [\n  {\n   \"date\": \"2026-08-30\",\n   \"day\": \"Sunday\",\n   \"condition\": \"light rain",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/forecast",
+  "label": "days-text",
+  "url": "https://telegraph-sky.margyn.workers.dev/forecast?location=London&days=three",
+  "code": "200",
+  "summary": "London, United Kingdom forecast over the next 3 days: temperatures range from 12.5C (13C) to 21.8C (22C). Light rain showers at first, then partly cloudy.",
+  "body": "{\n \"intent\": \"WEATHER_FORECAST\",\n \"location\": \"London\",\n \"country\": \"United Kingdom\",\n \"latitude\": 51.5072,\n \"longitude\": -0.1275,\n \"wikidata_id\": \"Q84\",\n \"window\": \"over the next 3 days\",\n \"days_covered\": 3,\n \"forecast\": [\n  {\n   \"date\": \"2026-08-30\",\n   \"day\": \"Sunday\",\n   \"condition\": \"light rain",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/forecast",
+  "label": "query-full",
+  "url": "https://telegraph-sky.margyn.workers.dev/forecast?query=What%20is%20the%20weather%20forecast%20for%20Paris%20over%20the%20next%203%20days%20including%20rain%3F",
+  "code": "200",
+  "summary": "Paris, France forecast over the next 3 days: temperatures range from 13.9C (14C) to 23.1C (23C) and little or no rain.",
+  "body": "{\n \"intent\": \"WEATHER_FORECAST\",\n \"location\": \"Paris\",\n \"country\": \"France\",\n \"latitude\": 48.8567,\n \"longitude\": 2.3522,\n \"wikidata_id\": \"Q90\",\n \"window\": \"over the next 3 days\",\n \"days_covered\": 3,\n \"forecast\": [\n  {\n   \"date\": \"2026-08-30\",\n   \"day\": \"Sunday\",\n   \"condition\": \"clear\",\n   \"high_c\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/forecast",
+  "label": "nonsense-place",
+  "url": "https://telegraph-sky.margyn.workers.dev/forecast?location=Zzzqqx%20Nowhereville",
+  "code": "200",
+  "summary": "A live weather reading for Zzzqqx Nowhereville could not be retrieved at this time.",
+  "body": "{\n \"error\": \"weather data unavailable for Zzzqqx Nowhereville\",\n \"detail\": \"Error: could not find a place named Zzzqqx Nowhereville\",\n \"summary\": \"A live weather reading for Zzzqqx Nowhereville could not be retrieved at this time.\",\n \"confidence\": 0.1,\n \"as_of\": \"2026-08-30T22:44:47.763Z\"\n}",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/storm",
+  "label": "bare",
+  "url": "https://telegraph-sky.margyn.workers.dev/storm",
+  "code": "200",
+  "summary": "No storm is expected in Miami, United States over the next 48 hours. Gusts are forecast to reach about 18.5 km/h (19 km/h).",
+  "body": "{\n \"intent\": \"STORM_ALERT\",\n \"location\": \"Miami\",\n \"country\": \"United States\",\n \"latitude\": 25.7833,\n \"longitude\": -80.2167,\n \"wikidata_id\": \"Q8652\",\n \"window_hours\": 48,\n \"breach\": false,\n \"level\": \"none\",\n \"threshold_asked\": null,\n \"threshold_unit\": \"km/h\",\n \"peak_gust_kmh\": 18.5,\n \"peak_gust_mph\"",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/storm",
+  "label": "location-hours",
+  "url": "https://telegraph-sky.margyn.workers.dev/storm?location=Chicago&hours=48",
+  "code": "200",
+  "summary": "No storm is expected in Chicago, United States over the next 48 hours. Gusts are forecast to reach about 31.5 km/h (31 km/h).",
+  "body": "{\n \"intent\": \"STORM_ALERT\",\n \"location\": \"Chicago\",\n \"country\": \"United States\",\n \"latitude\": 41.8819,\n \"longitude\": -87.6278,\n \"wikidata_id\": \"Q1297\",\n \"window_hours\": 48,\n \"breach\": false,\n \"level\": \"none\",\n \"threshold_asked\": null,\n \"threshold_unit\": \"km/h\",\n \"peak_gust_kmh\": 31.5,\n \"peak_gust_mp",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/storm",
+  "label": "hours-absurd",
+  "url": "https://telegraph-sky.margyn.workers.dev/storm?location=Chicago&hours=100000",
+  "code": "200",
+  "summary": "No storm is expected in Chicago, United States over the next 48 hours. Gusts are forecast to reach about 31.5 km/h (31 km/h).",
+  "body": "{\n \"intent\": \"STORM_ALERT\",\n \"location\": \"Chicago\",\n \"country\": \"United States\",\n \"latitude\": 41.8819,\n \"longitude\": -87.6278,\n \"wikidata_id\": \"Q1297\",\n \"window_hours\": 48,\n \"breach\": false,\n \"level\": \"none\",\n \"threshold_asked\": null,\n \"threshold_unit\": \"km/h\",\n \"peak_gust_kmh\": 31.5,\n \"peak_gust_mp",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/storm",
+  "label": "query-full",
+  "url": "https://telegraph-sky.margyn.workers.dev/storm?query=Will%20there%20be%20disruptive%20wind%20gusts%20exceeding%2040%20mph%20in%20Chicago%2C%20Illinois%20over%20the%20next%2048%20hours%2C%20and%20should%20I%20delay%20my%20outdoor%20construction%20project%20scheduled%20for%20Thursday%3F",
+  "code": "200",
+  "summary": "No, gusts are forecast to reach about 19.6 mph (20 mph) over the next 48 hours, below the 40 mph threshold, so outdoor work can most likely go ahead.",
+  "body": "{\n \"intent\": \"STORM_ALERT\",\n \"location\": \"Chicago\",\n \"country\": \"United States\",\n \"latitude\": 41.8819,\n \"longitude\": -87.6278,\n \"wikidata_id\": \"Q1297\",\n \"window_hours\": 48,\n \"breach\": false,\n \"level\": \"none\",\n \"threshold_asked\": 40,\n \"threshold_unit\": \"mph\",\n \"peak_gust_kmh\": 31.5,\n \"peak_gust_mph\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sky.margyn.workers.dev",
+  "path": "/storm",
+  "label": "nonsense-place",
+  "url": "https://telegraph-sky.margyn.workers.dev/storm?location=Zzzqqx%20Nowhereville",
+  "code": "200",
+  "summary": "A live weather reading for Zzzqqx Nowhereville could not be retrieved at this time.",
+  "body": "{\n \"error\": \"weather data unavailable for Zzzqqx Nowhereville\",\n \"detail\": \"Error: could not find a place named Zzzqqx Nowhereville\",\n \"summary\": \"A live weather reading for Zzzqqx Nowhereville could not be retrieved at this time.\",\n \"confidence\": 0.1,\n \"as_of\": \"2026-08-30T22:44:49.705Z\"\n}",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/price",
+  "label": "bare",
+  "url": "https://telegraph-fin.margyn.workers.dev/price",
+  "code": "200",
+  "summary": "Bitcoin (BTC) is trading at $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the past 24 hours.",
+  "body": "{\n \"intent\": \"CRYPTO_PRICE\",\n \"symbol\": \"BTC\",\n \"coingecko_id\": \"bitcoin\",\n \"name\": \"Bitcoin\",\n \"price_usd\": 78457.9,\n \"market_cap_usd\": null,\n \"change_24h_percent\": 0.2941409575623899,\n \"summary\": \"Bitcoin (BTC) is trading at $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/price",
+  "label": "symbol",
+  "url": "https://telegraph-fin.margyn.workers.dev/price?symbol=BTC",
+  "code": "200",
+  "summary": "Bitcoin (BTC) is trading at $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the past 24 hours.",
+  "body": "{\n \"intent\": \"CRYPTO_PRICE\",\n \"symbol\": \"BTC\",\n \"coingecko_id\": \"bitcoin\",\n \"name\": \"Bitcoin\",\n \"price_usd\": 78457.9,\n \"market_cap_usd\": null,\n \"change_24h_percent\": 0.2941409575623899,\n \"summary\": \"Bitcoin (BTC) is trading at $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/price",
+  "label": "unknown-symbol",
+  "url": "https://telegraph-fin.margyn.workers.dev/price?symbol=ZZQQXX",
+  "code": "200",
+  "summary": "A price for ZZQQXX could not be read: none of the exchange tickers this miner uses list that pair against the US dollar right now.",
+  "body": "{\n \"intent\": \"CRYPTO_PRICE\",\n \"symbol\": \"ZZQQXX\",\n \"price_usd\": null,\n \"summary\": \"A price for ZZQQXX could not be read: none of the exchange tickers this miner uses list that pair against the US dollar right now.\",\n \"supported\": true,\n \"confidence\": 0.3,\n \"attribution\": \"Crypto market data from the",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/price",
+  "label": "question",
+  "url": "https://telegraph-fin.margyn.workers.dev/price?question=What%20is%20the%20current%20price%20of%20Bitcoin%20%28BTC%29%20in%20USD%3F",
+  "code": "200",
+  "summary": "Bitcoin (BTC) is trading at $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the past 24 hours.",
+  "body": "{\n \"intent\": \"CRYPTO_PRICE\",\n \"symbol\": \"BTC\",\n \"coingecko_id\": \"bitcoin\",\n \"name\": \"Bitcoin\",\n \"price_usd\": 78457.9,\n \"market_cap_usd\": null,\n \"change_24h_percent\": 0.2941409575623899,\n \"summary\": \"Bitcoin (BTC) is trading at $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/price",
+  "label": "empty",
+  "url": "https://telegraph-fin.margyn.workers.dev/price?symbol=",
+  "code": "200",
+  "summary": "Bitcoin (BTC) is trading at $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the past 24 hours.",
+  "body": "{\n \"intent\": \"CRYPTO_PRICE\",\n \"symbol\": \"BTC\",\n \"coingecko_id\": \"bitcoin\",\n \"name\": \"Bitcoin\",\n \"price_usd\": 78457.9,\n \"market_cap_usd\": null,\n \"change_24h_percent\": 0.2941409575623899,\n \"summary\": \"Bitcoin (BTC) is trading at $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/fx",
+  "label": "bare",
+  "url": "https://telegraph-fin.margyn.workers.dev/fx",
+  "code": "200",
+  "summary": "1 USD buys 0.8589 (0.86, 0.85889) EUR.",
+  "body": "{\n \"intent\": \"CURRENCY_EXCHANGE\",\n \"from\": \"USD\",\n \"to\": \"EUR\",\n \"rate\": 0.85889,\n \"inverse_rate\": 1.164293,\n \"amount\": null,\n \"converted\": null,\n \"summary\": \"1 USD buys 0.8589 (0.86, 0.85889) EUR.\",\n \"readings\": \"base USD, quote EUR, rate 0.85889 (1 USD = 0.85889 EUR), inverse 1.164293 (1 EUR = 1.1",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/fx",
+  "label": "pair",
+  "url": "https://telegraph-fin.margyn.workers.dev/fx?from=USD&to=EUR",
+  "code": "200",
+  "summary": "1 USD buys 0.8589 (0.86, 0.85889) EUR.",
+  "body": "{\n \"intent\": \"CURRENCY_EXCHANGE\",\n \"from\": \"USD\",\n \"to\": \"EUR\",\n \"rate\": 0.85889,\n \"inverse_rate\": 1.164293,\n \"amount\": null,\n \"converted\": null,\n \"summary\": \"1 USD buys 0.8589 (0.86, 0.85889) EUR.\",\n \"readings\": \"base USD, quote EUR, rate 0.85889 (1 USD = 0.85889 EUR), inverse 1.164293 (1 EUR = 1.1",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/fx",
+  "label": "unknown-pair",
+  "url": "https://telegraph-fin.margyn.workers.dev/fx?from=ZZZ&to=QQQ",
+  "code": "200",
+  "summary": "An exchange rate from ZZZ to QQQ could not be read: the reference rate feed this miner uses does not publish that pair.",
+  "body": "{\n \"intent\": \"CURRENCY_EXCHANGE\",\n \"from\": \"ZZZ\",\n \"to\": \"QQQ\",\n \"rate\": null,\n \"summary\": \"An exchange rate from ZZZ to QQQ could not be read: the reference rate feed this miner uses does not publish that pair.\",\n \"supported\": true,\n \"confidence\": 0.3,\n \"attribution\": \"Crypto market data from the K",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/fx",
+  "label": "amount-text",
+  "url": "https://telegraph-fin.margyn.workers.dev/fx?from=USD&to=EUR&amount=lots",
+  "code": "200",
+  "summary": "1 USD buys 0.8589 (0.86, 0.85889) EUR.",
+  "body": "{\n \"intent\": \"CURRENCY_EXCHANGE\",\n \"from\": \"USD\",\n \"to\": \"EUR\",\n \"rate\": 0.85889,\n \"inverse_rate\": 1.164293,\n \"amount\": null,\n \"converted\": null,\n \"summary\": \"1 USD buys 0.8589 (0.86, 0.85889) EUR.\",\n \"readings\": \"base USD, quote EUR, rate 0.85889 (1 USD = 0.85889 EUR), inverse 1.164293 (1 EUR = 1.1",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/fx",
+  "label": "question",
+  "url": "https://telegraph-fin.margyn.workers.dev/fx?question=What%20is%20the%20exchange%20rate%20from%20USD%20to%20JPY%20today%3F",
+  "code": "200",
+  "summary": "1 USD buys 159.68 (160) JPY.",
+  "body": "{\n \"intent\": \"CURRENCY_EXCHANGE\",\n \"from\": \"USD\",\n \"to\": \"JPY\",\n \"rate\": 159.68,\n \"inverse_rate\": 0.006263,\n \"amount\": null,\n \"converted\": null,\n \"summary\": \"1 USD buys 159.68 (160) JPY.\",\n \"readings\": \"base USD, quote JPY, rate 159.68 (1 USD = 159.68 JPY), inverse 0.006263 (1 JPY = 0.006263 USD), r",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/financial",
+  "label": "bare",
+  "url": "https://telegraph-fin.margyn.workers.dev/financial",
+  "code": "200",
+  "summary": "Bitcoin (BTC) has 24 hour trading volume on Kraken of $86.86 million ($86.9 million, $87 million, $86,863,151), at a price of $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the past 24 hours.",
+  "body": "{\n \"intent\": \"FINANCIAL_DATA\",\n \"symbol\": \"BTC\",\n \"coingecko_id\": \"bitcoin\",\n \"name\": \"Bitcoin\",\n \"price_usd\": 78457.9,\n \"market_cap_usd\": null,\n \"change_24h_percent\": 0.2941409575623899,\n \"summary\": \"Bitcoin (BTC) has 24 hour trading volume on Kraken of $86.86 million ($86.9 million, $87 million, $",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/financial",
+  "label": "query",
+  "url": "https://telegraph-fin.margyn.workers.dev/financial?query=ethereum",
+  "code": "200",
+  "summary": "Ethereum (ETH) has 24 hour trading volume on Kraken of $35.44 million ($35.4 million, $35 million, $35,444,917), at a price of $2,471.72 ($2,472, $2,470, $2,500) USD, up 0.58% over the past 24 hours.",
+  "body": "{\n \"intent\": \"FINANCIAL_DATA\",\n \"symbol\": \"ETH\",\n \"coingecko_id\": \"ethereum\",\n \"name\": \"Ethereum\",\n \"price_usd\": 2471.72,\n \"market_cap_usd\": null,\n \"change_24h_percent\": 0.5827297143322091,\n \"summary\": \"Ethereum (ETH) has 24 hour trading volume on Kraken of $35.44 million ($35.4 million, $35 million",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/financial",
+  "label": "leaked-probe-1",
+  "url": "https://telegraph-fin.margyn.workers.dev/financial?question=What%20was%20the%20average%20daily%20trading%20volume%20for%20Solana%20%28SOL%29%20across%20all%20major%20exchanges%20during%20Q3%202026%2C%20and%20how%20does%20this%20compare%20to%20Bitcoin%27s%20average%20daily%20volume%20for%20the%20same%20period%3F",
+  "code": "200",
+  "summary": "Bitcoin (BTC) has 24 hour trading volume on Kraken of $86.86 million ($86.9 million, $87 million, $86,863,151), at a price of $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the past 24 hours.",
+  "body": "{\n \"intent\": \"FINANCIAL_DATA\",\n \"symbol\": \"BTC\",\n \"coingecko_id\": \"bitcoin\",\n \"name\": \"Bitcoin\",\n \"price_usd\": 78457.9,\n \"market_cap_usd\": null,\n \"change_24h_percent\": 0.2941409575623899,\n \"summary\": \"Bitcoin (BTC) has 24 hour trading volume on Kraken of $86.86 million ($86.9 million, $87 million, $",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/financial",
+  "label": "leaked-probe-2",
+  "url": "https://telegraph-fin.margyn.workers.dev/financial?question=What%20was%20the%20trading%20volume%20and%20price%20change%20percentage%20for%20Bitcoin%20%28BTC%29%20and%20Ethereum%20%28ETH%29%20on%20August%2015%2C%202026%2C%20and%20what%20were%20the%20best%20bid%20and%20ask%20prices%20for%20BTC%2FUSDT%20on%20Binance%20at%20that%20time%3F",
+  "code": "200",
+  "summary": "Bitcoin (BTC) has 24 hour trading volume on Kraken of $86.86 million ($86.9 million, $87 million, $86,863,151), at a price of $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the past 24 hours.",
+  "body": "{\n \"intent\": \"FINANCIAL_DATA\",\n \"symbol\": \"BTC\",\n \"coingecko_id\": \"bitcoin\",\n \"name\": \"Bitcoin\",\n \"price_usd\": 78457.9,\n \"market_cap_usd\": null,\n \"change_24h_percent\": 0.2941409575623899,\n \"summary\": \"Bitcoin (BTC) has 24 hour trading volume on Kraken of $86.86 million ($86.9 million, $87 million, $",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/financial",
+  "label": "unknown",
+  "url": "https://telegraph-fin.margyn.workers.dev/financial?query=zzqqxx%20corp",
+  "code": "200",
+  "summary": "Bitcoin (BTC) has 24 hour trading volume on Kraken of $86.86 million ($86.9 million, $87 million, $86,863,151), at a price of $78,457.90 ($78,458, $78,500, $78,000, $78,457.9) USD, up 0.29% over the past 24 hours.",
+  "body": "{\n \"intent\": \"FINANCIAL_DATA\",\n \"symbol\": \"BTC\",\n \"coingecko_id\": \"bitcoin\",\n \"name\": \"Bitcoin\",\n \"price_usd\": 78457.9,\n \"market_cap_usd\": null,\n \"change_24h_percent\": 0.2941409575623899,\n \"summary\": \"Bitcoin (BTC) has 24 hour trading volume on Kraken of $86.86 million ($86.9 million, $87 million, $",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/stock",
+  "label": "bare",
+  "url": "https://telegraph-fin.margyn.workers.dev/stock",
+  "code": "200",
+  "summary": "No stock price is served by this miner. Every keyless quote source we read either bars redistribution of its prices or bars commercial use, so publishing a figure from one would breach its terms. Crypto prices, exchange rates, protocol TVL and on-chain figures are served.",
+  "body": "{\n \"intent\": \"STOCK_PRICE\",\n \"price\": null,\n \"supported\": false,\n \"summary\": \"No stock price is served by this miner. Every keyless quote source we read either bars redistribution of its prices or bars commercial use, so publishing a figure from one would breach its terms. Crypto prices, exchange ra",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/stock",
+  "label": "symbol",
+  "url": "https://telegraph-fin.margyn.workers.dev/stock?symbol=AAPL",
+  "code": "200",
+  "summary": "No stock price is served by this miner. Every keyless quote source we read either bars redistribution of its prices or bars commercial use, so publishing a figure from one would breach its terms. Crypto prices, exchange rates, protocol TVL and on-chain figures are served.",
+  "body": "{\n \"intent\": \"STOCK_PRICE\",\n \"price\": null,\n \"supported\": false,\n \"summary\": \"No stock price is served by this miner. Every keyless quote source we read either bars redistribution of its prices or bars commercial use, so publishing a figure from one would breach its terms. Crypto prices, exchange ra",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/stock",
+  "label": "unknown-symbol",
+  "url": "https://telegraph-fin.margyn.workers.dev/stock?symbol=ZZQQXX",
+  "code": "200",
+  "summary": "No stock price is served by this miner. Every keyless quote source we read either bars redistribution of its prices or bars commercial use, so publishing a figure from one would breach its terms. Crypto prices, exchange rates, protocol TVL and on-chain figures are served.",
+  "body": "{\n \"intent\": \"STOCK_PRICE\",\n \"price\": null,\n \"supported\": false,\n \"summary\": \"No stock price is served by this miner. Every keyless quote source we read either bars redistribution of its prices or bars commercial use, so publishing a figure from one would breach its terms. Crypto prices, exchange ra",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/stock",
+  "label": "question",
+  "url": "https://telegraph-fin.margyn.workers.dev/stock?question=What%20is%20the%20current%20stock%20price%20of%20MSFT%3F",
+  "code": "200",
+  "summary": "No stock price is served by this miner. Every keyless quote source we read either bars redistribution of its prices or bars commercial use, so publishing a figure from one would breach its terms. Crypto prices, exchange rates, protocol TVL and on-chain figures are served.",
+  "body": "{\n \"intent\": \"STOCK_PRICE\",\n \"price\": null,\n \"supported\": false,\n \"summary\": \"No stock price is served by this miner. Every keyless quote source we read either bars redistribution of its prices or bars commercial use, so publishing a figure from one would breach its terms. Crypto prices, exchange ra",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/tvl",
+  "label": "bare",
+  "url": "https://telegraph-fin.margyn.workers.dev/tvl",
+  "code": "200",
+  "summary": "Aave (AAVE) has a total value locked of $18.19 billion ($18.2 billion, $18 billion, $18,186,347,469) across all chains.",
+  "body": "{\n \"intent\": \"TVL_LOOKUP\",\n \"kind\": \"protocol\",\n \"name\": \"Aave\",\n \"symbol\": \"AAVE\",\n \"slug\": \"aave\",\n \"tvl_usd\": 18186347469.1259,\n \"chains\": [],\n \"summary\": \"Aave (AAVE) has a total value locked of $18.19 billion ($18.2 billion, $18 billion, $18,186,347,469) across all chains.\",\n \"readings\": \"proto",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/tvl",
+  "label": "protocol",
+  "url": "https://telegraph-fin.margyn.workers.dev/tvl?protocol=aave",
+  "code": "200",
+  "summary": "Aave (AAVE) has a total value locked of $18.19 billion ($18.2 billion, $18 billion, $18,186,347,469) across all chains.",
+  "body": "{\n \"intent\": \"TVL_LOOKUP\",\n \"kind\": \"protocol\",\n \"name\": \"Aave\",\n \"symbol\": \"AAVE\",\n \"slug\": \"aave\",\n \"tvl_usd\": 18186347469.1259,\n \"chains\": [],\n \"summary\": \"Aave (AAVE) has a total value locked of $18.19 billion ($18.2 billion, $18 billion, $18,186,347,469) across all chains.\",\n \"readings\": \"proto",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/tvl",
+  "label": "unknown-protocol",
+  "url": "https://telegraph-fin.margyn.workers.dev/tvl?protocol=zzqqxx-finance",
+  "code": "200",
+  "summary": "A total value locked figure for zzqqxx-finance could not be read: the source this miner uses does not list it.",
+  "body": "{\n \"intent\": \"TVL_LOOKUP\",\n \"name\": \"zzqqxx-finance\",\n \"tvl_usd\": null,\n \"summary\": \"A total value locked figure for zzqqxx-finance could not be read: the source this miner uses does not list it.\",\n \"supported\": true,\n \"confidence\": 0.3,\n \"attribution\": \"Crypto market data from the Kraken, Bitstamp ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/tvl",
+  "label": "chain",
+  "url": "https://telegraph-fin.margyn.workers.dev/tvl?chain=ethereum",
+  "code": "200",
+  "summary": "The Ethereum chain has a total value locked of $49.42 billion ($49.4 billion, $49 billion, $49,420,823,408) across all protocols.",
+  "body": "{\n \"intent\": \"TVL_LOOKUP\",\n \"kind\": \"chain\",\n \"name\": \"Ethereum\",\n \"symbol\": \"ETH\",\n \"chain_id\": 1,\n \"tvl_usd\": 49420823408.390114,\n \"summary\": \"The Ethereum chain has a total value locked of $49.42 billion ($49.4 billion, $49 billion, $49,420,823,408) across all protocols.\",\n \"readings\": \"chain Eth",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-fin.margyn.workers.dev",
+  "path": "/tvl",
+  "label": "question",
+  "url": "https://telegraph-fin.margyn.workers.dev/tvl?question=What%20is%20the%20total%20value%20locked%20in%20Uniswap%3F",
+  "code": "200",
+  "summary": "Uniswap (UNI) has a total value locked of $3.50 billion ($3.5 billion, $3 billion, $3,497,762,064) across all chains.",
+  "body": "{\n \"intent\": \"TVL_LOOKUP\",\n \"kind\": \"protocol\",\n \"name\": \"Uniswap\",\n \"symbol\": \"UNI\",\n \"slug\": \"uniswap\",\n \"tvl_usd\": 3497762063.6115437,\n \"chains\": [],\n \"summary\": \"Uniswap (UNI) has a total value locked of $3.50 billion ($3.5 billion, $3 billion, $3,497,762,064) across all chains.\",\n \"readings\": \"",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/balance",
+  "label": "bare",
+  "url": "https://telegraph-chain.margyn.workers.dev/balance",
+  "code": "200",
+  "summary": "No wallet address was named, so no balance can be read. Name an address (0x...) or an ENS name to get the ETH balance on Ethereum.",
+  "body": "{\n \"intent\": \"WALLET_BALANCE_CHECK\",\n \"chain\": \"ethereum\",\n \"balance\": null,\n \"summary\": \"No wallet address was named, so no balance can be read. Name an address (0x...) or an ENS name to get the ETH balance on Ethereum.\",\n \"attribution\": \"Balances and transactions read from public EVM nodes. Holder",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/balance",
+  "label": "chain-only",
+  "url": "https://telegraph-chain.margyn.workers.dev/balance?chain=base",
+  "code": "200",
+  "summary": "No wallet address was named, so no balance can be read. Name an address (0x...) or an ENS name to get the ETH balance on Base.",
+  "body": "{\n \"intent\": \"WALLET_BALANCE_CHECK\",\n \"chain\": \"base\",\n \"balance\": null,\n \"summary\": \"No wallet address was named, so no balance can be read. Name an address (0x...) or an ENS name to get the ETH balance on Base.\",\n \"attribution\": \"Balances and transactions read from public EVM nodes. Holder counts ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/balance",
+  "label": "address",
+  "url": "https://telegraph-chain.margyn.workers.dev/balance?chain=ethereum&address=0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+  "code": "200",
+  "summary": "The Ethereum account 0x742d35Cc6634C0532925a3b844Bc454e4438f44e holds 109,094.750086414039274903 ETH.",
+  "body": "{\n \"intent\": \"WALLET_BALANCE_CHECK\",\n \"address\": \"0x742d35Cc6634C0532925a3b844Bc454e4438f44e\",\n \"ens\": null,\n \"chain\": \"ethereum\",\n \"chain_id\": 1,\n \"token\": null,\n \"symbol\": \"ETH\",\n \"balance\": 109094.750086,\n \"balance_raw\": \"109094750086414039274903\",\n \"decimals\": 18,\n \"block\": 25871160,\n \"summary\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/balance",
+  "label": "bad-address",
+  "url": "https://telegraph-chain.margyn.workers.dev/balance?chain=ethereum&address=0xnothex",
+  "code": "200",
+  "summary": "No wallet address was named, so no balance can be read. Name an address (0x...) or an ENS name to get the ETH balance on Ethereum.",
+  "body": "{\n \"intent\": \"WALLET_BALANCE_CHECK\",\n \"chain\": \"ethereum\",\n \"balance\": null,\n \"summary\": \"No wallet address was named, so no balance can be read. Name an address (0x...) or an ENS name to get the ETH balance on Ethereum.\",\n \"attribution\": \"Balances and transactions read from public EVM nodes. Holder",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/balance",
+  "label": "ens",
+  "url": "https://telegraph-chain.margyn.workers.dev/balance?address=vitalik.eth",
+  "code": "200",
+  "summary": "The Ethereum account vitalik.eth holds 6.6421781652213403 ETH.",
+  "body": "{\n \"intent\": \"WALLET_BALANCE_CHECK\",\n \"address\": \"0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045\",\n \"ens\": \"vitalik.eth\",\n \"chain\": \"ethereum\",\n \"chain_id\": 1,\n \"token\": null,\n \"symbol\": \"ETH\",\n \"balance\": 6.642178,\n \"balance_raw\": \"6642178165221340300\",\n \"decimals\": 18,\n \"block\": 25871160,\n \"summary\": ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/balance",
+  "label": "unknown-chain",
+  "url": "https://telegraph-chain.margyn.workers.dev/balance?chain=zzqqxx&address=0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+  "code": "200",
+  "summary": "A balance is not served for zzqqxx. This miner covers ethereum, base, arbitrum, optimism, polygon, base-sepolia, sepolia.",
+  "body": "{\n \"intent\": \"WALLET_BALANCE_CHECK\",\n \"chain\": \"zzqqxx\",\n \"balance\": null,\n \"summary\": \"A balance is not served for zzqqxx. This miner covers ethereum, base, arbitrum, optimism, polygon, base-sepolia, sepolia.\",\n \"attribution\": \"Balances and transactions read from public EVM nodes. Holder counts fro",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/balance",
+  "label": "query-full",
+  "url": "https://telegraph-chain.margyn.workers.dev/balance?query=What%20is%20the%20current%20native-coin%20balance%20of%20address%200x742d35Cc6634C0532925a3b844Bc454e4438f44e%20on%20Ethereum%3F",
+  "code": "200",
+  "summary": "The Ethereum account 0x742d35Cc6634C0532925a3b844Bc454e4438f44e holds 109,094.750086414039274903 ETH.",
+  "body": "{\n \"intent\": \"WALLET_BALANCE_CHECK\",\n \"address\": \"0x742d35Cc6634C0532925a3b844Bc454e4438f44e\",\n \"ens\": null,\n \"chain\": \"ethereum\",\n \"chain_id\": 1,\n \"token\": null,\n \"symbol\": \"ETH\",\n \"balance\": 109094.750086,\n \"balance_raw\": \"109094750086414039274903\",\n \"decimals\": 18,\n \"block\": 25871160,\n \"summary\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/tx",
+  "label": "bare",
+  "url": "https://telegraph-chain.margyn.workers.dev/tx",
+  "code": "200",
+  "summary": "No transaction hash was named, so no transaction can be looked up. Supply a 66 character hash (0x and 64 hex) to read one on ethereum, base, arbitrum, optimism, polygon, base-sepolia, sepolia.",
+  "body": "{\n \"intent\": \"ONCHAIN_TX_LOOKUP\",\n \"hash\": null,\n \"found\": null,\n \"summary\": \"No transaction hash was named, so no transaction can be looked up. Supply a 66 character hash (0x and 64 hex) to read one on ethereum, base, arbitrum, optimism, polygon, base-sepolia, sepolia.\",\n \"usage\": \"/tx?hash=0x...&c",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/tx",
+  "label": "hash",
+  "url": "https://telegraph-chain.margyn.workers.dev/tx?chain=ethereum&hash=0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
+  "code": "200",
+  "summary": "Ethereum transaction 0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060 succeeded in block 46147: a transfer of 0.000000000000031337 ETH to 0x5df9b87991262f6ba471f09758cde1c0fc1de734.",
+  "body": "{\n \"intent\": \"ONCHAIN_TX_LOOKUP\",\n \"hash\": \"0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060\",\n \"chain\": \"ethereum\",\n \"chain_id\": 1,\n \"from\": \"0xa1e4380a3b1f749673e270229993ee55f35663b4\",\n \"to\": \"0x5df9b87991262f6ba471f09758cde1c0fc1de734\",\n \"value\": 0,\n \"value_wei\": \"31337\",\n \"sym",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/tx",
+  "label": "bad-hash",
+  "url": "https://telegraph-chain.margyn.workers.dev/tx?hash=0xdeadbeef",
+  "code": "200",
+  "summary": "No transaction hash was named, so no transaction can be looked up. Supply a 66 character hash (0x and 64 hex) to read one on ethereum, base, arbitrum, optimism, polygon, base-sepolia, sepolia.",
+  "body": "{\n \"intent\": \"ONCHAIN_TX_LOOKUP\",\n \"hash\": null,\n \"found\": null,\n \"summary\": \"No transaction hash was named, so no transaction can be looked up. Supply a 66 character hash (0x and 64 hex) to read one on ethereum, base, arbitrum, optimism, polygon, base-sepolia, sepolia.\",\n \"usage\": \"/tx?hash=0x...&c",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/tx",
+  "label": "unknown-hash",
+  "url": "https://telegraph-chain.margyn.workers.dev/tx?chain=ethereum&hash=0xabababababababababababababababababababababababababababababababab",
+  "code": "200",
+  "summary": "Transaction 0xabababababababababababababababababababababababababababababababab could not be looked up: the public nodes this miner reads did not answer.",
+  "body": "{\n \"intent\": \"ONCHAIN_TX_LOOKUP\",\n \"hash\": \"0xabababababababababababababababababababababababababababababababab\",\n \"found\": null,\n \"summary\": \"Transaction 0xabababababababababababababababababababababababababababababababab could not be looked up: the public nodes this miner reads did not answer.\",\n \"s",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/tx",
+  "label": "query-full",
+  "url": "https://telegraph-chain.margyn.workers.dev/tx?query=Look%20up%20Ethereum%20transaction%200x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
+  "code": "200",
+  "summary": "Ethereum transaction 0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060 succeeded in block 46147: a transfer of 0.000000000000031337 ETH to 0x5df9b87991262f6ba471f09758cde1c0fc1de734.",
+  "body": "{\n \"intent\": \"ONCHAIN_TX_LOOKUP\",\n \"hash\": \"0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060\",\n \"chain\": \"ethereum\",\n \"chain_id\": 1,\n \"from\": \"0xa1e4380a3b1f749673e270229993ee55f35663b4\",\n \"to\": \"0x5df9b87991262f6ba471f09758cde1c0fc1de734\",\n \"value\": 0,\n \"value_wei\": \"31337\",\n \"sym",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/holders",
+  "label": "bare",
+  "url": "https://telegraph-chain.margyn.workers.dev/holders",
+  "code": "200",
+  "summary": "No token was named, so no holder count can be read. Name a contract address (0x...) or one of usdt, usdc, dai, weth on Ethereum.",
+  "body": "{\n \"intent\": \"TOKEN_HOLDER_COUNT\",\n \"chain\": \"ethereum\",\n \"holders\": null,\n \"summary\": \"No token was named, so no holder count can be read. Name a contract address (0x...) or one of usdt, usdc, dai, weth on Ethereum.\",\n \"attribution\": \"Balances and transactions read from public EVM nodes. Holder cou",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/holders",
+  "label": "token",
+  "url": "https://telegraph-chain.margyn.workers.dev/holders?chain=ethereum&token=USDT",
+  "code": "200",
+  "summary": "USDT on Ethereum has 17,543,534 holders.",
+  "body": "{\n \"intent\": \"TOKEN_HOLDER_COUNT\",\n \"chain\": \"ethereum\",\n \"chain_id\": 1,\n \"contract_address\": \"0xdAC17F958D2ee523a2206206994597C13D831ec7\",\n \"symbol\": \"USDT\",\n \"name\": \"Tether\",\n \"token_type\": \"ERC-20\",\n \"holders\": 17543534,\n \"summary\": \"USDT on Ethereum has 17,543,534 holders.\",\n \"readings\": \"token",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/holders",
+  "label": "address-token",
+  "url": "https://telegraph-chain.margyn.workers.dev/holders?chain=ethereum&token=0x6b175474e89094c44da98b954eedeac495271d0f",
+  "code": "200",
+  "summary": "DAI on Ethereum has 752,936 holders.",
+  "body": "{\n \"intent\": \"TOKEN_HOLDER_COUNT\",\n \"chain\": \"ethereum\",\n \"chain_id\": 1,\n \"contract_address\": \"0x6b175474e89094c44da98b954eedeac495271d0f\",\n \"symbol\": \"DAI\",\n \"name\": \"Dai\",\n \"token_type\": \"ERC-20\",\n \"holders\": 752936,\n \"summary\": \"DAI on Ethereum has 752,936 holders.\",\n \"readings\": \"token DAI (Dai)",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/holders",
+  "label": "optimism",
+  "url": "https://telegraph-chain.margyn.workers.dev/holders?chain=optimism&token=0x4200000000000000000000000000000000000042",
+  "code": "200",
+  "summary": "A holder count is not served for optimism. This miner covers ethereum, base, arbitrum, polygon, where a public index of transfer events exists.",
+  "body": "{\n \"intent\": \"TOKEN_HOLDER_COUNT\",\n \"chain\": \"optimism\",\n \"holders\": null,\n \"summary\": \"A holder count is not served for optimism. This miner covers ethereum, base, arbitrum, polygon, where a public index of transfer events exists.\",\n \"attribution\": \"Balances and transactions read from public EVM no",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/holders",
+  "label": "unknown-token",
+  "url": "https://telegraph-chain.margyn.workers.dev/holders?chain=ethereum&token=0x1111111111111111111111111111111111111111",
+  "code": "200",
+  "summary": "A holder count for 0x1111111111111111111111111111111111111111 on Ethereum could not be read: the public index did not return one for this contract.",
+  "body": "{\n \"intent\": \"TOKEN_HOLDER_COUNT\",\n \"chain\": \"ethereum\",\n \"chain_id\": 1,\n \"contract_address\": \"0x1111111111111111111111111111111111111111\",\n \"symbol\": null,\n \"holders\": null,\n \"summary\": \"A holder count for 0x1111111111111111111111111111111111111111 on Ethereum could not be read: the public index di",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/holders",
+  "label": "unknown-symbol",
+  "url": "https://telegraph-chain.margyn.workers.dev/holders?chain=ethereum&token=ZZQQXX",
+  "code": "200",
+  "summary": "No token was named, so no holder count can be read. Name a contract address (0x...) or one of usdt, usdc, dai, weth on Ethereum.",
+  "body": "{\n \"intent\": \"TOKEN_HOLDER_COUNT\",\n \"chain\": \"ethereum\",\n \"holders\": null,\n \"summary\": \"No token was named, so no holder count can be read. Name a contract address (0x...) or one of usdt, usdc, dai, weth on Ethereum.\",\n \"attribution\": \"Balances and transactions read from public EVM nodes. Holder cou",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-chain.margyn.workers.dev",
+  "path": "/holders",
+  "label": "query-full",
+  "url": "https://telegraph-chain.margyn.workers.dev/holders?query=How%20many%20holders%20does%20USDC%20on%20Base%20have%3F",
+  "code": "200",
+  "summary": "A holder count for USDC on Base could not be read: the public index did not return one for this contract.",
+  "body": "{\n \"intent\": \"TOKEN_HOLDER_COUNT\",\n \"chain\": \"base\",\n \"chain_id\": 8453,\n \"contract_address\": \"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913\",\n \"symbol\": \"USDC\",\n \"holders\": null,\n \"summary\": \"A holder count for USDC on Base could not be read: the public index did not return one for this contract.\",\n \"s",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-gas.margyn.workers.dev",
+  "path": "/gas",
+  "label": "bare",
+  "url": "https://telegraph-gas.margyn.workers.dev/gas",
+  "code": "200",
+  "summary": "The current average transaction fee on Base is about $0.0003 for a standard transfer, at a gas price of 0.006 gwei, which is low for this network.",
+  "body": "{\n \"network\": \"base\",\n \"chain_id\": 8453,\n \"gas_price_gwei\": 0.006,\n \"transfer_gas\": 21000,\n \"transfer_cost_native\": 1.26e-7,\n \"transfer_cost_usd\": 0.00031144,\n \"native_token\": \"ETH\",\n \"native_price_usd\": 2471.74,\n \"gas_price_wei\": \"6000000\",\n \"base_fee_gwei\": 0.005,\n \"priority_fee_gwei\": 0.001,\n \"le",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-gas.margyn.workers.dev",
+  "path": "/gas",
+  "label": "network",
+  "url": "https://telegraph-gas.margyn.workers.dev/gas?network=ethereum",
+  "code": "200",
+  "summary": "The current average transaction fee on Ethereum is about $0.0023 ($0.002) for a standard transfer, at a gas price of 0.044 gwei (0.04, 0.043536), which is low for this network.",
+  "body": "{\n \"network\": \"ethereum\",\n \"chain_id\": 1,\n \"gas_price_gwei\": 0.043536,\n \"transfer_gas\": 21000,\n \"transfer_cost_native\": 9.1425e-7,\n \"transfer_cost_usd\": 0.00225979,\n \"native_token\": \"ETH\",\n \"native_price_usd\": 2471.74,\n \"gas_price_wei\": \"43535694\",\n \"base_fee_gwei\": 0.040045,\n \"priority_fee_gwei\": 0",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-gas.margyn.workers.dev",
+  "path": "/gas",
+  "label": "sepolia",
+  "url": "https://telegraph-gas.margyn.workers.dev/gas?network=sepolia",
+  "code": "200",
+  "summary": "Gas on Sepolia is currently 1.09 gwei (1.1, 1.094411), which is low for this network.",
+  "body": "{\n \"network\": \"sepolia\",\n \"chain_id\": 11155111,\n \"gas_price_gwei\": 1.094411,\n \"transfer_gas\": 21000,\n \"transfer_cost_native\": 0.000022982622,\n \"transfer_cost_usd\": null,\n \"native_token\": \"ETH\",\n \"native_price_usd\": null,\n \"gas_price_wei\": \"1094410577\",\n \"base_fee_gwei\": 1.063119,\n \"priority_fee_gwei",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-gas.margyn.workers.dev",
+  "path": "/gas",
+  "label": "unknown-network",
+  "url": "https://telegraph-gas.margyn.workers.dev/gas?network=zzqqxx",
+  "code": "200",
+  "summary": "A gas price is not served for zzqqxx. This miner covers ethereum, base, arbitrum, optimism, polygon, base-sepolia, sepolia.",
+  "body": "{\n \"intent\": \"GAS_PRICE\",\n \"network\": \"zzqqxx\",\n \"gas_price_gwei\": null,\n \"summary\": \"A gas price is not served for zzqqxx. This miner covers ethereum, base, arbitrum, optimism, polygon, base-sepolia, sepolia.\",\n \"attribution\": \"Gas figures read from public EVM nodes with eth_gasPrice and eth_feeHis",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-gas.margyn.workers.dev",
+  "path": "/gas",
+  "label": "query-full",
+  "url": "https://telegraph-gas.margyn.workers.dev/gas?query=What%20is%20the%20current%20average%20transaction%20fee%20level%20on%20the%20blockchain%20network%20as%20of%20August%2028%2C%202026%3F",
+  "code": "200",
+  "summary": "A gas price is not served for What is the current average transaction fee level on the blockchain network as of August 28, 2026?. This miner covers ethereum, base, arbitrum, optimism, polygon, base-sepolia, sepolia.",
+  "body": "{\n \"intent\": \"GAS_PRICE\",\n \"network\": \"What is the current average transaction fee level on the blockchain network as of August 28, 2026?\",\n \"gas_price_gwei\": null,\n \"summary\": \"A gas price is not served for What is the current average transaction fee level on the blockchain network as of August 28,",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ip-geolocate",
+  "label": "bare",
+  "url": "https://telegraph-net.margyn.workers.dev/ip-geolocate",
+  "code": "200",
+  "summary": "8.8.8.8 is located in the United States.",
+  "body": "{\n \"intent\": \"IP_GEOLOCATION\",\n \"ip\": \"8.8.8.8\",\n \"city\": \"Mountain View\",\n \"region\": \"California\",\n \"country\": \"United States\",\n \"country_code\": \"US\",\n \"latitude\": 37.4134432926076,\n \"longitude\": -122.06016596080144,\n \"timezone\": \"America/Los_Angeles\",\n \"org\": \"Google LLC\",\n \"asn\": 15169,\n \"hostnam",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ip-geolocate",
+  "label": "public",
+  "url": "https://telegraph-net.margyn.workers.dev/ip-geolocate?ip=8.8.8.8",
+  "code": "200",
+  "summary": "8.8.8.8 is located in the United States.",
+  "body": "{\n \"intent\": \"IP_GEOLOCATION\",\n \"ip\": \"8.8.8.8\",\n \"city\": \"Mountain View\",\n \"region\": \"California\",\n \"country\": \"United States\",\n \"country_code\": \"US\",\n \"latitude\": 37.4134432926076,\n \"longitude\": -122.06016596080144,\n \"timezone\": \"America/Los_Angeles\",\n \"org\": \"Google LLC\",\n \"asn\": 15169,\n \"hostnam",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ip-geolocate",
+  "label": "probe-ip",
+  "url": "https://telegraph-net.margyn.workers.dev/ip-geolocate?ip=142.251.42.174",
+  "code": "200",
+  "summary": "142.251.42.174 is located in Japan.",
+  "body": "{\n \"intent\": \"IP_GEOLOCATION\",\n \"ip\": \"142.251.42.174\",\n \"city\": \"Chiyoda\",\n \"region\": \"Tokyo\",\n \"country\": \"Japan\",\n \"country_code\": \"JP\",\n \"latitude\": 35.68333851760195,\n \"longitude\": 139.77462708743772,\n \"timezone\": \"Asia/Tokyo\",\n \"org\": \"Google LLC\",\n \"asn\": 15169,\n \"hostname\": null,\n \"bgp_prefi",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ip-geolocate",
+  "label": "private",
+  "url": "https://telegraph-net.margyn.workers.dev/ip-geolocate?ip=192.168.1.100",
+  "code": "200",
+  "summary": "192.168.1.100 has no geographic location: it is a private address in the RFC 1918 192.168.0.0/16 range, which is not routed on the public internet.",
+  "body": "{\n \"intent\": \"IP_GEOLOCATION\",\n \"ip\": \"192.168.1.100\",\n \"city\": null,\n \"region\": null,\n \"country\": null,\n \"summary\": \"192.168.1.100 has no geographic location: it is a private address in the RFC 1918 192.168.0.0/16 range, which is not routed on the public internet.\",\n \"special_use\": \"a private addre",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ip-geolocate",
+  "label": "bad-ip",
+  "url": "https://telegraph-net.margyn.workers.dev/ip-geolocate?ip=999.999.999.999",
+  "code": "200",
+  "summary": "8.8.8.8 is located in the United States.",
+  "body": "{\n \"intent\": \"IP_GEOLOCATION\",\n \"ip\": \"8.8.8.8\",\n \"city\": \"Mountain View\",\n \"region\": \"California\",\n \"country\": \"United States\",\n \"country_code\": \"US\",\n \"latitude\": 37.4134432926076,\n \"longitude\": -122.06016596080144,\n \"timezone\": \"America/Los_Angeles\",\n \"org\": \"Google LLC\",\n \"asn\": 15169,\n \"hostnam",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ip-geolocate",
+  "label": "ipv6",
+  "url": "https://telegraph-net.margyn.workers.dev/ip-geolocate?ip=2001%3A4860%3A4860%3A%3A8888",
+  "code": "200",
+  "summary": "2001:4860:4860::8888 is located in the United States.",
+  "body": "{\n \"intent\": \"IP_GEOLOCATION\",\n \"ip\": \"2001:4860:4860::8888\",\n \"city\": \"Mountain View\",\n \"region\": \"California\",\n \"country\": \"United States\",\n \"country_code\": \"US\",\n \"latitude\": 37.40444120199725,\n \"longitude\": -122.06958188848091,\n \"timezone\": \"America/Los_Angeles\",\n \"org\": \"Google LLC\",\n \"asn\": 15",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ip-geolocate",
+  "label": "query-full",
+  "url": "https://telegraph-net.margyn.workers.dev/ip-geolocate?query=Where%20is%20the%20IP%20address%201.1.1.1%20located%3F",
+  "code": "200",
+  "summary": "1.1.1.1 is located in Australia.",
+  "body": "{\n \"intent\": \"IP_GEOLOCATION\",\n \"ip\": \"1.1.1.1\",\n \"city\": \"Sydney\",\n \"region\": \"New South Wales\",\n \"country\": \"Australia\",\n \"country_code\": \"AU\",\n \"latitude\": -33.88452797803698,\n \"longitude\": 151.22307175364432,\n \"timezone\": \"Australia/Sydney\",\n \"org\": \"Cloudflare, Inc.\",\n \"asn\": 13335,\n \"hostname\"",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ssl-check",
+  "label": "bare",
+  "url": "https://telegraph-net.margyn.workers.dev/ssl-check",
+  "code": "200",
+  "summary": "The TLS certificate for example.com is valid and trusted.",
+  "body": "{\n \"intent\": \"SSL_VERIFICATION\",\n \"domain\": \"example.com\",\n \"valid\": true,\n \"https_reachable\": true,\n \"http_status\": 200,\n \"handshake_error\": null,\n \"summary\": \"The TLS certificate for example.com is valid and trusted.\",\n \"method\": \"live HTTPS handshake from the Cloudflare edge, no third-party certi",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ssl-check",
+  "label": "domain",
+  "url": "https://telegraph-net.margyn.workers.dev/ssl-check?domain=example.com",
+  "code": "200",
+  "summary": "The TLS certificate for example.com is valid and trusted.",
+  "body": "{\n \"intent\": \"SSL_VERIFICATION\",\n \"domain\": \"example.com\",\n \"valid\": true,\n \"https_reachable\": true,\n \"http_status\": 200,\n \"handshake_error\": null,\n \"summary\": \"The TLS certificate for example.com is valid and trusted.\",\n \"method\": \"live HTTPS handshake from the Cloudflare edge, no third-party certi",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ssl-check",
+  "label": "no-such-host",
+  "url": "https://telegraph-net.margyn.workers.dev/ssl-check?domain=zzqqxx-nope-nope.invalid",
+  "code": "200",
+  "summary": "The TLS certificate for zzqqxx-nope-nope.invalid is valid and trusted.",
+  "body": "{\n \"intent\": \"SSL_VERIFICATION\",\n \"domain\": \"zzqqxx-nope-nope.invalid\",\n \"valid\": true,\n \"https_reachable\": true,\n \"http_status\": 530,\n \"handshake_error\": null,\n \"summary\": \"The TLS certificate for zzqqxx-nope-nope.invalid is valid and trusted.\",\n \"method\": \"live HTTPS handshake from the Cloudflare ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ssl-check",
+  "label": "plain-http",
+  "url": "https://telegraph-net.margyn.workers.dev/ssl-check?domain=neverssl.com",
+  "code": "200",
+  "summary": "The TLS certificate for neverssl.com is valid and trusted.",
+  "body": "{\n \"intent\": \"SSL_VERIFICATION\",\n \"domain\": \"neverssl.com\",\n \"valid\": true,\n \"https_reachable\": true,\n \"http_status\": 520,\n \"handshake_error\": null,\n \"summary\": \"The TLS certificate for neverssl.com is valid and trusted.\",\n \"method\": \"live HTTPS handshake from the Cloudflare edge, no third-party cer",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ssl-check",
+  "label": "url",
+  "url": "https://telegraph-net.margyn.workers.dev/ssl-check?url=https%3A%2F%2Fexample.com%2Fa%2Fb%3Fc%3Dd",
+  "code": "200",
+  "summary": "The TLS certificate for example.com is valid and trusted.",
+  "body": "{\n \"intent\": \"SSL_VERIFICATION\",\n \"domain\": \"example.com\",\n \"valid\": true,\n \"https_reachable\": true,\n \"http_status\": 200,\n \"handshake_error\": null,\n \"summary\": \"The TLS certificate for example.com is valid and trusted.\",\n \"method\": \"live HTTPS handshake from the Cloudflare edge, no third-party certi",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ssl-check",
+  "label": "port",
+  "url": "https://telegraph-net.margyn.workers.dev/ssl-check?domain=example.com%3A443",
+  "code": "200",
+  "summary": "The TLS certificate for example.com is valid and trusted.",
+  "body": "{\n \"intent\": \"SSL_VERIFICATION\",\n \"domain\": \"example.com\",\n \"valid\": true,\n \"https_reachable\": true,\n \"http_status\": 200,\n \"handshake_error\": null,\n \"summary\": \"The TLS certificate for example.com is valid and trusted.\",\n \"method\": \"live HTTPS handshake from the Cloudflare edge, no third-party certi",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/ssl-check",
+  "label": "query-full",
+  "url": "https://telegraph-net.margyn.workers.dev/ssl-check?query=Is%20the%20TLS%20certificate%20for%20github.com%20valid%3F",
+  "code": "200",
+  "summary": "The TLS certificate for github.com is valid and trusted.",
+  "body": "{\n \"intent\": \"SSL_VERIFICATION\",\n \"domain\": \"github.com\",\n \"valid\": true,\n \"https_reachable\": true,\n \"http_status\": 200,\n \"handshake_error\": null,\n \"summary\": \"The TLS certificate for github.com is valid and trusted.\",\n \"method\": \"live HTTPS handshake from the Cloudflare edge, no third-party certifi",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/url-scan",
+  "label": "bare",
+  "url": "https://telegraph-net.margyn.workers.dev/url-scan",
+  "code": "200",
+  "summary": "The URL https://example.com is assessed as safe, with a risk score of 0.1 on a 0 (safe) to 1 (unsafe) scale, because no phishing or malware indicators were detected and it is served over valid HTTPS.",
+  "body": "{\n \"intent\": \"URL_SCAN\",\n \"url\": \"https://example.com/\",\n \"safe\": true,\n \"risk_score\": 0.1,\n \"risk\": \"low\",\n \"listings\": [],\n \"host_listings\": [],\n \"feeds_checked\": [\n  \"URLhaus\",\n  \"OpenPhish\"\n ],\n \"reachable\": true,\n \"https\": true,\n \"status_code\": 200,\n \"redirect_location\": null,\n \"host_resolves\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/url-scan",
+  "label": "url",
+  "url": "https://telegraph-net.margyn.workers.dev/url-scan?url=https%3A%2F%2Fexample.com",
+  "code": "200",
+  "summary": "The URL https://example.com is assessed as safe, with a risk score of 0.1 on a 0 (safe) to 1 (unsafe) scale, because no phishing or malware indicators were detected and it is served over valid HTTPS.",
+  "body": "{\n \"intent\": \"URL_SCAN\",\n \"url\": \"https://example.com/\",\n \"safe\": true,\n \"risk_score\": 0.1,\n \"risk\": \"low\",\n \"listings\": [],\n \"host_listings\": [],\n \"feeds_checked\": [\n  \"URLhaus\",\n  \"OpenPhish\"\n ],\n \"reachable\": true,\n \"https\": true,\n \"status_code\": 200,\n \"redirect_location\": null,\n \"host_resolves\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/url-scan",
+  "label": "no-such-host",
+  "url": "https://telegraph-net.margyn.workers.dev/url-scan?url=https%3A%2F%2Fzzqqxx-nope-nope.invalid%2Fx",
+  "code": "200",
+  "summary": "The URL https://zzqqxx-nope-nope.invalid/x is assessed as safe, with a risk score of 0.1 on a 0 (safe) to 1 (unsafe) scale, because no phishing or malware indicators were detected and it is served over valid HTTPS.",
+  "body": "{\n \"intent\": \"URL_SCAN\",\n \"url\": \"https://zzqqxx-nope-nope.invalid/x\",\n \"safe\": true,\n \"risk_score\": 0.1,\n \"risk\": \"low\",\n \"listings\": [],\n \"host_listings\": [],\n \"feeds_checked\": [\n  \"URLhaus\",\n  \"OpenPhish\"\n ],\n \"reachable\": true,\n \"https\": true,\n \"status_code\": 530,\n \"redirect_location\": null,\n \"h",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/url-scan",
+  "label": "no-scheme",
+  "url": "https://telegraph-net.margyn.workers.dev/url-scan?url=example.com",
+  "code": "200",
+  "summary": "The URL https://example.com is assessed as safe, with a risk score of 0.1 on a 0 (safe) to 1 (unsafe) scale, because no phishing or malware indicators were detected and it is served over valid HTTPS.",
+  "body": "{\n \"intent\": \"URL_SCAN\",\n \"url\": \"https://example.com/\",\n \"safe\": true,\n \"risk_score\": 0.1,\n \"risk\": \"low\",\n \"listings\": [],\n \"host_listings\": [],\n \"feeds_checked\": [\n  \"URLhaus\",\n  \"OpenPhish\"\n ],\n \"reachable\": true,\n \"https\": true,\n \"status_code\": 200,\n \"redirect_location\": null,\n \"host_resolves\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/url-scan",
+  "label": "query-full",
+  "url": "https://telegraph-net.margyn.workers.dev/url-scan?query=Is%20https%3A%2F%2Fgithub.com%20safe%20to%20visit%3F",
+  "code": "200",
+  "summary": "The URL https://github.com is not itself listed as malicious, but URLhaus lists other URLs on github.com, so treat content from that host with care. Its risk score is 0.5 on a 0 (safe) to 1 (unsafe) scale.",
+  "body": "{\n \"intent\": \"URL_SCAN\",\n \"url\": \"https://github.com/\",\n \"safe\": null,\n \"risk_score\": 0.5,\n \"risk\": \"moderate\",\n \"listings\": [],\n \"host_listings\": [\n  \"URLhaus\"\n ],\n \"feeds_checked\": [\n  \"URLhaus\",\n  \"OpenPhish\"\n ],\n \"reachable\": true,\n \"https\": true,\n \"status_code\": 200,\n \"redirect_location\": null,",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/extract",
+  "label": "bare",
+  "url": "https://telegraph-net.margyn.workers.dev/extract",
+  "code": "200",
+  "summary": "Example Domain. This domain is for use in documentation examples without needing permission.",
+  "body": "{\n \"intent\": \"CONTENT_EXTRACTION\",\n \"url\": \"https://example.com/\",\n \"title\": \"Example Domain\",\n \"char_count\": 112,\n \"excerpt\": \"This domain is for use in documentation examples without needing permission. Avoid use in operations. Learn more\",\n \"summary\": \"Example Domain. This domain is for use in do",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/extract",
+  "label": "url",
+  "url": "https://telegraph-net.margyn.workers.dev/extract?url=https%3A%2F%2Fexample.com",
+  "code": "200",
+  "summary": "Example Domain. This domain is for use in documentation examples without needing permission.",
+  "body": "{\n \"intent\": \"CONTENT_EXTRACTION\",\n \"url\": \"https://example.com/\",\n \"title\": \"Example Domain\",\n \"char_count\": 112,\n \"excerpt\": \"This domain is for use in documentation examples without needing permission. Avoid use in operations. Learn more\",\n \"summary\": \"Example Domain. This domain is for use in do",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/extract",
+  "label": "no-such-host",
+  "url": "https://telegraph-net.margyn.workers.dev/extract?url=https%3A%2F%2Fzzqqxx-nope-nope.invalid%2Fx",
+  "code": "200",
+  "summary": "The page https://zzqqxx-nope-nope.invalid/x could not be read at this time.",
+  "body": "{\n \"intent\": \"CONTENT_EXTRACTION\",\n \"url\": \"https://zzqqxx-nope-nope.invalid/x\",\n \"title\": null,\n \"char_count\": 0,\n \"excerpt\": \"\",\n \"summary\": \"The page https://zzqqxx-nope-nope.invalid/x could not be read at this time.\",\n \"confidence\": 0.5,\n \"source\": \"direct fetch of the page the caller named\",\n \"",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/extract",
+  "label": "pdf",
+  "url": "https://telegraph-net.margyn.workers.dev/extract?url=https%3A%2F%2Fwww.w3.org%2FWAI%2FER%2Ftests%2Fxhtml%2Ftestfiles%2Fresources%2Fpdf%2Fdummy.pdf",
+  "code": "200",
+  "summary": "The page https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf could not be read at this time.",
+  "body": "{\n \"intent\": \"CONTENT_EXTRACTION\",\n \"url\": \"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf\",\n \"title\": null,\n \"char_count\": 0,\n \"excerpt\": \"\",\n \"summary\": \"The page https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf could not be read at this time.\",\n \"co",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-net.margyn.workers.dev",
+  "path": "/extract",
+  "label": "query-full",
+  "url": "https://telegraph-net.margyn.workers.dev/extract?query=Extract%20the%20main%20text%20from%20https%3A%2F%2Fexample.com",
+  "code": "200",
+  "summary": "Example Domain. This domain is for use in documentation examples without needing permission.",
+  "body": "{\n \"intent\": \"CONTENT_EXTRACTION\",\n \"url\": \"https://example.com/\",\n \"title\": \"Example Domain\",\n \"char_count\": 112,\n \"excerpt\": \"This domain is for use in documentation examples without needing permission. Avoid use in operations. Learn more\",\n \"summary\": \"Example Domain. This domain is for use in do",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-news.margyn.workers.dev",
+  "path": "/headlines",
+  "label": "bare",
+  "url": "https://telegraph-news.margyn.workers.dev/headlines",
+  "code": "200",
+  "summary": "The top story right now is \"Ribbon-Cutting Event for NASA Deep Space Network\u2019s Deep Space Station 23\" from NASA, published Sun, 30 Aug 2026 14:57:59 +0000 (about 8 hours ago).",
+  "body": "{\n \"intent\": \"NEWS_HEADLINES\",\n \"headline\": \"Ribbon-Cutting Event for NASA Deep Space Network\u2019s Deep Space Station 23\",\n \"source\": \"NASA\",\n \"url\": \"https://science.nasa.gov/photojournal/ribbon-cutting-event-for-nasa-deep-space-networks-deep-space-station-23/\",\n \"published_at\": \"Sun, 30 Aug 2026 14:5",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-news.margyn.workers.dev",
+  "path": "/headlines",
+  "label": "topic",
+  "url": "https://telegraph-news.margyn.workers.dev/headlines?topic=technology",
+  "code": "200",
+  "summary": "The top technology headline right now is \"NSF launches three new Science and Technology Centers with $90M investment in transformative research\" from the US National Science Foundation, published Wed, 26 Aug 2026 12:09:28 -0400 (4 days ago).",
+  "body": "{\n \"intent\": \"NEWS_HEADLINES\",\n \"headline\": \"NSF launches three new Science and Technology Centers with $90M investment in transformative research\",\n \"source\": \"the US National Science Foundation\",\n \"url\": \"https://www.nsf.gov/news/nsf-launches-three-new-science-technology-centers-90m\",\n \"published_",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-news.margyn.workers.dev",
+  "path": "/headlines",
+  "label": "unknown-topic",
+  "url": "https://telegraph-news.margyn.workers.dev/headlines?topic=zzqqxx%20quantum%20llamas",
+  "code": "200",
+  "summary": "The top zzqqxx quantum llamas headline right now is \"Eight NSF research institutes to propel U.S. quantum science with $290M investment\" from the US National Science Foundation, published Tue, 25 Aug 2026 10:00:08 -0400 (5 days ago).",
+  "body": "{\n \"intent\": \"NEWS_HEADLINES\",\n \"headline\": \"Eight NSF research institutes to propel U.S. quantum science with $290M investment\",\n \"source\": \"the US National Science Foundation\",\n \"url\": \"https://www.nsf.gov/news/eight-nsf-research-institutes-propel-us-quantum-science-290m\",\n \"published_at\": \"Tue, 2",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-news.margyn.workers.dev",
+  "path": "/headlines",
+  "label": "question",
+  "url": "https://telegraph-news.margyn.workers.dev/headlines?question=What%20are%20the%20top%20technology%20news%20headlines%20today%3F",
+  "code": "200",
+  "summary": "The top technology headline right now is \"NSF launches three new Science and Technology Centers with $90M investment in transformative research\" from the US National Science Foundation, published Wed, 26 Aug 2026 12:09:28 -0400 (4 days ago).",
+  "body": "{\n \"intent\": \"NEWS_HEADLINES\",\n \"headline\": \"NSF launches three new Science and Technology Centers with $90M investment in transformative research\",\n \"source\": \"the US National Science Foundation\",\n \"url\": \"https://www.nsf.gov/news/nsf-launches-three-new-science-technology-centers-90m\",\n \"published_",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-news.margyn.workers.dev",
+  "path": "/news",
+  "label": "bare",
+  "url": "https://telegraph-news.margyn.workers.dev/news",
+  "code": "200",
+  "summary": "The top match for \"technology\" is \"NSF launches three new Science and Technology Centers with $90M investment in transformative research\" from the US National Science Foundation, published Wed, 26 Aug 2026 12:09:28 -0400 (4 days ago).",
+  "body": "{\n \"intent\": \"NEWS_SEARCH\",\n \"headline\": \"NSF launches three new Science and Technology Centers with $90M investment in transformative research\",\n \"source\": \"the US National Science Foundation\",\n \"url\": \"https://www.nsf.gov/news/nsf-launches-three-new-science-technology-centers-90m\",\n \"published_at\"",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-news.margyn.workers.dev",
+  "path": "/news",
+  "label": "q",
+  "url": "https://telegraph-news.margyn.workers.dev/news?q=artificial%20intelligence%20regulation",
+  "code": "200",
+  "summary": "The top match for \"artificial intelligence regulation\" is \"Podcast: Educator wins Presidential AI Challenge\" from the US National Science Foundation, published Tue, 25 Aug 2026 13:32:13 -0400 (5 days ago).",
+  "body": "{\n \"intent\": \"NEWS_SEARCH\",\n \"headline\": \"Podcast: Educator wins Presidential AI Challenge\",\n \"source\": \"the US National Science Foundation\",\n \"url\": \"https://www.nsf.gov/news/podcast-educator-wins-presidential-ai-challenge\",\n \"published_at\": \"Tue, 25 Aug 2026 13:32:13 -0400\",\n \"published_unix\": 178",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-news.margyn.workers.dev",
+  "path": "/news",
+  "label": "unknown-q",
+  "url": "https://telegraph-news.margyn.workers.dev/news?q=zzqqxx%20quantum%20llamas",
+  "code": "200",
+  "summary": "The top match for \"zzqqxx quantum llamas\" is \"Eight NSF research institutes to propel U.S. quantum science with $290M investment\" from the US National Science Foundation, published Tue, 25 Aug 2026 10:00:08 -0400 (5 days ago).",
+  "body": "{\n \"intent\": \"NEWS_SEARCH\",\n \"headline\": \"Eight NSF research institutes to propel U.S. quantum science with $290M investment\",\n \"source\": \"the US National Science Foundation\",\n \"url\": \"https://www.nsf.gov/news/eight-nsf-research-institutes-propel-us-quantum-science-290m\",\n \"published_at\": \"Tue, 25 A",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-news.margyn.workers.dev",
+  "path": "/news",
+  "label": "leaked-probe",
+  "url": "https://telegraph-news.margyn.workers.dev/news?question=Return%20the%20top%205%20technology%20news%20headlines%20from%20the%20UK%20published%20in%20the%20last%207%20days%2C%20excluding%20any%20articles%20from%20the%20domain%20%27theguardian.com%27.",
+  "code": "200",
+  "summary": "The top match for \"Return top 5 technology headlines from UK published in last 7 days excluding from domain 'theguardian com'\" is \"NSF launches three new Science and Technology Centers with $90M investment in transformative research\" from the US National Science Foundation, published Wed, 26 Aug 2026 12:09:28 -0400 (4 days ago).",
+  "body": "{\n \"intent\": \"NEWS_SEARCH\",\n \"headline\": \"NSF launches three new Science and Technology Centers with $90M investment in transformative research\",\n \"source\": \"the US National Science Foundation\",\n \"url\": \"https://www.nsf.gov/news/nsf-launches-three-new-science-technology-centers-90m\",\n \"published_at\"",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/papers",
+  "label": "bare",
+  "url": "https://telegraph-scholar.margyn.workers.dev/papers",
+  "code": "200",
+  "summary": "Peer-reviewed research on CRISPR gene editing is extensive and well indexed in Crossref, spanning sweeter, tomatoes and through.",
+  "body": "{\n \"intent\": \"ACADEMIC_SEARCH\",\n \"topic\": \"CRISPR gene editing\",\n \"matched_works\": 1039160,\n \"source_api\": \"Crossref\",\n \"top_title\": \"CRISPR/Cas9 gene editing\",\n \"top_year\": null,\n \"top_citations\": 1,\n \"results\": [\n  {\n   \"title\": \"CRISPR/Cas9 gene editing\",\n   \"authors\": [],\n   \"year\": null,\n   \"ci",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/papers",
+  "label": "topic",
+  "url": "https://telegraph-scholar.margyn.workers.dev/papers?topic=climate%20change%20adaptation",
+  "code": "200",
+  "summary": "Peer-reviewed research on climate change adaptation is extensive and well indexed in Crossref, spanning introduction, handbook and biodiversity.",
+  "body": "{\n \"intent\": \"ACADEMIC_SEARCH\",\n \"topic\": \"climate change adaptation\",\n \"matched_works\": 1643403,\n \"source_api\": \"Crossref\",\n \"top_title\": \"Introduction to climate change adaptation\",\n \"top_year\": 2022,\n \"top_citations\": 2,\n \"results\": [\n  {\n   \"title\": \"Introduction to climate change adaptation\",\n ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/papers",
+  "label": "unknown-topic",
+  "url": "https://telegraph-scholar.margyn.workers.dev/papers?topic=zzqqxx%20quantum%20llamas",
+  "code": "200",
+  "summary": "Peer-reviewed research on zzqqxx quantum llamas is extensive and well indexed in Crossref, spanning eidos, identitas and indiscernibilium.",
+  "body": "{\n \"intent\": \"ACADEMIC_SEARCH\",\n \"topic\": \"zzqqxx quantum llamas\",\n \"matched_works\": 783535,\n \"source_api\": \"Crossref\",\n \"top_title\": \"Eidos and Identitas Indiscernibilium in Quantum Mechanics\",\n \"top_year\": 2020,\n \"top_citations\": 0,\n \"results\": [\n  {\n   \"title\": \"Eidos and Identitas Indiscernibili",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/papers",
+  "label": "question",
+  "url": "https://telegraph-scholar.margyn.workers.dev/papers?question=Find%20recent%20peer-reviewed%20papers%20on%20CRISPR.",
+  "code": "200",
+  "summary": "Peer-reviewed research on peer-reviewed papers on CRISPR is extensive and well indexed in Crossref, spanning reviewed, comparing and publication.",
+  "body": "{\n \"intent\": \"ACADEMIC_SEARCH\",\n \"topic\": \"peer-reviewed papers on CRISPR\",\n \"matched_works\": 1126649,\n \"source_api\": \"Crossref\",\n \"top_title\": \"Who is peer reviewed? Comparing publication patterns of peer-reviewed and non-peer-reviewed papers in Japanese political science\",\n \"top_year\": 2019,\n \"top",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/research",
+  "label": "bare",
+  "url": "https://telegraph-scholar.margyn.workers.dev/research",
+  "code": "200",
+  "summary": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy, typically from sunlight, into the chemical energy necessary to fuel their metabolism. The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as.",
+  "body": "{\n \"intent\": \"RESEARCH_QUERY\",\n \"question\": \"Photosynthesis\",\n \"topic\": \"Photosynthesis\",\n \"title\": \"Photosynthesis\",\n \"answer\": \"Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/research",
+  "label": "question",
+  "url": "https://telegraph-scholar.margyn.workers.dev/research?question=What%20does%20research%20say%20about%20sleep%20and%20memory%3F",
+  "code": "200",
+  "summary": "Research on sleep and memory finds that the relationship between sleep and memory has been studied since at least the early 19th century. Memory, the cognitive process of storing and retrieving past experiences, learning and recognition, is a product of brain plasticity, the structural changes within synapses that create associations between stimuli.",
+  "body": "{\n \"intent\": \"RESEARCH_QUERY\",\n \"question\": \"What does research say about sleep and memory?\",\n \"topic\": \"sleep and memory\",\n \"title\": \"Sleep and memory\",\n \"answer\": \"The relationship between sleep and memory has been studied since at least the early 19th century. Memory, the cognitive process of sto",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/research",
+  "label": "leaked-probe-1",
+  "url": "https://telegraph-scholar.margyn.workers.dev/research?question=For%20patients%20with%20early-stage%20melanoma%2C%20does%20the%20use%20of%20sentinel%20lymph%20node%20biopsy%20compared%20to%20observation%20affect%20five-year%20survival%20rates%20in%20studies%20published%20between%202015%20and%202026%3F",
+  "code": "200",
+  "summary": "Research on For patients with early-stage melanoma, does the use of sentinel lymph node biopsy compared to observation affect five-year survival rates in studies published between 2015 and 2026 finds that melanoma is a type of cancer, typically skin cancer; it develops from the melanin-producing cells known as melanocytes. In very rare cases melanoma can also happen in the lung, which is known as primary pulmonary melanoma and only happens in 0.01% of primary lung tumors.",
+  "body": "{\n \"intent\": \"RESEARCH_QUERY\",\n \"question\": \"For patients with early-stage melanoma, does the use of sentinel lymph node biopsy compared to observation affect five-year survival rates in studies published between 2015 and 2026?\",\n \"topic\": \"For patients with early-stage melanoma, does the use of sen",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/research",
+  "label": "leaked-probe-2",
+  "url": "https://telegraph-scholar.margyn.workers.dev/research?question=Find%20me%205%20open-access%20papers%20published%20in%202023%20about%20%27quantitative%20easing%20monetary%20policy%27%20and%20return%20their%20titles%2C%20authors%2C%20and%20publication%20venues%20in%20a%20JSON%20format.",
+  "code": "200",
+  "summary": "The most-cited scholarly work on 5 open-access papers published in 2023 about 'quantitative easing monetary policy' and return their titles, authors, and publication venues in a JSON format is \"Quantitative Easing and Monetary Policy Legitimate Perspective\" by Dr. Abdul Aziz Shwaish Abdul Hameed (2022), cited 0 times.",
+  "body": "{\n \"intent\": \"RESEARCH_QUERY\",\n \"question\": \"Find me 5 open-access papers published in 2023 about 'quantitative easing monetary policy' and return their titles, authors, and publication venues in a JSON format.\",\n \"topic\": \"5 open-access papers published in 2023 about 'quantitative easing monetary p",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/research",
+  "label": "unknown",
+  "url": "https://telegraph-scholar.margyn.workers.dev/research?question=zzqqxx%20quantum%20llamas",
+  "code": "200",
+  "summary": "The most-cited scholarly work on zzqqxx quantum llamas is \"Eidos and Identitas Indiscernibilium in Quantum Mechanics\" by Vicente Llamas Roig (2020), cited 0 times.",
+  "body": "{\n \"intent\": \"RESEARCH_QUERY\",\n \"question\": \"zzqqxx quantum llamas\",\n \"topic\": \"zzqqxx quantum llamas\",\n \"title\": \"Eidos and Identitas Indiscernibilium in Quantum Mechanics\",\n \"answer\": null,\n \"page_url\": \"https://doi.org/10.12775/setf.2020.007\",\n \"summary\": \"The most-cited scholarly work on zzqqxx ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/synthesis",
+  "label": "bare",
+  "url": "https://telegraph-scholar.margyn.workers.dev/synthesis",
+  "code": "200",
+  "summary": "An mRNA vaccine is a type of vaccine that uses a copy of a molecule called messenger RNA (mRNA) to produce an immune response. The most-cited scholarly work on mRNA vaccines is \"mRNA Vaccines: A Catastrophic Experiment\" (year unknown, cited 0 times), alongside \"mRNA vaccines\" (2025, cited 0) and \"mRNA Vaccines against Flaviviruses\" (2021, cited 41).",
+  "body": "{\n \"intent\": \"RESEARCH_SYNTHESIS\",\n \"topic\": \"mRNA vaccines\",\n \"question\": \"mRNA vaccines\",\n \"sources_used\": 4,\n \"wikipedia\": {\n  \"title\": \"MRNA vaccine\",\n  \"url\": \"https://en.wikipedia.org/wiki/MRNA_vaccine\"\n },\n \"works\": [\n  {\n   \"title\": \"mRNA Vaccines: A Catastrophic Experiment\",\n   \"year\": null",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/synthesis",
+  "label": "topic",
+  "url": "https://telegraph-scholar.margyn.workers.dev/synthesis?topic=intermittent%20fasting",
+  "code": "200",
+  "summary": "Intermittent fasting (IF) is any of various meal timing schedules that cycle between voluntary fasting and non-fasting over a given period. The most-cited scholarly work on intermittent fasting is \"Intermittent Fasting: Methods, Health Benefits and Risks\" (2025, cited 0 times), alongside \"Intermittent Fasting Slows Aging\" (2022, cited 0) and \"Food Addiction and Intermittent Fasting\" (2020, cited 1).",
+  "body": "{\n \"intent\": \"RESEARCH_SYNTHESIS\",\n \"topic\": \"intermittent fasting\",\n \"question\": \"intermittent fasting\",\n \"sources_used\": 4,\n \"wikipedia\": {\n  \"title\": \"Intermittent fasting\",\n  \"url\": \"https://en.wikipedia.org/wiki/Intermittent_fasting\"\n },\n \"works\": [\n  {\n   \"title\": \"Intermittent Fasting: Method",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/synthesis",
+  "label": "unknown-topic",
+  "url": "https://telegraph-scholar.margyn.workers.dev/synthesis?topic=zzqqxx%20quantum%20llamas",
+  "code": "200",
+  "summary": "The most-cited scholarly work on zzqqxx quantum llamas is \"Eidos and Identitas Indiscernibilium in Quantum Mechanics\" (2020, cited 0 times), alongside \"Author response for \"Advances in Integrated Quantum Photonics for Quantum Sensing and Communication\"\" (2025, cited 0) and \"Author response for \"Advances in Integrated Quantum Photonics for Quantum Sensing and Communication\"\" (2025, cited 0).",
+  "body": "{\n \"intent\": \"RESEARCH_SYNTHESIS\",\n \"topic\": \"zzqqxx quantum llamas\",\n \"question\": \"zzqqxx quantum llamas\",\n \"sources_used\": 3,\n \"wikipedia\": null,\n \"works\": [\n  {\n   \"title\": \"Eidos and Identitas Indiscernibilium in Quantum Mechanics\",\n   \"year\": 2020,\n   \"citations\": 0,\n   \"doi\": \"10.12775/setf.20",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-scholar.margyn.workers.dev",
+  "path": "/synthesis",
+  "label": "question",
+  "url": "https://telegraph-scholar.margyn.workers.dev/synthesis?question=Synthesise%20what%20studies%20say%20about%20microplastics.",
+  "code": "200",
+  "summary": "Heavy metals is a controversial and ambiguous term for metallic elements with relatively high densities, atomic weights or atomic numbers. The most-cited scholarly work on Synthesise what studies say about microplastics is \"EMDR Therapy in Person vs Online: What do the Latest Studies Say About its Effectiveness?\" (2023, cited 0 times), alongside \"What Can Science and Technological Studies Say about Science and Democracy?\" (2023, cited 0) and \"Speak for Yourself: What Girls Say about What Girls Need\" (2002, cited 0).",
+  "body": "{\n \"intent\": \"RESEARCH_SYNTHESIS\",\n \"topic\": \"Synthesise what studies say about microplastics\",\n \"question\": \"Synthesise what studies say about microplastics.\",\n \"sources_used\": 4,\n \"wikipedia\": {\n  \"title\": \"Heavy metals\",\n  \"url\": \"https://en.wikipedia.org/wiki/Heavy_metals\"\n },\n \"works\": [\n  {\n  ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sec.margyn.workers.dev",
+  "path": "/cve",
+  "label": "bare",
+  "url": "https://telegraph-sec.margyn.workers.dev/cve",
+  "code": "200",
+  "summary": "Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vulnerability is specific to log4j-core and does not affect log4net, log4cxx, or other Apache Logging Services projects. It is rated critical.",
+  "body": "{\n \"intent\": \"CVE_LOOKUP\",\n \"cve_id\": \"CVE-2021-44228\",\n \"title\": \"Apache Log4j2 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints\",\n \"cvss_score\": 10,\n \"cvss_version\": \"3.1\",\n \"cvss_vector\": \"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\",\n \"severity\": \"C",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sec.margyn.workers.dev",
+  "path": "/cve",
+  "label": "id",
+  "url": "https://telegraph-sec.margyn.workers.dev/cve?id=CVE-2021-44228",
+  "code": "200",
+  "summary": "Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vulnerability is specific to log4j-core and does not affect log4net, log4cxx, or other Apache Logging Services projects. It is rated critical.",
+  "body": "{\n \"intent\": \"CVE_LOOKUP\",\n \"cve_id\": \"CVE-2021-44228\",\n \"title\": \"Apache Log4j2 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints\",\n \"cvss_score\": 10,\n \"cvss_version\": \"3.1\",\n \"cvss_vector\": \"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\",\n \"severity\": \"C",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sec.margyn.workers.dev",
+  "path": "/cve",
+  "label": "unknown-cve",
+  "url": "https://telegraph-sec.margyn.workers.dev/cve?id=CVE-1999-99999",
+  "code": "404",
+  "summary": null,
+  "body": "{\n \"error\": \"CVE lookup unavailable for CVE-1999-99999\",\n \"detail\": \"Error: not found\"\n}",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sec.margyn.workers.dev",
+  "path": "/cve",
+  "label": "malformed",
+  "url": "https://telegraph-sec.margyn.workers.dev/cve?id=not-a-cve",
+  "code": "200",
+  "summary": "Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vulnerability is specific to log4j-core and does not affect log4net, log4cxx, or other Apache Logging Services projects. It is rated critical.",
+  "body": "{\n \"intent\": \"CVE_LOOKUP\",\n \"cve_id\": \"CVE-2021-44228\",\n \"title\": \"Apache Log4j2 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints\",\n \"cvss_score\": 10,\n \"cvss_version\": \"3.1\",\n \"cvss_vector\": \"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\",\n \"severity\": \"C",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sec.margyn.workers.dev",
+  "path": "/cve",
+  "label": "question",
+  "url": "https://telegraph-sec.margyn.workers.dev/cve?question=What%20is%20CVE-2014-0160%20and%20how%20severe%20is%20it%3F",
+  "code": "200",
+  "summary": "The (1) TLS and (2) DTLS implementations in OpenSSL 1.0.1 before 1.0.1g do not properly handle Heartbeat Extension packets, which allows remote attackers to obtain sensitive information from process memory via crafted packets that trigger a buffer over-read, as demonstrated by reading private keys, related to d1_both.c and t1_lib.c, aka the Heartbleed bug. It is rated high.",
+  "body": "{\n \"intent\": \"CVE_LOOKUP\",\n \"cve_id\": \"CVE-2014-0160\",\n \"title\": null,\n \"cvss_score\": 7.5,\n \"cvss_version\": \"3.1\",\n \"cvss_vector\": \"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N\",\n \"severity\": \"HIGH\",\n \"cwe\": [\n  \"CWE-125\"\n ],\n \"cwe_details\": [\n  {\n   \"id\": \"CWE-125\",\n   \"name\": \"Out-of-bounds Read\",",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-lang.margyn.workers.dev",
+  "path": "/translate",
+  "label": "bare",
+  "url": "https://telegraph-lang.margyn.workers.dev/translate",
+  "code": "200",
+  "summary": "In Spanish, \"Hello, how are you?\" is \"Hola, c\u00f3mo eres?\". Spanish: Hola, c\u00f3mo eres?",
+  "body": "{\n \"intent\": \"LANGUAGE_TRANSLATION\",\n \"source_text\": \"Hello, how are you?\",\n \"source_lang\": \"en\",\n \"target_lang\": \"es\",\n \"target_language\": \"Spanish\",\n \"translation\": \"Hola, c\u00f3mo eres?\",\n \"match_percent\": 95,\n \"summary\": \"In Spanish, \\\"Hello, how are you?\\\" is \\\"Hola, c\u00f3mo eres?\\\". Spanish: Hola, c\u00f3",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-lang.margyn.workers.dev",
+  "path": "/translate",
+  "label": "text-to",
+  "url": "https://telegraph-lang.margyn.workers.dev/translate?text=Good%20morning%2C%20how%20are%20you%3F&to=es",
+  "code": "200",
+  "summary": "In Spanish, \"Good morning, how are you?\" is \"Buenos d\u00edas, c\u00f3mo eres?\". Spanish: Buenos d\u00edas, c\u00f3mo eres?",
+  "body": "{\n \"intent\": \"LANGUAGE_TRANSLATION\",\n \"source_text\": \"Good morning, how are you?\",\n \"source_lang\": \"en\",\n \"target_lang\": \"es\",\n \"target_language\": \"Spanish\",\n \"translation\": \"Buenos d\u00edas, c\u00f3mo eres?\",\n \"match_percent\": 95,\n \"summary\": \"In Spanish, \\\"Good morning, how are you?\\\" is \\\"Buenos d\u00edas, c\u00f3m",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-lang.margyn.workers.dev",
+  "path": "/translate",
+  "label": "unsupported-pair",
+  "url": "https://telegraph-lang.margyn.workers.dev/translate?text=Good%20morning&to=zu",
+  "code": "200",
+  "summary": "A translation from the source language of that text into zu is not available from the open-source engine this miner uses, so no translation is stated.",
+  "body": "{\n \"intent\": \"LANGUAGE_TRANSLATION\",\n \"source_text\": \"Good morning\",\n \"source_lang\": \"auto\",\n \"target_lang\": \"zu\",\n \"target_language\": \"zu\",\n \"translation\": null,\n \"match_percent\": 0,\n \"summary\": \"A translation from the source language of that text into zu is not available from the open-source engin",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-lang.margyn.workers.dev",
+  "path": "/translate",
+  "label": "unknown-lang",
+  "url": "https://telegraph-lang.margyn.workers.dev/translate?text=Good%20morning&to=zzqqxx",
+  "code": "200",
+  "summary": "In Spanish, \"Good morning\" is \"Buenos d\u00edas\". Spanish: Buenos d\u00edas",
+  "body": "{\n \"intent\": \"LANGUAGE_TRANSLATION\",\n \"source_text\": \"Good morning\",\n \"source_lang\": \"en\",\n \"target_lang\": \"es\",\n \"target_language\": \"Spanish\",\n \"translation\": \"Buenos d\u00edas\",\n \"match_percent\": 95,\n \"summary\": \"In Spanish, \\\"Good morning\\\" is \\\"Buenos d\u00edas\\\". Spanish: Buenos d\u00edas\",\n \"readings\": \"sour",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-lang.margyn.workers.dev",
+  "path": "/translate",
+  "label": "question",
+  "url": "https://telegraph-lang.margyn.workers.dev/translate?question=Translate%20%27thank%20you%20very%20much%27%20into%20French.",
+  "code": "200",
+  "summary": "A translation from the source language of that text into French is not available from the open-source engine this miner uses, so no translation is stated.",
+  "body": "{\n \"intent\": \"LANGUAGE_TRANSLATION\",\n \"source_text\": \"thank you very much\",\n \"source_lang\": \"auto\",\n \"target_lang\": \"fr\",\n \"target_language\": \"French\",\n \"translation\": null,\n \"match_percent\": 0,\n \"summary\": \"A translation from the source language of that text into French is not available from the op",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-lang.margyn.workers.dev",
+  "path": "/translate",
+  "label": "empty",
+  "url": "https://telegraph-lang.margyn.workers.dev/translate?text=&to=fr",
+  "code": "200",
+  "summary": "In French, \"Hello, how are you?\" is \"Hello, how Ouvre you?\". French: Hello, how Ouvre you?",
+  "body": "{\n \"intent\": \"LANGUAGE_TRANSLATION\",\n \"source_text\": \"Hello, how are you?\",\n \"source_lang\": \"es\",\n \"target_lang\": \"fr\",\n \"target_language\": \"French\",\n \"translation\": \"Hello, how Ouvre you?\",\n \"match_percent\": 95,\n \"summary\": \"In French, \\\"Hello, how are you?\\\" is \\\"Hello, how Ouvre you?\\\". French: H",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sport.margyn.workers.dev",
+  "path": "/score",
+  "label": "bare",
+  "url": "https://telegraph-sport.margyn.workers.dev/score",
+  "code": "200",
+  "summary": "Viktoria K\u00f6ln and Preu\u00dfen M\u00fcnster are 2-1 in the 3. Liga, in play now.",
+  "body": "{\n \"intent\": \"SPORTS_SCORE\",\n \"league\": \"3. Liga\",\n \"matchday\": \"3. Spieltag\",\n \"home_team\": \"Viktoria K\u00f6ln\",\n \"away_team\": \"Preu\u00dfen M\u00fcnster\",\n \"home_score\": 2,\n \"away_score\": 1,\n \"winner\": \"Viktoria K\u00f6ln\",\n \"draw\": false,\n \"decided_by\": null,\n \"kickoff\": \"2026-08-30T19:30:00\",\n \"finished\": false,\n ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sport.margyn.workers.dev",
+  "path": "/score",
+  "label": "team",
+  "url": "https://telegraph-sport.margyn.workers.dev/score?team=Bayern",
+  "code": "200",
+  "summary": "FC Bayern M\u00fcnchen beat VfB Stuttgart 5-1 in the Bundesliga on 28 August 2026 (final).",
+  "body": "{\n \"intent\": \"SPORTS_SCORE\",\n \"league\": \"Bundesliga\",\n \"matchday\": \"1. Spieltag\",\n \"home_team\": \"FC Bayern M\u00fcnchen\",\n \"away_team\": \"VfB Stuttgart\",\n \"home_score\": 5,\n \"away_score\": 1,\n \"winner\": \"FC Bayern M\u00fcnchen\",\n \"draw\": false,\n \"decided_by\": null,\n \"kickoff\": \"2026-08-28T20:30:00\",\n \"finished\":",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sport.margyn.workers.dev",
+  "path": "/score",
+  "label": "unknown-team",
+  "url": "https://telegraph-sport.margyn.workers.dev/score?team=Zzqqxx%20United",
+  "code": "200",
+  "summary": "No match involving zzqqxx united was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.",
+  "body": "{\n \"intent\": \"SPORTS_SCORE\",\n \"summary\": \"No match involving zzqqxx united was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.\",\n \"covered_competitions\": [\n  \"Bundesliga\",\n  \"2. Bundesliga\",\n  \"3. Liga\",\n  \"DFB-Pokal\",\n  \"Champions League\",\n  \"LaL",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sport.margyn.workers.dev",
+  "path": "/score",
+  "label": "us-league",
+  "url": "https://telegraph-sport.margyn.workers.dev/score?team=Lakers&league=nba",
+  "code": "200",
+  "summary": "No match involving lakers was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.",
+  "body": "{\n \"intent\": \"SPORTS_SCORE\",\n \"summary\": \"No match involving lakers was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.\",\n \"covered_competitions\": [\n  \"Bundesliga\",\n  \"2. Bundesliga\",\n  \"3. Liga\",\n  \"DFB-Pokal\",\n  \"Champions League\",\n  \"LaLiga\"\n ]",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sport.margyn.workers.dev",
+  "path": "/score",
+  "label": "question",
+  "url": "https://telegraph-sport.margyn.workers.dev/score?question=What%20was%20the%20score%20of%20the%20latest%20Manchester%20United%20match%3F",
+  "code": "200",
+  "summary": "No match involving manchester united was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.",
+  "body": "{\n \"intent\": \"SPORTS_SCORE\",\n \"summary\": \"No match involving manchester united was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.\",\n \"covered_competitions\": [\n  \"Bundesliga\",\n  \"2. Bundesliga\",\n  \"3. Liga\",\n  \"DFB-Pokal\",\n  \"Champions League\",\n  ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sport.margyn.workers.dev",
+  "path": "/game",
+  "label": "bare",
+  "url": "https://telegraph-sport.margyn.workers.dev/game",
+  "code": "200",
+  "summary": "FC Augsburg beat FC Schalke 04 3-0 in the Bundesliga on 30 August 2026 (final). The winner was FC Augsburg.",
+  "body": "{\n \"intent\": \"GAME_RESULT\",\n \"league\": \"Bundesliga\",\n \"matchday\": \"1. Spieltag\",\n \"home_team\": \"FC Augsburg\",\n \"away_team\": \"FC Schalke 04\",\n \"home_score\": 3,\n \"away_score\": 0,\n \"winner\": \"FC Augsburg\",\n \"draw\": false,\n \"decided_by\": null,\n \"kickoff\": \"2026-08-30T17:30:00\",\n \"finished\": true,\n \"in_p",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sport.margyn.workers.dev",
+  "path": "/game",
+  "label": "team",
+  "url": "https://telegraph-sport.margyn.workers.dev/game?team=Dortmund",
+  "code": "200",
+  "summary": "Borussia Dortmund beat Hamburger SV 2-0 in the Bundesliga on 29 August 2026 (final). The winner was Borussia Dortmund.",
+  "body": "{\n \"intent\": \"GAME_RESULT\",\n \"league\": \"Bundesliga\",\n \"matchday\": \"1. Spieltag\",\n \"home_team\": \"Borussia Dortmund\",\n \"away_team\": \"Hamburger SV\",\n \"home_score\": 2,\n \"away_score\": 0,\n \"winner\": \"Borussia Dortmund\",\n \"draw\": false,\n \"decided_by\": null,\n \"kickoff\": \"2026-08-29T18:30:00\",\n \"finished\": t",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sport.margyn.workers.dev",
+  "path": "/game",
+  "label": "leaked-probe",
+  "url": "https://telegraph-sport.margyn.workers.dev/game?question=Who%20won%20the%202026%20FIFA%20World%20Cup%20and%20what%20was%20the%20score%20of%20the%20final%20match%3F",
+  "code": "200",
+  "summary": "No match involving 2026 fifa world cup was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.",
+  "body": "{\n \"intent\": \"GAME_RESULT\",\n \"summary\": \"No match involving 2026 fifa world cup was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.\",\n \"covered_competitions\": [\n  \"Bundesliga\",\n  \"2. Bundesliga\",\n  \"3. Liga\",\n  \"DFB-Pokal\",\n  \"Champions League\",\n ",
+  "json": true
+ },
+ {
+  "base": "https://telegraph-sport.margyn.workers.dev",
+  "path": "/game",
+  "label": "unknown-team",
+  "url": "https://telegraph-sport.margyn.workers.dev/game?team=Zzqqxx%20United",
+  "code": "200",
+  "summary": "No match involving zzqqxx united was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.",
+  "body": "{\n \"intent\": \"GAME_RESULT\",\n \"summary\": \"No match involving zzqqxx united was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.\",\n \"covered_competitions\": [\n  \"Bundesliga\",\n  \"2. Bundesliga\",\n  \"3. Liga\",\n  \"DFB-Pokal\",\n  \"Champions League\",\n  \"LaLi",
+  "json": true
+ }
+]

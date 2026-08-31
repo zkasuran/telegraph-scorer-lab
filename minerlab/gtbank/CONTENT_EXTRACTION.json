@@ -1,0 +1,20 @@
+{
+ "question": "Extract the main text content from https://example.com",
+ "truths": [
+  {
+   "label": "leader",
+   "source": "netwire-content-extraction (ours) is rank 1 and the module scores it 1.0 against this",
+   "text": "Example Domain. This domain is for use in documentation examples without needing permission. Avoid use in operations."
+  },
+  {
+   "label": "title_only",
+   "source": "microlink-url-extraction live title field, the shape a title-mapped miner returns",
+   "text": "Example Domain"
+  },
+  {
+   "label": "prose",
+   "source": "written: a model reading the page and describing it",
+   "text": "The page is titled Example Domain. Its body says the domain is for use in illustrative examples in documents, and that it may be used in literature without prior coordination or asking for permission."
+  }
+ ]
+}

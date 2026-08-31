@@ -1,0 +1,38 @@
+{
+ "question": "What is the total value locked in Aave?",
+ "values": {
+  "tvl": {
+   "url": "https://telegraph-fin.margyn.workers.dev/tvl",
+   "params": {
+    "protocol": "aave"
+   },
+   "field": "tvl_usd"
+  },
+  "tvl_b": {
+   "from": "tvl",
+   "divide": 1000000000.0
+  }
+ },
+ "truths": [
+  {
+   "label": "preflight",
+   "source": "preflight-ssl-verification live /tvl reason field, rank 1 at epoch 295",
+   "text": "The current total value locked (TVL) in the Aave protocol is approximately ${tvl_b:.2f} billion, according to DefiLlama. This figure is the aggregate USD value of assets deposited in the protocol's smart contracts across all chains."
+  },
+  {
+   "label": "formatted",
+   "source": "preflight live tvl_formatted field",
+   "text": "${tvl_b:.2f} billion"
+  },
+  {
+   "label": "exact",
+   "source": "written: a model quoting the full figure a source returns",
+   "text": "Aave has a total value locked of ${tvl:,.0f} across all chains."
+  },
+  {
+   "label": "rounded",
+   "source": "written: a model rounding as reporting does",
+   "text": "Aave's total value locked is about ${tvl_b:.0f} billion."
+  }
+ ]
+}

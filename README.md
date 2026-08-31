@@ -156,10 +156,12 @@ That produced the two changes this lane now rests on:
    safe as an exact-1.0 slot. This replaced the older, too-strong rule that only margin 1.0 is
    safe, which had left slots unhardened for want of a 1.0 their fixtures could never reach.
 
-**Current status 2026-08-31: 38/45 held, 11 of them exactly on their ceiling.** Three slots
-(LANGUAGE_TRANSLATION, TEXT_AUTHENTICITY_CHECK, CVE_LOOKUP) are genuine locks the other way: the
-rival sits inside the node's 1e-6 promotion epsilon of the ceiling of every base we own, so they
-need a scorer that separates one more pair rather than another calibration.
+**Current status 2026-08-31: 40/45 held, 13 on their ROC ceiling, 9 of those sealed at bit-exact
+1.0** and therefore unbeatable by anyone, ever. Two of the five outstanding are winnable and have
+rails queued; two have a rival parked inside the 1e-6 promotion epsilon just below our attainable
+ceiling, which needs a scorer that separates one more fixture pair rather than another calibration;
+CVE_LOOKUP is left alone because the only builds of ours that clear its agreement gate are the
+patchsignal derivatives we withdrew.
 
 > **The board is contested in real time.** 45/45 is not a finish line you cross once; it is a
 > state you defend. Everything below is how.

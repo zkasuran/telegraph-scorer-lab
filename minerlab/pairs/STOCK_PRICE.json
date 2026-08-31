@@ -1,0 +1,28 @@
+{
+ "intent": "STOCK_PRICE",
+ "question": "What is the current stock price of AAPL?",
+ "ours": {
+  "url": "https://telegraph-fin.margyn.workers.dev/stock?symbol=AAPL",
+  "text": "No stock price is served by this miner. Every keyless quote source we read either bars redistribution of its prices or bars commercial use, so publishing a figure from one would breach its terms. Crypto prices, exchange rates, protocol TVL and on-chain figures are served.",
+  "readings": null,
+  "raw_keys": [
+   "as_of",
+   "attribution",
+   "blocker",
+   "confidence",
+   "intent",
+   "price",
+   "remedy",
+   "source",
+   "summary",
+   "supported",
+   "symbol"
+  ]
+ },
+ "leader": {
+  "slug": "chainsight-oracle",
+  "field": "signal",
+  "url": "https://hub.shadrakbessanh.me/stock?symbol=AAPL",
+  "text": "The current share price of Apple Inc (AAPL) is $319.70 USD."
+ }
+}

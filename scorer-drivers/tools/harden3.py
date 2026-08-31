@@ -10,6 +10,7 @@ non-empty, so enumerate every candidate threshold (the score levels themselves) 
 A slot is only worth re-registering when the rail's j/N beats the margin we already hold; otherwise
 the current build stays and the slot is logged as not hardenable with this base.
 """
+import os
 import json, os, struct, sys
 ULP1 = 2 ** -24
 HALF = 2 ** -25
@@ -19,7 +20,7 @@ TAG = {'URL_SCAN':'us','AGENT_TASK':'at','TVL_LOOKUP':'tv2','STOCK_PRICE':'sp',
        'MEDIA_AUTHENTICITY_CHECK':'mac','VIDEO_VERIFICATION':'vv','FINANCIAL_DATA':'fd',
        'RESEARCH_SYNTHESIS':'rs'}
 W = {r['intent']: r for r in json.load(open(
-     '/home/asuran/Downloads/hackathon-hq/work/telegraph/.scratch/wrappable.json'))}
+     os.environ.get("WRAPPABLE", os.path.join(os.path.dirname(__file__), "wrappable.json"))))}
 
 def best(P, N):
     out = []

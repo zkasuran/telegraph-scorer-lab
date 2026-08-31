@@ -1,0 +1,35 @@
+{
+ "intent": "URL_SCAN",
+ "question": "Is https://example.com safe to visit?",
+ "ours": {
+  "url": "https://telegraph-net.margyn.workers.dev/url-scan?url=https%3A%2F%2Fexample.com",
+  "text": "The URL https://example.com is assessed as safe, with a risk score of 0.1 on a 0 (safe) to 1 (unsafe) scale, because no phishing or malware indicators were detected and it is served over valid HTTPS.",
+  "readings": null,
+  "raw_keys": [
+   "as_of",
+   "attribution",
+   "confidence",
+   "feeds_checked",
+   "host_listings",
+   "host_resolves",
+   "https",
+   "intent",
+   "listings",
+   "reachable",
+   "redirect_location",
+   "risk",
+   "risk_score",
+   "safe",
+   "source",
+   "status_code",
+   "summary",
+   "url"
+  ]
+ },
+ "leader": {
+  "slug": "chainsight-oracle",
+  "field": "signal",
+  "url": "https://hub.shadrakbessanh.me/urlscan?url=https%3A%2F%2Fexample.com",
+  "text": "The URL https://example.com is assessed as safe, with a risk score of 0.1 on a 0 (safe) to 1 (unsafe) scale, because no phishing, malware, or scam indicators were detected."
+ }
+}

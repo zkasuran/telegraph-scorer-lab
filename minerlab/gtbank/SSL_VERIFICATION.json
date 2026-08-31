@@ -1,0 +1,25 @@
+{
+ "question": "Is the TLS certificate for example.com valid?",
+ "truths": [
+  {
+   "label": "leader",
+   "source": "preflight-ssl-verification live /ssl-check verdict field, rank 1 on this intent",
+   "text": "The TLS certificate for example.com is valid. It is issued by SSL Corporation and expires in 57 days."
+  },
+  {
+   "label": "livecert",
+   "source": "livecert live /ssl-check verdict, rank 2",
+   "text": "valid"
+  },
+  {
+   "label": "prose",
+   "source": "written: a model reading a certificate and answering the asked question",
+   "text": "Yes, the TLS certificate for example.com is currently valid and trusted. It has not expired and it is issued by a certificate authority in the public trust stores."
+  },
+  {
+   "label": "terse",
+   "source": "written: the shortest true answer",
+   "text": "The TLS certificate for example.com is valid and trusted."
+  }
+ ]
+}

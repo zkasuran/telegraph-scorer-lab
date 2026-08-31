@@ -1,0 +1,25 @@
+{
+ "question": "What is the current native-coin balance of address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on Ethereum?",
+ "truths": [
+  {
+   "label": "leader",
+   "source": "preflight-ssl-verification live /wallet-balance, rank 1 on this intent",
+   "text": "The address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e holds 109094.750086414039274903 ETH on Ethereum."
+  },
+  {
+   "label": "grouped",
+   "source": "written: the same value as a person reads it, with thousands separators",
+   "text": "The Ethereum account 0x742d35Cc6634C0532925a3b844Bc454e4438f44e holds 109,094.750086414039274903 ETH."
+  },
+  {
+   "label": "rounded",
+   "source": "written: a model reading a block explorer and rounding as explorers do",
+   "text": "That address currently holds about 109,094.75 ETH on Ethereum mainnet."
+  },
+  {
+   "label": "terse",
+   "source": "written: the shortest true answer",
+   "text": "109094.750086414 ETH"
+  }
+ ]
+}

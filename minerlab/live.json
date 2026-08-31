@@ -1,0 +1,183 @@
+{
+ "ACADEMIC_SEARCH": {
+  "url": "https://telegraph-scholar.margyn.workers.dev/papers",
+  "params": {
+   "topic": "climate change adaptation"
+  },
+  "field": "summary"
+ },
+ "CONTENT_EXTRACTION": {
+  "url": "https://telegraph-net.margyn.workers.dev/extract",
+  "params": {
+   "url": "https://example.com"
+  },
+  "field": "summary"
+ },
+ "CRYPTO_PRICE": {
+  "url": "https://telegraph-fin.margyn.workers.dev/price",
+  "params": {
+   "symbol": "BTC"
+  },
+  "field": "summary"
+ },
+ "CURRENCY_EXCHANGE": {
+  "url": "https://telegraph-fin.margyn.workers.dev/fx",
+  "params": {
+   "from": "USD",
+   "to": "EUR"
+  },
+  "field": "summary"
+ },
+ "CVE_LOOKUP": {
+  "url": "https://telegraph-sec.margyn.workers.dev/cve",
+  "params": {
+   "cve_id": "CVE-2021-44228"
+  },
+  "field": "summary"
+ },
+ "FINANCIAL_DATA": {
+  "url": "https://telegraph-fin.margyn.workers.dev/financial",
+  "params": {
+   "query": "ethereum"
+  },
+  "field": "summary"
+ },
+ "GAME_RESULT": {
+  "url": "https://telegraph-sport.margyn.workers.dev/game",
+  "params": {
+   "team": "Lakers"
+  },
+  "field": "summary"
+ },
+ "GAS_PRICE": {
+  "url": "https://telegraph-gas.margyn.workers.dev/gas",
+  "params": {
+   "network": "ethereum"
+  },
+  "field": "summary"
+ },
+ "IP_GEOLOCATION": {
+  "url": "https://telegraph-net.margyn.workers.dev/ip-geolocate",
+  "params": {
+   "ip": "142.251.42.174"
+  },
+  "field": "summary"
+ },
+ "LANGUAGE_TRANSLATION": {
+  "url": "https://telegraph-lang.margyn.workers.dev/translate",
+  "params": {
+   "text": "Good morning, how are you?",
+   "to": "es"
+  },
+  "field": "summary"
+ },
+ "NEWS_HEADLINES": {
+  "url": "https://telegraph-news.margyn.workers.dev/headlines",
+  "params": {
+   "category": "technology"
+  },
+  "field": "summary"
+ },
+ "NEWS_SEARCH": {
+  "url": "https://telegraph-news.margyn.workers.dev/news",
+  "params": {
+   "q": "artificial intelligence regulation"
+  },
+  "field": "summary"
+ },
+ "ONCHAIN_TX_LOOKUP": {
+  "url": "https://telegraph-chain.margyn.workers.dev/tx",
+  "params": {
+   "hash": "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060"
+  },
+  "field": "summary"
+ },
+ "RESEARCH_QUERY": {
+  "url": "https://telegraph-scholar.margyn.workers.dev/research",
+  "params": {
+   "question": "effect of sleep on memory consolidation"
+  },
+  "field": "summary"
+ },
+ "RESEARCH_SYNTHESIS": {
+  "url": "https://telegraph-scholar.margyn.workers.dev/synthesis",
+  "params": {
+   "topic": "intermittent fasting"
+  },
+  "field": "summary"
+ },
+ "SPORTS_SCORE": {
+  "url": "https://telegraph-sport.margyn.workers.dev/score",
+  "params": {
+   "team": "Manchester United"
+  },
+  "field": "summary"
+ },
+ "SSL_VERIFICATION": {
+  "url": "https://telegraph-net.margyn.workers.dev/ssl-check",
+  "params": {
+   "domain": "example.com"
+  },
+  "field": "summary"
+ },
+ "STOCK_PRICE": {
+  "url": "https://telegraph-fin.margyn.workers.dev/stock",
+  "params": {
+   "symbol": "AAPL"
+  },
+  "field": "summary"
+ },
+ "STORM_ALERT": {
+  "url": "https://telegraph-sky.margyn.workers.dev/storm",
+  "params": {
+   "location": "Chicago",
+   "hours": "48"
+  },
+  "field": "summary"
+ },
+ "TOKEN_HOLDER_COUNT": {
+  "url": "https://telegraph-chain.margyn.workers.dev/holders",
+  "params": {
+   "chain": "ethereum",
+   "token": "USDT"
+  },
+  "field": "summary"
+ },
+ "TVL_LOOKUP": {
+  "url": "https://telegraph-fin.margyn.workers.dev/tvl",
+  "params": {
+   "protocol": "aave"
+  },
+  "field": "summary"
+ },
+ "URL_SCAN": {
+  "url": "https://telegraph-net.margyn.workers.dev/url-scan",
+  "params": {
+   "url": "https://example.com"
+  },
+  "field": "summary"
+ },
+ "WALLET_BALANCE_CHECK": {
+  "url": "https://telegraph-chain.margyn.workers.dev/balance",
+  "params": {
+   "chain": "ethereum",
+   "address": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+  },
+  "field": "summary"
+ },
+ "WEATHER_CHECK": {
+  "url": "https://telegraph-sky.margyn.workers.dev/weather",
+  "params": {
+   "location": "Tokyo"
+  },
+  "field": "summary"
+ },
+ "WEATHER_FORECAST": {
+  "url": "https://telegraph-sky.margyn.workers.dev/forecast",
+  "params": {
+   "location": "London",
+   "days": "3"
+  },
+  "field": "summary"
+ }
+}

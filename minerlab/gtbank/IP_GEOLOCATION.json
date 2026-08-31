@@ -1,0 +1,25 @@
+{
+ "question": "Where is the IP address 142.251.42.174 located?",
+ "truths": [
+  {
+   "label": "txlens",
+   "source": "txlens live /ip-geolocate on this exact IP, rank 1 on this intent",
+   "text": "142.251.42.174 is located in Tokyo, Japan, operated by Google LLC (AS15169 Google LLC)."
+  },
+  {
+   "label": "livecert",
+   "source": "livecert live /ip-geolocate verdict on this exact IP, rank 1 at epoch 295",
+   "text": "Chiyoda City, Tokyo, Japan"
+  },
+  {
+   "label": "prose",
+   "source": "written: a model reading a geolocation database and answering in prose",
+   "text": "The IP address 142.251.42.174 belongs to Google LLC and geolocates to Chiyoda City in Tokyo, Japan."
+  },
+  {
+   "label": "country_only",
+   "source": "written: the answer when a database resolves only the registry country",
+   "text": "142.251.42.174 is located in Japan."
+  }
+ ]
+}

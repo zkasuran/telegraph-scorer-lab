@@ -5,8 +5,10 @@ mkrails predicts the rail's output from a dump of the base. This runs the rail i
 checks the prediction, so a mis-encoded threshold or a broken code section is caught here
 rather than by the node after a registration is already spent.
 """
+import os
 import json, os, struct, subprocess, sys
-ROOT="/home/asuran/Downloads/hackathon-hq/work/telegraph/scorer"
+ROOT = os.environ.get("SCORER_ROOT", os.path.abspath(os.path.join(
+    os.path.dirname(__file__), "..", "..", "..", "scorer")))
 def f32(x): return struct.unpack("<f",struct.pack("<f",x))[0]
 def rail(s,T,top,low):
     s=f32(s)

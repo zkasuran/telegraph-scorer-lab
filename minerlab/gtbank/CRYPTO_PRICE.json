@@ -1,0 +1,41 @@
+{
+ "question": "What is the current price of Bitcoin (BTC) in USD?",
+ "values": {
+  "price": {
+   "url": "https://telegraph-fin.margyn.workers.dev/price",
+   "params": {
+    "symbol": "BTC"
+   },
+   "field": "price"
+  },
+  "chg": {
+   "url": "https://telegraph-fin.margyn.workers.dev/price",
+   "params": {
+    "symbol": "BTC"
+   },
+   "field": "change_24h_pct"
+  }
+ },
+ "truths": [
+  {
+   "label": "preflight",
+   "source": "preflight-ssl-verification live /crypto-price reason field, rank 1 at epoch 295, value substituted from our own live read so only wording varies",
+   "text": "The current price of Bitcoin (BTC) is approximately ${price:,.2f} USD. The price has shown a 24-hour change of about {chg:.2f}%."
+  },
+  {
+   "label": "formatted",
+   "source": "preflight live price_formatted field, the shape a formatted-price miner returns",
+   "text": "${price:,.2f}"
+  },
+  {
+   "label": "whole",
+   "source": "written: a model reading a ticker and rounding to whole dollars as reporting does",
+   "text": "Bitcoin (BTC) is trading at about ${price:,.0f} USD."
+  },
+  {
+   "label": "terse_dec",
+   "source": "written: the bare number at the grain an exchange ticker publishes",
+   "text": "Bitcoin (BTC) is trading at {price:,.2f} USD."
+  }
+ ]
+}

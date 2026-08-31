@@ -8,9 +8,11 @@ node will check for real:
 Both are read off a dump of the base, which is why one dump per base is enough for the whole
 sweep: every rail is a function of the base score alone.
 """
+import os
 import json, os, struct, subprocess, sys
 
-ROOT = "/home/asuran/Downloads/hackathon-hq/work/telegraph/scorer"
+ROOT = os.environ.get("SCORER_ROOT", os.path.abspath(os.path.join(
+    os.path.dirname(__file__), "..", "..", "..", "scorer")))
 DUMP = "/tmp/dump"
 TRI  = "/tmp/tri.json"
 

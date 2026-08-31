@@ -1,0 +1,25 @@
+{
+ "intent": "GAME_RESULT",
+ "question": "Who won the most recent Los Angeles Lakers game and what was the score?",
+ "ours": {
+  "url": "https://telegraph-sport.margyn.workers.dev/game?team=Lakers",
+  "text": "No match involving lakers was found. This miner covers Bundesliga, 2. Bundesliga, 3. Liga, DFB-Pokal, Champions League and LaLiga.",
+  "readings": null,
+  "raw_keys": [
+   "as_of",
+   "attribution",
+   "confidence",
+   "covered_competitions",
+   "intent",
+   "source",
+   "summary",
+   "supported"
+  ]
+ },
+ "leader": {
+  "slug": "fourcast-sports-intelligence",
+  "field": "score",
+  "url": "https://miner.sportwarren.com/query?team=Lakers&intent=GAME_RESULT :: <!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Error</title> </head> <body> <pre>Cannot GET /query</pre> </body> </html> ",
+  "text": null
+ }
+}
