@@ -6,14 +6,14 @@
    "params": {
     "symbol": "BTC"
    },
-   "field": "price"
+   "field": "price_usd"
   },
   "chg": {
    "url": "https://telegraph-fin.margyn.workers.dev/price",
    "params": {
     "symbol": "BTC"
    },
-   "field": "change_24h_pct"
+   "field": "change_24h_percent"
   }
  },
  "truths": [
