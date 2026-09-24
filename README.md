@@ -156,12 +156,18 @@ That produced the two changes this lane now rests on:
    safe as an exact-1.0 slot. This replaced the older, too-strong rule that only margin 1.0 is
    safe, which had left slots unhardened for want of a 1.0 their fixtures could never reach.
 
-**Current status 2026-08-31: 40/45 held, 13 on their ROC ceiling, 9 of those sealed at bit-exact
-1.0** and therefore unbeatable by anyone, ever. Two of the five outstanding are winnable and have
-rails queued; two have a rival parked inside the 1e-6 promotion epsilon just below our attainable
-ceiling, which needs a scorer that separates one more fixture pair rather than another calibration;
-CVE_LOOKUP is left alone because the only builds of ours that clear its agreement gate are the
-patchsignal derivatives we withdrew.
+**Live status 2026-09-25: 43/45 held.** The two losses are CURRENCY_EXCHANGE and
+TEXT_AUTHENTICITY_CHECK, both to one rival author, read off the node's `/intents/<id>` active
+registration. CVE_LOOKUP, TEXT_GENERATION and LANGUAGE_GENERATION, still open at the end of August,
+are now back under our wallet with our own builds (CVE_LOOKUP at margin 1.0, an own build rather than
+a patchsignal derivative).
+
+Kept as the dated milestone this section was written at: **2026-08-31, 40/45 held, 13 on their ROC
+ceiling, 9 of those sealed at bit-exact 1.0** and therefore unbeatable by anyone, ever. Two of the
+five outstanding then were winnable and had rails queued; two had a rival parked inside the 1e-6
+promotion epsilon just below our attainable ceiling, which needed a scorer that separates one more
+fixture pair rather than another calibration; CVE_LOOKUP was left alone because the only builds of
+ours that had cleared its agreement gate were the patchsignal derivatives we withdrew.
 
 > **The board is contested in real time.** 45/45 is not a finish line you cross once; it is a
 > state you defend. Everything below is how.
